@@ -15,7 +15,7 @@ public class Doge : MonoBehaviour
     void Update()
     {
         move_doge();
-        gravity();
+        //gravity();
     }
 
     public void move_doge()
@@ -31,7 +31,7 @@ public class Doge : MonoBehaviour
 
         if (Input.GetKey(KeyCode.UpArrow))
         {
-            transform.position -= new Vector3(0, -4, 0);
+            transform.position -= new Vector3(0, -1, 0);
         }
         else if (Input.GetKey(KeyCode.DownArrow))
         {
@@ -63,6 +63,16 @@ public class Doge : MonoBehaviour
         if (other_obj.GetComponent<Enemy>())
         {
             Destroy(gameObject);
+        }
+    }
+
+    public void stopOnPlatform(Collider2D collider)
+    {
+        GameObject other_obj = collider.gameObject;
+
+        if (other_obj.GetComponent<Platform>())
+        {
+            transform.position = new Vector3(transform.position.x, 100, 0);
         }
     }
 }
