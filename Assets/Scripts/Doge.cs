@@ -10,7 +10,6 @@ public class Doge : MonoBehaviour
     void Start()
     {
         rigid = GetComponent<Rigidbody2D>();
-        rigid.velocity = new Vector2(10, 10);
     }
 
     // Update is called once per frame
