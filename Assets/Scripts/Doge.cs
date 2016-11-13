@@ -1,11 +1,13 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.SceneManagement;
 
 public class Doge : MonoBehaviour
 {
     private float time_in_air = 0;
     private Rigidbody2D rigid;
     private bool dogeIsGrounded = false;
+    private Vector3 dogeScale;
     // Use this for initialization
     void Start()
     {
@@ -18,6 +20,7 @@ public class Doge : MonoBehaviour
         
         move_doge();
         //gravity();
+        turnAroundDoge();
     }
 
     public void move_doge()
@@ -94,7 +97,8 @@ public class Doge : MonoBehaviour
 
         if (other_obj.GetComponent<Enemy>())
         {
-            Destroy(gameObject);
+            //Destroy(gameObject);
+            SceneManager.LoadScene("EndScreen");
         }
     }
 
@@ -105,6 +109,18 @@ public class Doge : MonoBehaviour
         if (other_obj.GetComponent<Platform>())
         {
             transform.position = new Vector3(transform.position.x, 100, 0);
+        }
+    }
+    private void turnAroundDoge()
+    {
+
+        if(rigid.velocity.x < 0)
+        {
+            transform.localScale = new Vector3(20, 20, 1);
+        }
+        else if (rigid.velocity.x > 0)
+        {
+            transform.localScale = new Vector3(-20, 20, 1);
         }
     }
 }

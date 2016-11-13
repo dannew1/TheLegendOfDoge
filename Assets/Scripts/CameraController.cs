@@ -19,7 +19,6 @@ public class CameraController : MonoBehaviour
         //player = GetComponent<Doge>();
 
         offset = transform.position - player.transform.position;
-        Debug.Log(offset);
     }
 
     void LateUpdate()
