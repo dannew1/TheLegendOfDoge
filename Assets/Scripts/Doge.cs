@@ -4,6 +4,10 @@ using UnityEngine.SceneManagement;
 
 public class Doge : MonoBehaviour
 {
+    public float speed = 1;
+    public float topSpeed = 100;
+    public float jumpHeight = 100;
+
     private float time_in_air = 0;
     private Rigidbody2D rigid;
     private bool dogeIsGrounded = false;
@@ -19,7 +23,6 @@ public class Doge : MonoBehaviour
     {
         
         move_doge();
-        //gravity();
         turnAroundDoge();
     }
 
@@ -28,29 +31,29 @@ public class Doge : MonoBehaviour
         
             if (Input.GetKey(KeyCode.LeftArrow) && rigid.velocity.x > 0)
         {
-            rigid.velocity += new Vector2(-2, 0);
+            rigid.velocity += new Vector2(-speed*2, 0);
         }
         else if(Input.GetKey(KeyCode.LeftArrow) && nonTopSpeed())
         {
-            rigid.velocity += new Vector2(-1, 0);
+            rigid.velocity += new Vector2(-speed, 0);
         }
 
             if (Input.GetKey(KeyCode.RightArrow) && rigid.velocity.x < 0)
         {
-            rigid.velocity += new Vector2(2, 0);
+            rigid.velocity += new Vector2(speed*2, 0);
         }
         else if (Input.GetKey(KeyCode.RightArrow) && nonTopSpeed())
         {
-            rigid.velocity += new Vector2(1, 0);
+            rigid.velocity += new Vector2(speed, 0);
         }
 
         if (Input.GetKey(KeyCode.UpArrow) && noYMovement())
         {
-            rigid.velocity = new Vector2(rigid.velocity.x, 100);
+            rigid.velocity = new Vector2(rigid.velocity.x, jumpHeight);
         }
         if (Input.GetKey(KeyCode.DownArrow))
         {
-            rigid.velocity += new Vector2(0, -1);
+            rigid.velocity += new Vector2(0, -jumpHeight/100);
         }
     }
 
@@ -61,7 +64,7 @@ public class Doge : MonoBehaviour
 
     private bool nonTopSpeed()
     {
-        return rigid.velocity.x <= 100 && rigid.velocity.x >= -100;
+        return rigid.velocity.x <= topSpeed && rigid.velocity.x >= -topSpeed;
     }
 
     void OnCollisionStay2D(Collision2D col)
@@ -72,23 +75,6 @@ public class Doge : MonoBehaviour
     void OnCollisionExit2D(Collision2D col)
     {
         dogeIsGrounded = false;
-    }
-
-    public void gravity()
-    {
-
-        if (transform.position.y <= 100)
-        {
-            transform.position = new Vector3(transform.position.x, 100, 0);
-            time_in_air = 0;
-        }
-
-        else
-        {
-            time_in_air += Time.deltaTime;
-            transform.position -= new Vector3(0, 1, 0) * 3 * time_in_air;
-        }
-
     }
 
     public void OnTriggerEnter2D(Collider2D collider)
@@ -102,15 +88,15 @@ public class Doge : MonoBehaviour
         }
     }
 
-    public void stopOnPlatform(Collider2D collider)
-    {
-        GameObject other_obj = collider.gameObject;
-
-        if (other_obj.GetComponent<Platform>())
-        {
-            transform.position = new Vector3(transform.position.x, 100, 0);
-        }
-    }
+    //public void stopOnPlatform(Collider2D collider)
+    //{
+    //    GameObject other_obj = collider.gameObject;
+    //
+    //    if (other_obj.GetComponent<Platform>())
+    //    {
+    //        transform.position = new Vector3(transform.position.x, 100, 0);
+    //    }
+    //}
     private void turnAroundDoge()
     {
 
