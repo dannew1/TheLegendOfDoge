@@ -4,6 +4,8 @@ using UnityEngine.SceneManagement;
 
 public class Doge : MonoBehaviour
 {
+    public Fireball fireballPrefab;
+
     private float time_in_air = 0;
     private Rigidbody2D rigid;
     private bool dogeIsGrounded = false;
@@ -12,10 +14,12 @@ public class Doge : MonoBehaviour
     void Start()
     {
         rigid = GetComponent<Rigidbody2D>();
-    }
+        
+        Fireball clone = (Fireball)Instantiate(fireballPrefab, transform.position, transform.rotation);
+}
 
-    // Update is called once per frame
-    void Update()
+// Update is called once per frame
+void Update()
     {
         
         move_doge();
