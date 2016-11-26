@@ -4,15 +4,14 @@ using UnityEngine.SceneManagement;
 
 public class Doge : MonoBehaviour
 {
-<<<<<<< HEAD
     public Fireball fireballPrefab;
-=======
+
     public float speed = 1;
     public float topSpeed = 100;
     public float jumpHeight = 100;
->>>>>>> c59cb69abd08baf723632b28354b39b333582596
 
-    private float time_in_air = 0;
+
+    //private float time_in_air = 0;
     private Rigidbody2D rigid;
     private bool dogeIsGrounded = false;
     private Vector3 dogeScale;
@@ -21,7 +20,7 @@ public class Doge : MonoBehaviour
     {
         rigid = GetComponent<Rigidbody2D>();
         
-        Fireball clone = (Fireball)Instantiate(fireballPrefab, transform.position, transform.rotation);
+        
 }
 
 // Update is called once per frame
@@ -30,6 +29,7 @@ void Update()
         
         move_doge();
         turnAroundDoge();
+        shootFireBall();
     }
 
     public void move_doge()
@@ -113,6 +113,14 @@ void Update()
         else if (rigid.velocity.x > 0)
         {
             transform.localScale = new Vector3(-20, 20, 1);
+        }
+    }
+
+    private void shootFireBall()
+    {
+        if (Input.GetKey(KeyCode.C))
+        {
+            Fireball clone = (Fireball)Instantiate(fireballPrefab, transform.position, transform.rotation);
         }
     }
 }
