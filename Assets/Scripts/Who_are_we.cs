@@ -13,7 +13,6 @@ public class Who_are_we : MonoBehaviour {
     private float maxRange;
     private float minRange;
 
-    
 
 	// Use this for initialization
 	void Start () {
@@ -51,16 +50,6 @@ public class Who_are_we : MonoBehaviour {
             {
                 rigid.velocity += new Vector2(-speed, 0);
             }
-        }
-    }
-
-    public void OnTriggerEnter2D(Collider2D collider)
-    {
-        GameObject other_obj = collider.gameObject;
-
-        if (other_obj.GetComponent<Fireball>())
-        {
-            Destroy(gameObject);
         }
     }
 }

@@ -6,12 +6,13 @@ public class Doge : MonoBehaviour
 {
     public Fireball fireballPrefab;
 
-    public float speed = 1;
-    public float topSpeed = 100;
-    public float jumpHeight = 100;
+//    public float speed = 1;
+//    public float topSpeed = 100;
+//    public float jumpHeight = 100;
 
 
     //private float time_in_air = 0;
+//    private float time_in_air = 0;
     private Rigidbody2D rigid;
     private bool dogeIsGrounded = false;
     private Vector3 dogeScale;
@@ -22,9 +23,10 @@ public class Doge : MonoBehaviour
         
         
 }
+    }
 
-// Update is called once per frame
-void Update()
+    // Update is called once per frame
+    void Update()
     {
         
         move_doge();
