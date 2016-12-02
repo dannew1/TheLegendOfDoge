@@ -9,19 +9,19 @@ public class Doge : MonoBehaviour
     public float speed = 1;
     public float topSpeed = 100;
     public float jumpHeight = 100;
-
+    public float shootingDelay = 2;
 
     //private float time_in_air = 0;
     private Rigidbody2D rigid;
     private bool dogeIsGrounded = false;
     private Vector3 dogeScale;
+    private float reloadTime = 0;
+    private float shootingDirection = 2;
     // Use this for initialization
     void Start()
     {
         rigid = GetComponent<Rigidbody2D>();
-        
-        
-}
+    }
 
 // Update is called once per frame
 void Update()
@@ -30,12 +30,13 @@ void Update()
         move_doge();
         turnAroundDoge();
         shootFireBall();
+        SetShootingDirection();
     }
 
     public void move_doge()
     {
         
-            if (Input.GetKey(KeyCode.LeftArrow) && rigid.velocity.x > 0)
+        if (Input.GetKey(KeyCode.LeftArrow) && rigid.velocity.x > 0)
         {
             rigid.velocity += new Vector2(-speed*2, 0);
         }
@@ -44,7 +45,7 @@ void Update()
             rigid.velocity += new Vector2(-speed, 0);
         }
 
-            if (Input.GetKey(KeyCode.RightArrow) && rigid.velocity.x < 0)
+        if (Input.GetKey(KeyCode.RightArrow) && rigid.velocity.x < 0)
         {
             rigid.velocity += new Vector2(speed*2, 0);
         }
@@ -116,11 +117,41 @@ void Update()
         }
     }
 
+    private void setShootingDelay ()
+        {
+            reloadTime = shootingDelay;
+        }
+
     private void shootFireBall()
     {
-        if (Input.GetKey(KeyCode.C))
+        reloadTime -= Time.deltaTime;
+        if (Input.GetKey(KeyCode.C) && reloadTime <= 0)
         {
             Fireball clone = (Fireball)Instantiate(fireballPrefab, transform.position, transform.rotation);
+            //clone.rigid.velocity.x = 100;
+            setShootingDelay();
         }
     }
+
+    private void SetShootingDirection()
+    {
+        if (Input.GetKey(KeyCode.DownArrow))
+        {
+            shootingDirection = 1;
+        }
+        else if (Input.GetKey(KeyCode.UpArrow))
+        {
+            shootingDirection = 3;
+        }
+        else if (Input.GetKey(KeyCode.LeftArrow) && nonTopSpeed())
+        {
+            shootingDirection = 2;
+        }
+        else if (Input.GetKey(KeyCode.RightArrow) && nonTopSpeed())
+        {
+            shootingDirection = 4;
+        }
+    }
+
+    
 }

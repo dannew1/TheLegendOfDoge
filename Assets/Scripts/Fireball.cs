@@ -3,12 +3,14 @@ using System.Collections;
 
 public class Fireball : MonoBehaviour {
 
-    private Rigidbody2D rigid;
+    public Rigidbody2D rigid;
+
+    public float reloadTime = 1;
 
     // Use this for initialization
     void Start () {
         rigid = GetComponent<Rigidbody2D>();
-        rigid.velocity = new Vector2(100, 0);
+        //rigid.velocity = new Vector2(100, 0);
     }
 	
 	// Update is called once per frame
@@ -24,5 +26,10 @@ public class Fireball : MonoBehaviour {
         {
             Destroy(gameObject);
         }
+    }
+
+    public void FireFireball()
+    {
+
     }
 }
