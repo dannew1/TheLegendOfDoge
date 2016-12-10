@@ -8,12 +8,16 @@ public class Fireball : MonoBehaviour {
     public float reloadTime = 1;
 
     // Use this for initialization
+
     void Start () {
-        rigid = GetComponent<Rigidbody2D>();
-        //rigid.velocity = new Vector2(100, 0);
+        
     }
-	
-	// Update is called once per frame
+
+	public void Initialize()
+    {
+        rigid = GetComponent<Rigidbody2D>();
+    }
+
 	void Update () {
 	    
 	}
@@ -31,5 +35,9 @@ public class Fireball : MonoBehaviour {
     public void FireFireball()
     {
 
+    }
+    public void setSpeed(float speed)
+    {
+        rigid.velocity = new Vector2(speed, 0);
     }
 }

@@ -17,20 +17,24 @@ public class Doge : MonoBehaviour
     private Vector3 dogeScale;
     private float reloadTime = 0;
     private float shootingDirection = 2;
+    private bool dogeLookingRight = false;
+    private Vector3 initialScale;
+
     // Use this for initialization
     void Start()
     {
         rigid = GetComponent<Rigidbody2D>();
+        initialScale = transform.localScale;
     }
 
 // Update is called once per frame
 void Update()
     {
-        
         move_doge();
         turnAroundDoge();
         shootFireBall();
         SetShootingDirection();
+        setDogeLookingRight();
     }
 
     public void move_doge()
@@ -104,16 +108,28 @@ void Update()
     //        transform.position = new Vector3(transform.position.x, 100, 0);
     //    }
     //}
-    private void turnAroundDoge()
+    private void setDogeLookingRight()
     {
 
         if(rigid.velocity.x < 0)
         {
-            transform.localScale = new Vector3(20, 20, 1);
+            dogeLookingRight = false;
         }
         else if (rigid.velocity.x > 0)
         {
-            transform.localScale = new Vector3(-20, 20, 1);
+            dogeLookingRight = true;
+        }
+    }
+
+    private void turnAroundDoge()
+    {
+        if(dogeLookingRight == false)
+        {
+            transform.localScale = new Vector3(initialScale.x, initialScale.y, initialScale.z);
+        }
+        else if (dogeLookingRight == true)
+        {
+            transform.localScale = new Vector3(initialScale.x*-1, initialScale.y, initialScale.z);
         }
     }
 
@@ -128,7 +144,15 @@ void Update()
         if (Input.GetKey(KeyCode.C) && reloadTime <= 0)
         {
             Fireball clone = (Fireball)Instantiate(fireballPrefab, transform.position, transform.rotation);
-            //clone.rigid.velocity.x = 100;
+            clone.Initialize();
+            if (dogeLookingRight == false)
+            {
+                clone.setSpeed(-100);
+            }
+            else if (dogeLookingRight == true)
+            {
+                clone.setSpeed(100);
+            }
             setShootingDelay();
         }
     }
