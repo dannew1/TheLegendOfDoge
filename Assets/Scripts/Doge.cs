@@ -10,6 +10,7 @@ public class Doge : MonoBehaviour
     public float topSpeed = 100;
     public float jumpHeight = 100;
     public float shootingDelay = 2;
+    public float fireballSpeed = 150;
 
     //private float time_in_air = 0;
     private Rigidbody2D rigid;
@@ -147,11 +148,11 @@ void Update()
             clone.Initialize();
             if (dogeLookingRight == false)
             {
-                clone.setSpeed(-100);
+                clone.setSpeed(-fireballSpeed);
             }
             else if (dogeLookingRight == true)
             {
-                clone.setSpeed(100);
+                clone.setSpeed(fireballSpeed);
             }
             setShootingDelay();
         }
