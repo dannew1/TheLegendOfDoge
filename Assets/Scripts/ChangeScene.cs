@@ -2,9 +2,9 @@
 using System.Collections;
 using UnityEngine.SceneManagement;
 
-public class ButtonActions : MonoBehaviour {
+public class ChangeScene : MonoBehaviour {
 
-    public void StartGame()
+    public void NewGame()
     {
         SceneManager.LoadScene("Scene");
     }
