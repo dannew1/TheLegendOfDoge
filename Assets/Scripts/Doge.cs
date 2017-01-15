@@ -11,6 +11,8 @@ public class Doge : MonoBehaviour
     public float jumpHeight = 100;
     public float shootingDelay = 2;
     public float fireballSpeed = 150;
+    public Transform GroundCheck1; // Put the prefab of the ground here
+    public LayerMask groundLayer; // Insert the layer here.
 
     //private float time_in_air = 0;
     private Rigidbody2D rigid;
@@ -31,14 +33,15 @@ public class Doge : MonoBehaviour
 // Update is called once per frame
 void Update()
     {
-        move_doge();
-        turnAroundDoge();
-        shootFireBall();
+        Move_doge();
+        TurnAroundDoge();
+        ShootFireBall();
         SetShootingDirection();
-        setDogeLookingRight();
+        SetDogeLookingRight();
+        IsDogeGrounded();
     }
 
-    public void move_doge()
+    public void Move_doge()
     {
         
         if (Input.GetKey(KeyCode.LeftArrow) && rigid.velocity.x > 0)
@@ -59,7 +62,7 @@ void Update()
             rigid.velocity += new Vector2(speed, 0);
         }
 
-        if (Input.GetKey(KeyCode.UpArrow) && noYMovement())
+        if (Input.GetKey(KeyCode.UpArrow) && NoYMovement())
         {
             rigid.velocity = new Vector2(rigid.velocity.x, jumpHeight);
         }
@@ -69,7 +72,7 @@ void Update()
         }
     }
 
-    private bool noYMovement()
+    private bool NoYMovement()
     {
         return rigid.velocity.y <= 10 && rigid.velocity.y >= -10 && dogeIsGrounded;
     }
@@ -79,15 +82,19 @@ void Update()
         return rigid.velocity.x <= topSpeed && rigid.velocity.x >= -topSpeed;
     }
 
-    void OnCollisionStay2D(Collision2D col)
+    private void IsDogeGrounded()
     {
-        dogeIsGrounded = true;
+        dogeIsGrounded = Physics2D.OverlapCircle(GroundCheck1.position, 0.15f, groundLayer);
     }
-
-    void OnCollisionExit2D(Collision2D col)
-    {
-        dogeIsGrounded = false;
-    }
+    //void OnCollisionStay2D(Collision2D col)
+    //{
+    //    dogeIsGrounded = true;
+    //}
+    //
+    //void OnCollisionExit2D(Collision2D col)
+    //{
+    //    dogeIsGrounded = false;
+    //}
 
     public void OnTriggerEnter2D(Collider2D collider)
     {
@@ -109,7 +116,7 @@ void Update()
     //        transform.position = new Vector3(transform.position.x, 100, 0);
     //    }
     //}
-    private void setDogeLookingRight()
+    private void SetDogeLookingRight()
     {
 
         if(rigid.velocity.x < 0)
@@ -122,7 +129,7 @@ void Update()
         }
     }
 
-    private void turnAroundDoge()
+    private void TurnAroundDoge()
     {
         if(dogeLookingRight == false)
         {
@@ -134,12 +141,12 @@ void Update()
         }
     }
 
-    private void setShootingDelay ()
+    private void SetShootingDelay ()
         {
             reloadTime = shootingDelay;
         }
 
-    private void shootFireBall()
+    private void ShootFireBall()
     {
         reloadTime -= Time.deltaTime;
         if (Input.GetKey(KeyCode.C) && reloadTime <= 0)
@@ -154,7 +161,7 @@ void Update()
             {
                 clone.setSpeed(fireballSpeed);
             }
-            setShootingDelay();
+            SetShootingDelay();
         }
     }
 
