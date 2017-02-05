@@ -6,6 +6,7 @@ public class MusicPlayer : MonoBehaviour {
     private AudioSource Level1;
 
     private static MusicPlayer instance = null;
+
     public static MusicPlayer Instance
     {
         get { return instance; }
@@ -33,8 +34,6 @@ void Start () {
         Level1.Play();
 
         //Level1.playOnAwake = true;
-
-        Debug.Log("hej");
     }
 	
 	// Update is called once per frame

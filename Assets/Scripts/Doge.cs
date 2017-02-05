@@ -6,28 +6,47 @@ public class Doge : MonoBehaviour
 {
     public Fireball fireballPrefab;
 
-    public float speed = 1;
+    public float maxHealth = 100;
+    public float healthValue;
+    public float healthRegen = 3;
+
+    public float maxMana = 100;
+    public float manaValue;
+    public float manaRegen = 4;
+    public float shootingDelay = 2;
+    public float manaUsage = 20;
+
+    public float speed = 3;
     public float topSpeed = 100;
     public float jumpHeight = 100;
-    public float shootingDelay = 2;
-    public float fireballSpeed = 150;
-    public Transform GroundCheck1; // Put the prefab of the ground here
-    public LayerMask groundLayer; // Insert the layer here.
+    public Transform GroundCheck1;
+    public LayerMask groundLayer;
+        
 
-    //private float time_in_air = 0;
     private Rigidbody2D rigid;
     private bool dogeIsGrounded = false;
-    private Vector3 dogeScale;
+    private Vector3 initialScale;
+
     private float reloadTime = 0;
     private float shootingDirection = 2;
-    private bool dogeLookingRight = false;
-    private Vector3 initialScale;
+    private bool dogeLookingRight = true;
+    private float fireballSpeed;
+    private float mana;
+
+    private float damageDelay;
+    private float health;
 
     // Use this for initialization
     void Start()
     {
         rigid = GetComponent<Rigidbody2D>();
         initialScale = transform.localScale;
+
+        health = maxHealth;
+        mana = maxMana;
+        shootingDelay = Fireball.reloadTime;
+        manaUsage = Fireball.manaUsage;
+        fireballSpeed = Fireball.fireballSpeed;
     }
 
 // Update is called once per frame
@@ -35,10 +54,19 @@ void Update()
     {
         Move_doge();
         TurnAroundDoge();
-        ShootFireBall();
-        SetShootingDirection();
         SetDogeLookingRight();
         IsDogeGrounded();
+
+        ShootFireBall();
+        SetShootingDirection();
+        
+        DamageDelayCountdown();
+        HealthRegen();
+        SetHealthValue();
+        PlayerDeath();
+
+        ManaRegen();
+        SetManahValue();
     }
 
     public void Move_doge()
@@ -100,10 +128,10 @@ void Update()
     {
         GameObject other_obj = collider.gameObject;
 
-        if (other_obj.GetComponent<Enemy>())
+        if (other_obj.GetComponent<Enemy>() && damageDelay <= 0)
         {
-            //Destroy(gameObject);
-            SceneManager.LoadScene("EndScreen");
+            damageDelay = 100;
+            health -= 49;
         }
     }
 
@@ -149,7 +177,7 @@ void Update()
     private void ShootFireBall()
     {
         reloadTime -= Time.deltaTime;
-        if (Input.GetKey(KeyCode.C) && reloadTime <= 0)
+        if (Input.GetKey(KeyCode.C) && reloadTime <= 0 && mana > manaUsage)
         {
             Fireball clone = (Fireball)Instantiate(fireballPrefab, transform.position, transform.rotation);
             clone.Initialize();
@@ -162,6 +190,7 @@ void Update()
                 clone.setSpeed(fireballSpeed);
             }
             SetShootingDelay();
+            mana -= manaUsage;
         }
     }
 
@@ -184,6 +213,45 @@ void Update()
             shootingDirection = 4;
         }
     }
-
-    
+    private void DamageDelayCountdown()
+    {
+        if(damageDelay >= -20)
+        {
+            damageDelay -= Time.deltaTime * 100;
+        }
+    }
+    private void HealthRegen()
+    {
+        if (health < maxHealth && damageDelay <= 0)
+        health += Time.deltaTime * healthRegen;
+    }
+    private void ManaRegen()
+    {
+        if (mana < maxMana && reloadTime <= 0)
+            mana += Time.deltaTime * manaRegen;
+    }
+    private void SetHealthValue()
+    {
+        if (health > maxHealth)
+        {
+            health = maxHealth;
+        }
+        healthValue = health;
+    }
+    private void PlayerDeath()
+    {
+        if (health <= 0)
+        {
+            //Destroy(gameObject);
+            SceneManager.LoadScene("EndScreen");
+        }
+    }
+    private void SetManahValue()
+    {
+        if (mana > maxMana)
+        {
+            mana = maxMana;
+        }
+        manaValue = mana;
+    }
 }

@@ -5,7 +5,9 @@ public class Fireball : MonoBehaviour {
 
     public Rigidbody2D rigid;
 
-    public float reloadTime = 1;
+    public static float reloadTime = 2;
+    public static float manaUsage = 20;
+    public static float fireballSpeed = 150;
 
     // Use this for initialization
 
@@ -32,10 +34,6 @@ public class Fireball : MonoBehaviour {
         }
     }
 
-    public void FireFireball()
-    {
-
-    }
     public void setSpeed(float speed)
     {
         rigid.velocity = new Vector2(speed, 0);
