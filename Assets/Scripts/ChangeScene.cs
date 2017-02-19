@@ -8,4 +8,12 @@ public class ChangeScene : MonoBehaviour {
     {
         SceneManager.LoadScene("Scene");
     }
+    public void GameOver()
+    {
+        SceneManager.LoadScene("EndScreen");
+    }
+    public void YouWin()
+    {
+        SceneManager.LoadScene("WinScene");
+    }
 }
