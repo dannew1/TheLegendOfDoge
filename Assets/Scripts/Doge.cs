@@ -4,17 +4,12 @@ using UnityEngine.SceneManagement;
 
 public class Doge : MonoBehaviour
 {
-    //public Fireball fireballPrefab;
     private Shooting shootingScript;
     private DogeHealth healthScript;
 
     public float healthValue; 
     public float manaValue;
     
-    //public float manaRegen = 4;
-    //public float shootingDelay = 2;
-    //public float manaUsage = 20;
-
     public bool dogeLookingRight = true;
     public float speed = 3;
     public float topSpeed = 100;
@@ -28,15 +23,6 @@ public class Doge : MonoBehaviour
     private Rigidbody2D rigid;
     private bool dogeIsGrounded = false;
     private Vector3 initialScale;
-    
-
-    //private float reloadTime = 0;
-    //private float shootingDirection = 2;
-    //private float fireballSpeed;
-    //private float mana;
-
-    
-    
 
     // Use this for initialization
     void Start()
@@ -46,16 +32,10 @@ public class Doge : MonoBehaviour
         changeSceneScript = levelManager.GetComponent<ChangeScene>();
         shootingScript = GetComponent<Shooting>();
         healthScript = GetComponent<DogeHealth>();
-
-        
-        //mana = maxMana;
-        //shootingDelay = Fireball.reloadTime;
-        //manaUsage = Fireball.manaUsage;
-        //fireballSpeed = Fireball.fireballSpeed;
     }
 
 // Update is called once per frame
-void Update()
+    void Update()
     {
         Move_doge();
         TurnAroundDoge();
@@ -96,14 +76,17 @@ void Update()
             rigid.velocity += new Vector2(0, -jumpHeight/100);
         }
     }
+
     private bool NoYMovement()
     {
         return rigid.velocity.y <= 10 && rigid.velocity.y >= -10 && dogeIsGrounded;
     }
+
     public bool nonTopSpeed()
     {
         return rigid.velocity.x <= topSpeed && rigid.velocity.x >= -topSpeed;
     }
+
     private void IsDogeGrounded()
     {
         dogeIsGrounded = Physics2D.OverlapCircle(GroundCheck1.position, 0.15f, groundLayer);
@@ -120,6 +103,7 @@ void Update()
             dogeLookingRight = true;
         }
     }
+
     private void TurnAroundDoge()
     {
         if(dogeLookingRight == false)
@@ -131,12 +115,6 @@ void Update()
             transform.localScale = new Vector3(initialScale.x*-1, initialScale.y, initialScale.z);
         }
     }
-
-
-
-
-
-
 
     private void SetHealthValue()
     {
