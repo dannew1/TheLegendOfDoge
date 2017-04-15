@@ -1,6 +1,11 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+public class Derp : MonoBehaviour
+{
+
+}
+
 public class HitboxOfDoom : MonoBehaviour {
 
     public GameObject levelManager;

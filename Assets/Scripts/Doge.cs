@@ -27,6 +27,7 @@ public class Doge : MonoBehaviour
     // Use this for initialization
     void Start()
     {
+        
         rigid = GetComponent<Rigidbody2D>();
         initialScale = transform.localScale;
         changeSceneScript = levelManager.GetComponent<ChangeScene>();

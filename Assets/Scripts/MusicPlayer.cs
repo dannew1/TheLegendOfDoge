@@ -26,7 +26,7 @@ public class MusicPlayer : MonoBehaviour {
         DontDestroyOnLoad(this.gameObject);
     }
 
-void Start () {
+    void Start () {
 
         Level1 = GetComponent<AudioSource>();
 
