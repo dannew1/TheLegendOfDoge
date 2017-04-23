@@ -6,6 +6,22 @@ public class MainMenu : MonoBehaviour {
 
     public Text tutorialText;
     public GameObject loadingBlock;
+    public GameObject arrow1;
+    public GameObject arrow2;
+    public GameObject arrow3;
+    public GameObject arrow4;
+    public GameObject arrow5;
+    private SpriteRenderer arrowSprite1;
+    private SpriteRenderer arrowSprite2;
+    private SpriteRenderer arrowSprite3;
+    private SpriteRenderer arrowSprite4;
+    private SpriteRenderer arrowSprite5;
+    private Transform loadingblockTransform;
+    private Transform arrowTransform1;
+    private Transform arrowTransform2;
+    private Transform arrowTransform3;
+    private Transform arrowTransform4;
+    private Transform arrowTransform5;
     private float timer;
     private bool slowTimer1 = false;
     private bool slowTimer2 = false;
@@ -14,8 +30,22 @@ public class MainMenu : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-        
 
+        arrowSprite1 = arrow1.GetComponent<SpriteRenderer>();
+        arrowSprite2 = arrow2.GetComponent<SpriteRenderer>();
+        arrowSprite3 = arrow3.GetComponent<SpriteRenderer>();
+        arrowSprite4 = arrow4.GetComponent<SpriteRenderer>();
+        arrowSprite5 = arrow5.GetComponent<SpriteRenderer>();
+        loadingblockTransform = loadingBlock.GetComponent<Transform>();
+        arrowTransform1 = arrow1.GetComponent<Transform>();
+        arrowTransform2 = arrow2.GetComponent<Transform>();
+        arrowTransform3 = arrow3.GetComponent<Transform>();
+        arrowTransform4 = arrow4.GetComponent<Transform>();
+        arrowTransform5 = arrow5.GetComponent<Transform>();
+
+
+        ArrowBlockPosition(1);
+        ArrowInvisibility(false);
         ActivateTutorialStep1();
     }
 	
@@ -61,6 +91,7 @@ public class MainMenu : MonoBehaviour {
         timer = 0;
         tutorialText.text = "Walk here";
         tutorialStep = 1;
+        ArrowInvisibility(true);
     }
     private void ActivateTutorialStep2()
     {
@@ -120,13 +151,41 @@ public class MainMenu : MonoBehaviour {
             slowTimer3 = true;
         }
     }
+    private void ArrowInvisibility(bool isVisible)
+    {
+        if (isVisible == true)
+        {
+            arrowSprite1.color = new Color(1, 1, 1, 1);
+            arrowSprite2.color = new Color(1, 1, 1, 1);
+            arrowSprite3.color = new Color(1, 1, 1, 1);
+            arrowSprite4.color = new Color(1, 1, 1, 1);
+            arrowSprite5.color = new Color(1, 1, 1, 1);
+        }
+        else if (isVisible == false)
+        {
+            arrowSprite1.color = new Color(1, 1, 1, 0);
+            arrowSprite2.color = new Color(1, 1, 1, 0);
+            arrowSprite3.color = new Color(1, 1, 1, 0);
+            arrowSprite4.color = new Color(1, 1, 1, 0);
+            arrowSprite5.color = new Color(1, 1, 1, 0);
+        }
+    }
+    private void ArrowBlockPosition(int step)
+    {
+        loadingblockTransform.position = new Vector3(736, 70, 0);
+        arrowTransform1.position = new Vector3(611, 64, 0);
+        arrowTransform2.position = new Vector3(612, 158, 0);
+        arrowTransform3.position = new Vector3(733, 191, 0);
+        arrowTransform4.position = new Vector3(861, 142, 0);
+        arrowTransform5.position = new Vector3(861, 51, 0);
+    }
 
     //notes
-    //block x-46 y-58 
-    //arrow1 x171 y-64 r-1.5 
-    //arrow2 x-170 y30 r-33
-    //arrow3 x-49 y63 r271 
-    //arrow4 x79 y14 r210 
-    //arrow5 x79 y-78 r178
+    //block x736 y70 
+    //arrow1 x611 y64 r-1.5 
+    //arrow2 x612 y158 r-33
+    //arrow3 x733 y191 r271 
+    //arrow4 x861 y142 r210 
+    //arrow5 x861 y51 r178
     //
 }
