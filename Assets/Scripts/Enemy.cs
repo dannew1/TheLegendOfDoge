@@ -4,10 +4,12 @@ using System.Collections;
 public class Enemy : MonoBehaviour {
 
     private Rigidbody2D rigid;
+    private Vector3 initialScale;
 
     // Use this for initialization
     void Start () {
         rigid = GetComponent<Rigidbody2D>();
+        initialScale = transform.localScale;
     }
 	
 	// Update is called once per frame
@@ -20,11 +22,11 @@ public class Enemy : MonoBehaviour {
 
         if (rigid.velocity.x < 0)
         {
-            transform.localScale = new Vector3(20, 20, 1);
+            transform.localScale = new Vector3(initialScale.x, initialScale.y, initialScale.z);
         }
         else if (rigid.velocity.x > 0)
         {
-            transform.localScale = new Vector3(-20, 20, 1);
+            transform.localScale = new Vector3(initialScale.x * -1, initialScale.y, initialScale.z);
         }
     }
 }
