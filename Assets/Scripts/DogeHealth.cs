@@ -3,8 +3,7 @@ using System.Collections;
 
 public class DogeHealth : MonoBehaviour
 {
-
-    public GameObject levelManager;
+    private Doge dogeScript;
     private ChangeScene changeSceneScript;
 
     public float maxHealth = 100;
@@ -16,8 +15,9 @@ public class DogeHealth : MonoBehaviour
     // Use this for initialization
     void Start()
     {
+        dogeScript = GetComponent<Doge>();
         health = maxHealth;
-        changeSceneScript = levelManager.GetComponent<ChangeScene>();
+        changeSceneScript = dogeScript.levelManager.GetComponent<ChangeScene>();
     }
 
     // Update is called once per frame

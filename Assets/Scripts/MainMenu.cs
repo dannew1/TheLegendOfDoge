@@ -8,6 +8,7 @@ public class MainMenu : MonoBehaviour {
     public GameObject Tutorial1Objects;
     public GameObject Tutorial2Objects;
     public GameObject Tutorial3Objects;
+    public GameObject Tutorial4Objects;
     //public GameObject loadingBlock;
     //public GameObject arrow1;
     //public GameObject arrow2;
@@ -73,6 +74,13 @@ public class MainMenu : MonoBehaviour {
             ActivateTutorialStep3();
         }
     }
+    public void EnemyNextStep()
+    {
+        if(tutorialStep == 3)
+        {
+            ActivateTutorialStep4();
+        }
+    }
 
     private void UpdateTutorial()
     {
@@ -95,7 +103,6 @@ public class MainMenu : MonoBehaviour {
         timer = 0;
         tutorialText.text = "Walk here";
         tutorialStep = 1;
-        //ArrowInvisibility(true);
     }
     private void ActivateTutorialStep2()
     {
@@ -108,6 +115,12 @@ public class MainMenu : MonoBehaviour {
         timer = 0;
         tutorialText.text = "Lets go ahead and kill this enemy";
         tutorialStep = 3;
+    }
+    private void ActivateTutorialStep4()
+    {
+        timer = 0;
+        tutorialText.text = "You've done it!! The end is right here!";
+        tutorialStep = 4;
     }
 
     private void TutorialStep1()
@@ -163,68 +176,35 @@ public class MainMenu : MonoBehaviour {
             Tutorial1Objects.SetActive(true);
             Tutorial2Objects.SetActive(false);
             Tutorial3Objects.SetActive(false);
+            Tutorial4Objects.SetActive(false);
         }
         else if (tutorialStep == 2)
         {
             Tutorial2Objects.SetActive(true);
             Tutorial1Objects.SetActive(false);
             Tutorial3Objects.SetActive(false);
+            Tutorial4Objects.SetActive(false);
         }
         else if (tutorialStep == 3)
         {
             Tutorial3Objects.SetActive(true);
             Tutorial1Objects.SetActive(false);
             Tutorial2Objects.SetActive(false);
+            Tutorial4Objects.SetActive(false);
+        }
+        else if (tutorialStep == 4)
+        {
+            Tutorial4Objects.SetActive(true);
+            Tutorial1Objects.SetActive(false);
+            Tutorial2Objects.SetActive(false);
+            Tutorial3Objects.SetActive(false);
         }
         else
         {
             Tutorial1Objects.SetActive(false);
             Tutorial2Objects.SetActive(false);
             Tutorial3Objects.SetActive(false);
+            Tutorial4Objects.SetActive(false);
         }
     }
-
-    
-        
-    
-
-    //private void ArrowInvisibility(bool isVisible)
-    //{
-    //    if (isVisible == true)
-    //    {
-    //        arrowSprite1.color = new Color(1, 1, 1, 1);
-    //        arrowSprite2.color = new Color(1, 1, 1, 1);
-    //        arrowSprite3.color = new Color(1, 1, 1, 1);
-    //        arrowSprite4.color = new Color(1, 1, 1, 1);
-    //        arrowSprite5.color = new Color(1, 1, 1, 1);
-    //    }
-    //    else if (isVisible == false)
-    //    {
-    //        arrowSprite1.color = new Color(1, 1, 1, 0);
-    //        arrowSprite2.color = new Color(1, 1, 1, 0);
-    //        arrowSprite3.color = new Color(1, 1, 1, 0);
-    //        arrowSprite4.color = new Color(1, 1, 1, 0);
-    //        arrowSprite5.color = new Color(1, 1, 1, 0);
-    //    }
-    //}
-    //private void ArrowBlockPosition(int step)
-    //{
-    //    loadingblockTransform.position = new Vector3(736, 70, 0);
-    //    arrowTransform1.position = new Vector3(611, 64, 0);
-    //    arrowTransform2.position = new Vector3(612, 158, 0);
-    //    arrowTransform3.position = new Vector3(733, 191, 0);
-    //    arrowTransform4.position = new Vector3(861, 142, 0);
-    //    arrowTransform5.position = new Vector3(861, 51, 0);
-    //}
-
-
-
-    //notes
-    //block x736 y70 
-    //arrow1 x611 y64 r-1.5 
-    //arrow2 x612 y158 r-33
-    //arrow3 x733 y191 r271 
-    //arrow4 x861 y142 r210 
-    //arrow5 x861 y51 r178
-    //
 }
