@@ -14,7 +14,6 @@ public class HealthBar : MonoBehaviour
     {
         picture = GetComponent<SpriteRenderer>();
         dogeHealthScript = player.GetComponent<DogeHealth>();
-        //Object.FindObjectOfType<MainBossScript>();
     }
 
     // Update is called once per frame

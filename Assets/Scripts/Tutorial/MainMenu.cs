@@ -9,23 +9,6 @@ public class MainMenu : MonoBehaviour {
     public GameObject Tutorial2Objects;
     public GameObject Tutorial3Objects;
     public GameObject Tutorial4Objects;
-    //public GameObject loadingBlock;
-    //public GameObject arrow1;
-    //public GameObject arrow2;
-    //public GameObject arrow3;
-    //public GameObject arrow4;
-    //public GameObject arrow5;
-    //private SpriteRenderer arrowSprite1;
-    //private SpriteRenderer arrowSprite2;
-    //private SpriteRenderer arrowSprite3;
-    //private SpriteRenderer arrowSprite4;
-    //private SpriteRenderer arrowSprite5;
-    //private Transform loadingblockTransform;
-    //private Transform arrowTransform1;
-    //private Transform arrowTransform2;
-    //private Transform arrowTransform3;
-    //private Transform arrowTransform4;
-    //private Transform arrowTransform5;
     private float timer;
     private bool slowTimer1 = false;
     private bool slowTimer2 = false;
@@ -34,21 +17,6 @@ public class MainMenu : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-
-        //arrowSprite1 = arrow1.GetComponent<SpriteRenderer>();
-        //arrowSprite2 = arrow2.GetComponent<SpriteRenderer>();
-        //arrowSprite3 = arrow3.GetComponent<SpriteRenderer>();
-        //arrowSprite4 = arrow4.GetComponent<SpriteRenderer>();
-        //arrowSprite5 = arrow5.GetComponent<SpriteRenderer>();
-        //loadingblockTransform = loadingBlock.GetComponent<Transform>();
-        //arrowTransform1 = arrow1.GetComponent<Transform>();
-        //arrowTransform2 = arrow2.GetComponent<Transform>();
-        //arrowTransform3 = arrow3.GetComponent<Transform>();
-        //arrowTransform4 = arrow4.GetComponent<Transform>();
-        //arrowTransform5 = arrow5.GetComponent<Transform>();
-
-        //ArrowBlockPosition(1);
-        //ArrowInvisibility(false);
         ActivateTutorialStep1();
     }
 	
@@ -56,7 +24,6 @@ public class MainMenu : MonoBehaviour {
 	void Update () {
         UpdateTutorial();
         SelectVisableObjects();
-
     }
 
     public void StartTutorial()
@@ -82,6 +49,8 @@ public class MainMenu : MonoBehaviour {
         }
     }
 
+
+
     private void UpdateTutorial()
     {
         if (tutorialStep == 1)
@@ -95,6 +64,10 @@ public class MainMenu : MonoBehaviour {
         else if (tutorialStep == 3)
         {
             TutorialStep3();
+        }
+        else if (tutorialStep == 4)
+        {
+            //TutorialStep4();
         }
     }
 
@@ -168,6 +141,18 @@ public class MainMenu : MonoBehaviour {
             slowTimer3 = true;
         }
     }
+    //private void TutorialStep4()
+    //{
+    //    timer += Time.deltaTime * 10;
+    //    if ()
+    //    {
+    //        timer = 0;
+    //    }
+    //    if ()
+    //    {
+    //        
+    //    }
+    //}
 
     private void SelectVisableObjects()
     {
