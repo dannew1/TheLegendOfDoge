@@ -53,14 +53,4 @@ public class Who_are_we : MonoBehaviour {
             }
         }
     }
-
-    public void OnTriggerEnter2D(Collider2D collider)
-    {
-        GameObject other_obj = collider.gameObject;
-
-        if (other_obj.GetComponent<Fireball>())
-        {
-            Destroy(gameObject);
-        }
-    }
 }

@@ -9,6 +9,7 @@ public class MainMenu : MonoBehaviour {
     public GameObject Tutorial2Objects;
     public GameObject Tutorial3Objects;
     public GameObject Tutorial4Objects;
+    public GameObject player;
     private float timer;
     private bool slowTimer1 = false;
     private bool slowTimer2 = false;
@@ -17,7 +18,7 @@ public class MainMenu : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-        ActivateTutorialStep1();
+        player.SetActive(false);
     }
 	
 	// Update is called once per frame
@@ -76,6 +77,7 @@ public class MainMenu : MonoBehaviour {
         timer = 0;
         tutorialText.text = "Walk here";
         tutorialStep = 1;
+        player.SetActive(true);
     }
     private void ActivateTutorialStep2()
     {

@@ -29,4 +29,14 @@ public class Enemy : MonoBehaviour {
             transform.localScale = new Vector3(initialScale.x * -1, initialScale.y, initialScale.z);
         }
     }
+
+    public void OnTriggerEnter2D(Collider2D collider)
+    {
+        GameObject other_obj = collider.gameObject;
+
+        if (other_obj.GetComponent<Fireball>())
+        {
+            Destroy(gameObject);
+        }
+    }
 }
