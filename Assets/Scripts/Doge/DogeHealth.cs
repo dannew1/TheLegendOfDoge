@@ -38,6 +38,11 @@ public class DogeHealth : MonoBehaviour
             damageDelay = 100;
             health -= 49;
         }
+        else if (other_obj.GetComponent<GuyBullet>() && damageDelay <= 0)
+        {
+            damageDelay = 100;
+            health -= 90;
+        }
     }
 
     private void DamageDelayCountdown()

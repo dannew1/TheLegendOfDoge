@@ -1,34 +1,34 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class Fireball : MonoBehaviour {
+public class GuyBullet : MonoBehaviour {
+
+    public static float bulletSpeed = 150;
 
     private Rigidbody2D rigid;
 
-    public static float reloadTime = 2;
-    public static float manaUsage = 20;
-    public static float fireballSpeed = 150;
+
 
     // Use this for initialization
-
     void Start () {
-        
-    }
-
-	public void Initialize()
+	
+	}
+	
+    public void Initialize()
     {
         rigid = GetComponent<Rigidbody2D>();
     }
 
+	// Update is called once per frame
 	void Update () {
-	    
+	
 	}
 
     public void OnTriggerEnter2D(Collider2D collider)
     {
         GameObject other_obj = collider.gameObject;
 
-        if (other_obj.GetComponent<Enemy>())
+        if (other_obj.GetComponent<Platform>())
         {
             Destroy(gameObject);
         }
