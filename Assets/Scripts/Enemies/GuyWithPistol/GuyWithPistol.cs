@@ -6,6 +6,9 @@ public class GuyWithPistol : MonoBehaviour {
     public GuyBullet bulletPrefab;
 
     public float turnTime = 4;
+    public float fireDelay = 0.5F;
+    public float viewRangeX = 500;
+    public float viewRangeY = 100;
     public GameObject player;
 
     private Rigidbody2D rigid;
@@ -15,6 +18,8 @@ public class GuyWithPistol : MonoBehaviour {
     private float timeCounter;
     private float fireCounter;
     private bool dogeInViewRange = false;
+    private float distanceToDogeX;
+    private float distanceToDogeY;
 
     // Use this for initialization
     void Start () {
@@ -47,7 +52,7 @@ public class GuyWithPistol : MonoBehaviour {
     {
         if (guyLookingRight == true)
         {
-            transform.localScale = new Vector3(-initialScale.x, initialScale.y, initialScale.z);
+            transform.localScale = new Vector3(initialScale.x, initialScale.y, initialScale.z);
             guyLookingRight = false;
         }
         else if (guyLookingRight == false)
@@ -59,13 +64,23 @@ public class GuyWithPistol : MonoBehaviour {
 
     private void checkForPlayer()
     {
-        if(transform.position.x - player.transform.position.x > 0 && guyLookingRight == false)
+        distanceToDogeX = transform.position.x - player.transform.position.x;
+        distanceToDogeY = transform.position.y - player.transform.position.y;
+
+        if (distanceToDogeY < viewRangeY && distanceToDogeY > -viewRangeY)
         {
-            dogeInViewRange = true;
-        }
-        else if (transform.position.x - player.transform.position.x < 0 && guyLookingRight == true)
-        {
-            dogeInViewRange = true;
+            if (distanceToDogeX > 0 && distanceToDogeX < viewRangeX && guyLookingRight == false)
+            {
+                dogeInViewRange = true;
+            }
+            else if (distanceToDogeX < 0 && distanceToDogeX > -viewRangeX && guyLookingRight == true)
+            {
+                dogeInViewRange = true;
+            }
+            else
+            {
+                dogeInViewRange = false;
+            }
         }
         else
         {
@@ -77,10 +92,9 @@ public class GuyWithPistol : MonoBehaviour {
     {
         if(dogeInViewRange == true)
         {
-            Debug.Log(fireCounter);
             timeCounter = 0;
             fireCounter += Time.deltaTime;
-            if (fireCounter >= 3)
+            if (fireCounter >= fireDelay)
             {
                 fireCounter = 0;
                 ShootBullet();

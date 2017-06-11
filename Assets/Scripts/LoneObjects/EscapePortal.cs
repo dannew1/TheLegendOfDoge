@@ -5,11 +5,11 @@ using UnityEngine.SceneManagement;
 public class EscapePortal : MonoBehaviour {
 
     public GameObject levelManager;
-    private ChangeScene changeSceneScript;
+    private LevelManager changeSceneScript;
 
 	// Use this for initialization
 	void Start () {
-	    changeSceneScript = levelManager.GetComponent<ChangeScene>();
+	    changeSceneScript = levelManager.GetComponent<LevelManager>();
     }
 	
 	// Update is called once per frame
