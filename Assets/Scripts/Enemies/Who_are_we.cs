@@ -27,18 +27,16 @@ public class Who_are_we : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
         enemy_movement();
-        
     }
 
     public void enemy_movement()
     {
-
         waitTime -= Time.deltaTime;
         if (waitTime <= 0)
         {
             if (transform.position.x + 10 >= goToPosition && transform.position.x - 10 <= goToPosition)
             {
-                rigid.velocity = new Vector2(0, rigid.velocity.y);
+                rigid.velocity = new Vector2(0, 0);
                 goToPosition = Random.Range(minRange, maxRange);
                 waitTime = baseWaitTime;
             }

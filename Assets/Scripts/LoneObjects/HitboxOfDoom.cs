@@ -1,19 +1,12 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class Derp : MonoBehaviour
-{
-
-}
-
 public class HitboxOfDoom : MonoBehaviour {
 
-    public GameObject levelManager;
-    private LevelManager changeSceneScript;
+    public DontDestroyOnLoadConector levelManager;
 
     // Use this for initialization
     void Start () {
-        changeSceneScript = levelManager.GetComponent<LevelManager>();
     }
 	
 	// Update is called once per frame
@@ -27,7 +20,7 @@ public class HitboxOfDoom : MonoBehaviour {
 
         if (other_obj.GetComponent<Doge>())
         {
-            changeSceneScript.GameOver();
+            levelManager.GameOver(false);
         }
         else
         {

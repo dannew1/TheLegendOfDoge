@@ -5,12 +5,10 @@ public class CameraController : MonoBehaviour
 {
 
     public Doge player;
-    public float maxX = 800;
-    public float minX = 200;
-    public float maxY = 500;
-    public float minY = 0;
+    public Vector2 min = new Vector2(200, 230);
+    public Vector2 max = new Vector2(3450, 700);
 
-    private Vector3 offset;
+    //private Vector3 offset;
     private float cameraX;
     private float cameraY;
 
@@ -18,22 +16,22 @@ public class CameraController : MonoBehaviour
     {
         //player = GetComponent<Doge>();
 
-        offset = transform.position - player.transform.position;
+        //offset = transform.position - player.transform.position;
     }
 
     void LateUpdate()
     {
-        if (player.transform.position.x >= maxX)
-            cameraX = maxX;
-        else if (player.transform.position.x <= minX)
-            cameraX = minX;
+        if (player.transform.position.x >= max.x)
+            cameraX = max.x;
+        else if (player.transform.position.x <= min.x)
+            cameraX = min.x;
         else
             cameraX = player.transform.position.x;
 
-        if (player.transform.position.y >= maxY)
-            cameraY = maxY;
-        else if (player.transform.position.y <= minY)
-            cameraY = minY;
+        if (player.transform.position.y >= max.y)
+            cameraY = max.y;
+        else if (player.transform.position.y <= min.y)
+            cameraY = min.y;
         else
             cameraY = player.transform.position.y;
 

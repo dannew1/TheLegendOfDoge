@@ -7,8 +7,6 @@ public class GuyBullet : MonoBehaviour {
 
     private Rigidbody2D rigid;
 
-
-
     // Use this for initialization
     void Start () {
 	

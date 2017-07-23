@@ -4,12 +4,12 @@ using UnityEngine.SceneManagement;
 
 public class EscapePortal : MonoBehaviour {
 
-    public GameObject levelManager;
-    private LevelManager changeSceneScript;
+    //public GameObject levelManager;
+    public DontDestroyOnLoadConector levelManager;
+    // Use this for initialization
 
-	// Use this for initialization
-	void Start () {
-	    changeSceneScript = levelManager.GetComponent<LevelManager>();
+    void Start () {
+	    //changeSceneScript = levelManager.GetComponent<LevelManager>();
     }
 	
 	// Update is called once per frame
@@ -23,7 +23,7 @@ public class EscapePortal : MonoBehaviour {
 
         if (other_obj.GetComponent<Doge>())
         {
-            changeSceneScript.YouWin();
+            levelManager.GameOver(true);
         }
     }
 }

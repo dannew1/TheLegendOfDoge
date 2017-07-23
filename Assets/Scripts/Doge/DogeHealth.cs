@@ -4,7 +4,7 @@ using System.Collections;
 public class DogeHealth : MonoBehaviour
 {
     private Doge dogeScript;
-    private LevelManager changeSceneScript;
+    public DontDestroyOnLoadConector levelManager;
 
     public float maxHealth = 100;
     public float healthRegen = 3;
@@ -17,7 +17,7 @@ public class DogeHealth : MonoBehaviour
     {
         dogeScript = GetComponent<Doge>();
         health = maxHealth;
-        changeSceneScript = dogeScript.levelManager.GetComponent<LevelManager>();
+        //changeSceneScript = dogeScript.levelManager.GetComponent<LevelManager>();
     }
 
     // Update is called once per frame
@@ -47,7 +47,7 @@ public class DogeHealth : MonoBehaviour
 
     private void DamageDelayCountdown()
     {
-        if (damageDelay >= -20)
+        if (damageDelay >= -10)
         {
             damageDelay -= Time.deltaTime * 100;
         }
@@ -68,7 +68,7 @@ public class DogeHealth : MonoBehaviour
     {
         if (health <= 0)
         {
-            changeSceneScript.GameOver();
+            levelManager.GameOver(false);
         }
     }
 

@@ -12,20 +12,19 @@ public class Doge : MonoBehaviour
     public float manaValue;
     public bool dogeLookingRight = true;
 
-    public GameObject levelManager;
-    private LevelManager changeSceneScript;
+    //public GameObject levelManager;
+    //private LevelManager changeSceneScript;
 
     // Use this for initialization
+
+    
+
     void Start()
     {
-        Debug.Log(levelManager);
-        Debug.Log(changeSceneScript);
-        changeSceneScript = levelManager.GetComponent<LevelManager>();
+        //changeSceneScript = levelManager.GetComponent<LevelManager>();
         shootingScript = GetComponent<Shooting>();
         healthScript = GetComponent<DogeHealth>();
         moveScript = GetComponent<MoveDoge>();
-        Debug.Log(levelManager);
-        Debug.Log(changeSceneScript);
     }
 
 // Update is called once per frame

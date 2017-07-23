@@ -4,47 +4,40 @@ using System.Collections;
 public class GuyWithPistol : MonoBehaviour {
 
     public GuyBullet bulletPrefab;
-
     public float turnTime = 4;
     public float fireDelay = 0.5F;
-    public float viewRangeX = 500;
-    public float viewRangeY = 100;
+    public Vector2 viewRange = new Vector2(500, 100);
     public GameObject player;
 
     private Rigidbody2D rigid;
     private Vector3 initialScale;
 
     private bool guyLookingRight;
-    private float timeCounter;
+    private float turnCounter;
     private float fireCounter;
-    private bool dogeInViewRange = false;
-    private float distanceToDogeX;
-    private float distanceToDogeY;
 
     // Use this for initialization
     void Start () {
         rigid = GetComponent<Rigidbody2D>();
-
         initialScale = transform.localScale;
         guyLookingRight = false;
-        timeCounter = 0;
+        turnCounter = 0;
         fireCounter = 0;
     }
 	
 	// Update is called once per frame
 	void Update () {
-        checkForPlayer();
         FireAtDoge();
-        whenToTurnGuy();
+        WhenToTurnGuy();
     }
 
-    private void whenToTurnGuy()
+    private void WhenToTurnGuy()
     {
-        timeCounter += Time.deltaTime;
-        if (timeCounter >= turnTime)
+        turnCounter += Time.deltaTime;
+        if (turnCounter >= turnTime)
         {
             turnAroundGuy();
-            timeCounter = 0;
+            turnCounter = 0;
         }
     }
 
@@ -62,37 +55,48 @@ public class GuyWithPistol : MonoBehaviour {
         }
     }
 
-    private void checkForPlayer()
+    private bool DogeInViewRange()
     {
-        distanceToDogeX = transform.position.x - player.transform.position.x;
-        distanceToDogeY = transform.position.y - player.transform.position.y;
+        Vector2 distanceToDoge = new Vector2(transform.position.x - player.transform.position.x, transform.position.y - player.transform.position.y);
 
-        if (distanceToDogeY < viewRangeY && distanceToDogeY > -viewRangeY)
+        if (IsValueBetween(distanceToDoge.y, -viewRange.y, viewRange.y))
         {
-            if (distanceToDogeX > 0 && distanceToDogeX < viewRangeX && guyLookingRight == false)
+            if (IsValueBetween(distanceToDoge.x, 0, viewRange.x) && guyLookingRight == false)
             {
-                dogeInViewRange = true;
+                return true;
             }
-            else if (distanceToDogeX < 0 && distanceToDogeX > -viewRangeX && guyLookingRight == true)
+            else if (IsValueBetween(distanceToDoge.x, -viewRange.x, 0) && guyLookingRight == true)
             {
-                dogeInViewRange = true;
+                return true;
             }
             else
             {
-                dogeInViewRange = false;
+                return false;
             }
         }
         else
         {
-            dogeInViewRange = false;
+            return false;
+        }
+    }
+
+    private bool IsValueBetween(float value, float low, float high)
+    {
+        if (value > low && value < high)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
         }
     }
 
     private void FireAtDoge()
     {
-        if(dogeInViewRange == true)
+        if(DogeInViewRange())
         {
-            timeCounter = 0;
+            turnCounter = 0;
             fireCounter += Time.deltaTime;
             if (fireCounter >= fireDelay)
             {
@@ -108,8 +112,6 @@ public class GuyWithPistol : MonoBehaviour {
 
     private void ShootBullet()
     {
-        
-        
             GuyBullet clone = (GuyBullet)Instantiate(bulletPrefab, transform.position, transform.rotation);
             clone.Initialize();
             if (guyLookingRight == false)
@@ -120,6 +122,5 @@ public class GuyWithPistol : MonoBehaviour {
             {
                 clone.setSpeed(GuyBullet.bulletSpeed);
             }
-        
     }
 }
