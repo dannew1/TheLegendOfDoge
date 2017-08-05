@@ -31,6 +31,8 @@ public class DogeHealth : MonoBehaviour
 
     public void OnTriggerEnter2D(Collider2D collider)
     {
+        
+
         GameObject other_obj = collider.gameObject;
 
         if (other_obj.GetComponent<Enemy>() && damageDelay <= 0)
