@@ -5,7 +5,7 @@ using UnityEngine.SceneManagement;
 public class EscapePortal : MonoBehaviour {
 
     //public GameObject levelManager;
-    public DontDestroyOnLoadConector levelManager;
+    public DDOLConnector levelManager;
     // Use this for initialization
 
     void Start () {

@@ -3,7 +3,7 @@ using System.Collections;
 
 public class HitboxOfDoom : MonoBehaviour {
 
-    public DontDestroyOnLoadConector levelManager;
+    public DDOLConnector levelManager;
 
     // Use this for initialization
     void Start () {

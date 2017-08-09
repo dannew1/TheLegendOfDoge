@@ -4,7 +4,7 @@ using UnityEngine.UI;
 
 public class LevelUpEngine : MonoBehaviour {
 
-    public DontDestroyOnLoadConector levelManager;
+    public DDOLConnector playerStats;
 
     public Text HpStatText;
     public Text HpRegText;
@@ -23,29 +23,29 @@ public class LevelUpEngine : MonoBehaviour {
 
     private void UpdateText()
     {
-        HpStatText.text = "Hp Stat: " + levelManager.playerHpStat;
-        HpRegText.text = "Hp Reg: " + levelManager.playerHpReg;
-        SpStatText.text = "Sp Stat: " + levelManager.playerSpStat;
-        SpRegText.text = "Sp Reg: " + levelManager.playerSpReg;
+        HpStatText.text = "Hp Stat: " + playerStats.playerHpStat;
+        HpRegText.text = "Hp Reg: " + playerStats.playerHpReg;
+        SpStatText.text = "Sp Stat: " + playerStats.playerSpStat;
+        SpRegText.text = "Sp Reg: " + playerStats.playerSpReg;
     }
 
     public void UpgradeStat(int stat)
     {
         if (stat == 1)
         {
-            levelManager.AddStat(1);
+            playerStats.AddStat(1);
         }
         else if (stat == 2)
         {
-            levelManager.AddStat(2);
+            playerStats.AddStat(2);
         }
         else if (stat == 3)
         {
-            levelManager.AddStat(3);
+            playerStats.AddStat(3);
         }
         else if (stat == 4)
         {
-            levelManager.AddStat(4);
+            playerStats.AddStat(4);
         }
     }
 }

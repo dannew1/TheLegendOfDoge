@@ -7,12 +7,12 @@ public class StatBar : MonoBehaviour {
     public int statType;
     public LevelUpEngine levelUpEngine;
 
-    private DontDestroyOnLoadConector levelManager;
+    private DDOLConnector playerStats;
     private Image sprite;
 
     // Use this for initialization
     void Start () {
-        levelManager = levelUpEngine.levelManager;
+        playerStats = levelUpEngine.playerStats;
         sprite = GetComponent<Image>();
     }
 	
@@ -26,21 +26,21 @@ public class StatBar : MonoBehaviour {
 
         if(statType == 1)
         {
-            spriteColor = new Color(1, 0.7f - levelManager.playerHpStat * 0.05f , 0.7f - levelManager.playerHpStat * 0.05f, 1);
-            //spriteColor = new Color(1, 1 / 255 * (levelManager.playerHpStat*3), 1 / 255 * (levelManager.playerHpStat * 3), 1);
+            spriteColor = new Color(1, 0.7f - playerStats.playerHpStat * 0.05f , 0.7f - playerStats.playerHpStat * 0.05f, 1);
+            //spriteColor = new Color(1, 1 / 255 * (playerStats.playerHpStat*3), 1 / 255 * (playerStats.playerHpStat * 3), 1);
             //spriteColor = new Color(1, 1, 1, 1);
         }
         else if (statType == 2)
         {
-            spriteColor = new Color(0.7f - levelManager.playerHpReg * 0.05f, 1, 0.7f - levelManager.playerHpReg * 0.05f, 1);
+            spriteColor = new Color(0.7f - playerStats.playerHpReg * 0.05f, 1, 0.7f - playerStats.playerHpReg * 0.05f, 1);
         }
         else if (statType == 3)
         {
-            spriteColor = new Color(0.7f - levelManager.playerSpStat * 0.05f, 0.7f - levelManager.playerSpStat * 0.05f, 1, 1);
+            spriteColor = new Color(0.7f - playerStats.playerSpStat * 0.05f, 0.7f - playerStats.playerSpStat * 0.05f, 1, 1);
         }
         else if (statType == 4)
         {
-            spriteColor = new Color(1, 1, 0.7f - levelManager.playerSpReg * 0.05f, 1);
+            spriteColor = new Color(1, 1, 0.7f - playerStats.playerSpReg * 0.05f, 1);
         }
         else
         {

@@ -4,13 +4,12 @@ using UnityEngine.UI;
 
 public class TheSign : MonoBehaviour {
 
-    public Text storyText;
-
     private bool overlappingDoge = false;
+    private StoryText storyScript;
 
 	// Use this for initialization
 	void Start () {
-	
+        storyScript = GetComponent<StoryText>();
 	}
 	
 	// Update is called once per frame
@@ -20,13 +19,17 @@ public class TheSign : MonoBehaviour {
 
     private void activateSign()
     {
-        if (overlappingDoge == true && Input.GetKeyDown(KeyCode.X))
+        if (storyScript.inStory == true && Input.GetKeyDown(KeyCode.X))
         {
-            storyText.text = "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA";
+            storyScript.ContinueText();
         }
-        else if(overlappingDoge == false && Input.GetKeyDown(KeyCode.X))
+        else if (overlappingDoge == true && Input.GetKeyDown(KeyCode.X))
         {
-            storyText.text = "";
+            storyScript.StartText(0, 1);
+        }
+        else if(Input.GetKeyDown(KeyCode.Z))
+        {
+            storyScript.ClearText();
         }
     }
 

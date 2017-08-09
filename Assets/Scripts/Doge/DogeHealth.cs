@@ -4,7 +4,7 @@ using System.Collections;
 public class DogeHealth : MonoBehaviour
 {
     private Doge dogeScript;
-    public DontDestroyOnLoadConector levelManager;
+    public DDOLConnector levelManager;
 
     public float maxHealth = 100;
     public float healthRegen = 3;
@@ -17,7 +17,6 @@ public class DogeHealth : MonoBehaviour
     {
         dogeScript = GetComponent<Doge>();
         health = maxHealth;
-        //changeSceneScript = dogeScript.levelManager.GetComponent<LevelManager>();
     }
 
     // Update is called once per frame
