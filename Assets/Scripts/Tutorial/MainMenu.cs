@@ -33,7 +33,7 @@ public class MainMenu : MonoBehaviour {
     }
     public void LoadingBlockCollider()
     {
-        if(tutorialStep == 1)
+        if (tutorialStep == 1)
         {
             ActivateTutorialStep2();
         }

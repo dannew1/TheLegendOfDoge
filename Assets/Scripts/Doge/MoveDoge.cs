@@ -14,6 +14,8 @@ public class MoveDoge : MonoBehaviour {
     private bool dogeIsGrounded = false;
     private Vector3 initialScale;
 
+    private float timeInAir;
+
     // Use this for initialization
     void Start () {
         rigid = GetComponent<Rigidbody2D>();
@@ -26,6 +28,7 @@ public class MoveDoge : MonoBehaviour {
         TurnAroundDoge();
         SetDogeLookingRight();
         IsDogeGrounded();
+        TimeInAir();
     }
 
     public void Move_doge()
@@ -52,9 +55,22 @@ public class MoveDoge : MonoBehaviour {
         {
             rigid.velocity = new Vector2(rigid.velocity.x, jumpHeight);
         }
-        if (Input.GetKey(KeyCode.DownArrow))
+        else if (Input.GetKey(KeyCode.UpArrow))
         {
-            rigid.velocity += new Vector2(0, -jumpHeight / 100);
+            rigid.velocity += new Vector2(0, jumpHeight / (300 * timeInAir));
+        }
+    }
+
+    private void TimeInAir()
+    {
+        if (NoYMovement() == true)
+        {
+            timeInAir = 0;
+        }
+
+        else if (NoYMovement() == false)
+        {
+            timeInAir += Time.deltaTime;
         }
     }
 
