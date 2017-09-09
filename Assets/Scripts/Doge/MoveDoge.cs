@@ -16,6 +16,8 @@ public class MoveDoge : MonoBehaviour {
 
     private float timeInAir;
 
+    private bool lockSpeed = false;
+
     // Use this for initialization
     void Start () {
         rigid = GetComponent<Rigidbody2D>();
@@ -29,10 +31,13 @@ public class MoveDoge : MonoBehaviour {
         SetDogeLookingRight();
         IsDogeGrounded();
         TimeInAir();
+        Debug.Log(rigid.velocity);
     }
 
     public void Move_doge()
     {
+
+
         if (Input.GetKey(KeyCode.LeftArrow) && rigid.velocity.x > 0)
         {
             rigid.velocity += new Vector2(-speed * 2, 0);
@@ -42,6 +47,8 @@ public class MoveDoge : MonoBehaviour {
             rigid.velocity += new Vector2(-speed, 0);
         }
 
+        
+
         if (Input.GetKey(KeyCode.RightArrow) && rigid.velocity.x < 0)
         {
             rigid.velocity += new Vector2(speed * 2, 0);
@@ -49,6 +56,20 @@ public class MoveDoge : MonoBehaviour {
         else if (Input.GetKey(KeyCode.RightArrow) && nonTopSpeed())
         {
             rigid.velocity += new Vector2(speed, 0);
+        }
+
+        if (Input.GetKey(KeyCode.RightArrow) == false)
+        {
+            lockSpeed = false;
+        }
+        else if (Input.GetKey(KeyCode.RightArrow) && nonTopSpeed() == false)
+        {
+            lockSpeed = true;
+        }
+
+        if (lockSpeed == true)
+        {
+            rigid.velocity = new Vector2(topSpeed, rigid.velocity.y);
         }
 
         if (Input.GetKey(KeyCode.UpArrow) && NoYMovement())
