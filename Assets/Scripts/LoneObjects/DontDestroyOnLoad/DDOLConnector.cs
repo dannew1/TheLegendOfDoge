@@ -28,9 +28,11 @@ public class DDOLConnector : MonoBehaviour {
 	}
 
 	void Update () {
+        
         UpdatePlayerStat();
     }
 
+    
 
     private void UpdatePlayerStat()
     {
