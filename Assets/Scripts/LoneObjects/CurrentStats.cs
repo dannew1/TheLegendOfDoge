@@ -9,6 +9,7 @@ public class CurrentStats : MonoBehaviour {
     public Image spSprite;
     public Text hpText;
     public Text spText;
+    public Text livesText;
 
     private Shooting shootingScript;
     private DogeHealth dogeHealthScript;
@@ -25,6 +26,7 @@ public class CurrentStats : MonoBehaviour {
         spSprite.color = new Color(1 - player.manaValue / shootingScript.maxMana, 1 - player.manaValue / shootingScript.maxMana, 1, 1);
         hpText.text = Mathf.Round(player.healthValue / dogeHealthScript.maxHealth * 100) + "%";
         spText.text = Mathf.Round(player.manaValue / shootingScript.maxMana * 100) + "%";
+        livesText.text = "Lives left: Fix dis";
     }
 
 }

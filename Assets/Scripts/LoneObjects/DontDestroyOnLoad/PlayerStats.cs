@@ -7,6 +7,7 @@ public class PlayerStats : MonoBehaviour {
     public float playerHpReg;
     public float playerSpStat;
     public float playerSpReg;
+    public float currentPlayerLives;
 
     // Use this for initialization
     void Start () {
@@ -14,6 +15,7 @@ public class PlayerStats : MonoBehaviour {
         playerHpReg = 1;
         playerSpStat = 1;
         playerSpReg = 1;
+        currentPlayerLives = 3;
     }
 	
 	// Update is called once per frame

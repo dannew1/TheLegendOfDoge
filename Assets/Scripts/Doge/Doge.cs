@@ -11,9 +11,10 @@ public class Doge : MonoBehaviour
     public float healthValue; 
     public float manaValue;
     public bool dogeLookingRight = true;
+    public float livesLeft;
 
-    //public GameObject levelManager;
-    //private LevelManager changeSceneScript;
+    public DDOLConnector statsScript;
+    //private PlayerStats statsScript;
 
     // Use this for initialization
 
@@ -30,7 +31,7 @@ public class Doge : MonoBehaviour
 // Update is called once per frame
     void Update()
     {
-        
+        livesLeft = statsScript.currentPlayerLives;
         SetLookingRight();
         SetHealthValue();
         SetManaValue();

@@ -3,7 +3,7 @@ using System.Collections;
 
 public class DogeHealth : MonoBehaviour
 {
-    private Doge dogeScript;
+    private Doge DogeScript;
     public DDOLConnector levelManager;
 
     public float maxHealth = 100;
@@ -15,7 +15,7 @@ public class DogeHealth : MonoBehaviour
     // Use this for initialization
     void Start()
     {
-        dogeScript = GetComponent<Doge>();
+        DogeScript = GetComponent<Doge>();
         health = maxHealth;
     }
 

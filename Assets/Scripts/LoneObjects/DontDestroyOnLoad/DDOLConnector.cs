@@ -7,6 +7,7 @@ public class DDOLConnector : MonoBehaviour {
     public float playerHpReg;
     public float playerSpStat;
     public float playerSpReg;
+    public float currentPlayerLives;
 
     private DontDestroyOnLoad dontDestroyOnLoad;
     private LevelManager levelManager;
@@ -40,6 +41,7 @@ public class DDOLConnector : MonoBehaviour {
         playerHpReg = playerStats.playerHpReg;
         playerSpStat = playerStats.playerSpStat;
         playerSpReg = playerStats.playerSpReg;
+        currentPlayerLives = playerStats.currentPlayerLives;
     }
 
     public void AddStat(int stat)

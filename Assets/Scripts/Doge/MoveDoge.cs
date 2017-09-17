@@ -4,9 +4,9 @@ using System.Collections;
 public class MoveDoge : MonoBehaviour {
 
     public bool isDogeLookingRight = true;
-    public float speed = 4;
-    public float topSpeed = 150;
-    public float jumpHeight = 150;
+    public float speed = 16;
+    public float topSpeed = 250;
+    public float jumpHeight = 350;
     public Transform GroundCheck1;
     public LayerMask groundLayer;
 
@@ -16,7 +16,8 @@ public class MoveDoge : MonoBehaviour {
 
     private float timeInAir;
 
-    private bool lockSpeed = false;
+    private bool lockSpeedR = false;
+    private bool lockSpeedL = false;
 
     // Use this for initialization
     void Start () {
@@ -31,27 +32,22 @@ public class MoveDoge : MonoBehaviour {
         SetDogeLookingRight();
         IsDogeGrounded();
         TimeInAir();
-        Debug.Log(rigid.velocity);
     }
 
-    public void Move_doge()
+    private void Move_doge()
     {
-
-
         if (Input.GetKey(KeyCode.LeftArrow) && rigid.velocity.x > 0)
         {
-            rigid.velocity += new Vector2(-speed * 2, 0);
+            rigid.velocity += new Vector2(-speed * 3, 0);
         }
         else if (Input.GetKey(KeyCode.LeftArrow) && nonTopSpeed())
         {
             rigid.velocity += new Vector2(-speed, 0);
         }
 
-        
-
         if (Input.GetKey(KeyCode.RightArrow) && rigid.velocity.x < 0)
         {
-            rigid.velocity += new Vector2(speed * 2, 0);
+            rigid.velocity += new Vector2(speed * 3, 0);
         }
         else if (Input.GetKey(KeyCode.RightArrow) && nonTopSpeed())
         {
@@ -60,16 +56,28 @@ public class MoveDoge : MonoBehaviour {
 
         if (Input.GetKey(KeyCode.RightArrow) == false)
         {
-            lockSpeed = false;
+            lockSpeedR = false;
         }
         else if (Input.GetKey(KeyCode.RightArrow) && nonTopSpeed() == false)
         {
-            lockSpeed = true;
+            lockSpeedR = true;
         }
-
-        if (lockSpeed == true)
+        if (lockSpeedR == true)
         {
             rigid.velocity = new Vector2(topSpeed, rigid.velocity.y);
+        }
+
+        if (Input.GetKey(KeyCode.LeftArrow) == false)
+        {
+            lockSpeedL = false;
+        }
+        else if (Input.GetKey(KeyCode.LeftArrow) && nonTopSpeed() == false)
+        {
+            lockSpeedL = true;
+        }
+        if (lockSpeedL == true)
+        {
+            rigid.velocity = new Vector2(-topSpeed, rigid.velocity.y);
         }
 
         if (Input.GetKey(KeyCode.UpArrow) && NoYMovement())
@@ -100,7 +108,7 @@ public class MoveDoge : MonoBehaviour {
         return rigid.velocity.y <= 10 && rigid.velocity.y >= -10 && dogeIsGrounded;
     }
 
-    public bool nonTopSpeed()
+    private bool nonTopSpeed()
     {
         return rigid.velocity.x <= topSpeed && rigid.velocity.x >= -topSpeed;
     }

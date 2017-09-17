@@ -45,16 +45,17 @@ public class StoryText : MonoBehaviour {
         finalTextShown = false;
     }
 
+    /// //////////////////////////////////////////////////////////////////
 
     private int CurrentScenario(int signRage, int currentStage)
     {
-        Vector2 range = StageRange(currentStage);
+        Vector2 rage = StageRage(currentStage);
 
-        if (signRage <= range.x)
+        if (signRage <= rage.x)
         {
             return 1;
         }
-        else if (signRage >= range.y)
+        else if (signRage >= rage.y)
         {
             return 3;
         }
@@ -64,9 +65,7 @@ public class StoryText : MonoBehaviour {
         }
     }
 
-    /// //////////////////////////////////////////////////////////////////
-    
-    private Vector2 StageRange(int currentStage)
+    private Vector2 StageRage(int currentStage)
     {
         if(currentStage == 0)
         {
