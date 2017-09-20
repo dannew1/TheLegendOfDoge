@@ -5,6 +5,7 @@ using UnityEngine.UI;
 public class CurrentStats : MonoBehaviour {
 
     public Doge player;
+    public DDOLConnector playerStatsScript;
     public Image hpSprite;
     public Image spSprite;
     public Text hpText;
@@ -26,7 +27,7 @@ public class CurrentStats : MonoBehaviour {
         spSprite.color = new Color(1 - player.manaValue / shootingScript.maxMana, 1 - player.manaValue / shootingScript.maxMana, 1, 1);
         hpText.text = Mathf.Round(player.healthValue / dogeHealthScript.maxHealth * 100) + "%";
         spText.text = Mathf.Round(player.manaValue / shootingScript.maxMana * 100) + "%";
-        livesText.text = "Lives left: Fix dis";
+        livesText.text = "Lives left: " + playerStatsScript.currentPlayerLives;
     }
 
 }
