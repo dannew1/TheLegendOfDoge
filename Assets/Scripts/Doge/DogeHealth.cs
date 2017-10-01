@@ -4,11 +4,10 @@ using System.Collections;
 public class DogeHealth : MonoBehaviour
 {
     private Doge DogeScript;
-    public DDOLConnector levelManager;
+    public float health;
 
     public float maxHealth = 100;
     public float healthRegen = 3;
-    public float health;
 
     private float damageDelay = 3;
 
@@ -30,8 +29,6 @@ public class DogeHealth : MonoBehaviour
 
     public void OnTriggerEnter2D(Collider2D collider)
     {
-        
-
         GameObject other_obj = collider.gameObject;
 
         if (other_obj.GetComponent<Enemy>() && damageDelay <= 0)
@@ -67,9 +64,10 @@ public class DogeHealth : MonoBehaviour
     }
     private void PlayerDeath()
     {
+        
         if (health <= 0)
         {
-            levelManager.GameOver(false);
+            DogeScript.DogeIsDead();
         }
     }
 

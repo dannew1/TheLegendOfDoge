@@ -33,19 +33,19 @@ public class LevelUpEngine : MonoBehaviour {
     {
         if (stat == 1)
         {
-            playerStats.AddStat(1);
+            playerStats.EditStat(1, 1);
         }
         else if (stat == 2)
         {
-            playerStats.AddStat(2);
+            playerStats.EditStat(2, 1);
         }
         else if (stat == 3)
         {
-            playerStats.AddStat(3);
+            playerStats.EditStat(3, 1);
         }
         else if (stat == 4)
         {
-            playerStats.AddStat(4);
+            playerStats.EditStat(4, 1);
         }
     }
 }

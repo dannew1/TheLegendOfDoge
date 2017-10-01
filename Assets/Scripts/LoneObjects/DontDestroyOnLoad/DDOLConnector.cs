@@ -22,6 +22,8 @@ public class DDOLConnector : MonoBehaviour {
         levelManager = dontDestroyOnLoad.GetComponent<LevelManager>();
         playerStats = dontDestroyOnLoad.GetComponent<PlayerStats>();
         musicPlayer = dontDestroyOnLoad.GetComponent<MusicPlayer>();
+        UpdatePlayerStat();
+       
     }
 
     void Start () {
@@ -44,27 +46,29 @@ public class DDOLConnector : MonoBehaviour {
         currentPlayerLives = playerStats.currentPlayerLives;
     }
 
-    public void AddStat(int stat)
+    public void EditStat(int stat, int value)
     {
         if (stat == 1)
         {
-            playerStats.playerHpStat += 1;
+            playerStats.playerHpStat += value;
         }
         else if (stat == 2)
         {
-            playerStats.playerHpReg += 1;
+            playerStats.playerHpReg += value;
         }
         else if (stat == 3)
         {
-            playerStats.playerSpStat += 1;
+            playerStats.playerSpStat += value;
         }
         else if (stat == 4)
         {
-            playerStats.playerSpReg += 1;
+            playerStats.playerSpReg += value;
+        }
+        else if (stat == 5)
+        {
+            playerStats.currentPlayerLives += value;
         }
     }
-
-
 
     public void NewGame()
     {

@@ -3,14 +3,15 @@ using System.Collections;
 
 public class PlayerStats : MonoBehaviour {
 
-    public float playerHpStat;
-    public float playerHpReg;
-    public float playerSpStat;
-    public float playerSpReg;
-    public float currentPlayerLives;
+    public int playerHpStat;
+    public int playerHpReg;
+    public int playerSpStat;
+    public int playerSpReg;
+    public int currentPlayerLives = 3;
 
     // Use this for initialization
     void Start () {
+        
         playerHpStat = 1;
         playerHpReg = 1;
         playerSpStat = 1;

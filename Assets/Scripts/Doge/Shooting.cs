@@ -12,7 +12,7 @@ public class Shooting : MonoBehaviour {
     public float manaUsage = 20;
 
     private float reloadTime = 0;
-    private float shootingDirection = 2;
+    //private float shootingDirection = 2;
     private float fireballSpeed;
     public float mana;
 

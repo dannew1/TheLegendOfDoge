@@ -10,15 +10,19 @@ public class Doge : MonoBehaviour
 
     public float healthValue; 
     public float manaValue;
+    public float livesLeft = 3;
     public bool dogeLookingRight = true;
-    public float livesLeft;
 
-    public DDOLConnector statsScript;
-    //private PlayerStats statsScript;
+    public DDOLConnector ddolScript;
+
 
     // Use this for initialization
 
-    
+    void Awake()
+    {
+        
+        livesLeft = ddolScript.currentPlayerLives;
+    }
 
     void Start()
     {
@@ -31,7 +35,8 @@ public class Doge : MonoBehaviour
 // Update is called once per frame
     void Update()
     {
-        livesLeft = statsScript.currentPlayerLives;
+        
+        livesLeft = ddolScript.currentPlayerLives;
         SetLookingRight();
         SetHealthValue();
         SetManaValue();
@@ -51,5 +56,19 @@ public class Doge : MonoBehaviour
     private void SetManaValue()
     {
         manaValue = shootingScript.mana;
+    }
+
+    public void DogeIsDead()
+    {
+
+        if (livesLeft > 0)
+        {
+            ddolScript.EditStat(5, -1);
+            ddolScript.NewGame();
+        }
+        else
+        {
+            ddolScript.GameOver(false);
+        }
     }
 }
