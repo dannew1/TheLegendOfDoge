@@ -20,7 +20,6 @@ public class Doge : MonoBehaviour
 
     void Awake()
     {
-        
         livesLeft = ddolScript.currentPlayerLives;
     }
 

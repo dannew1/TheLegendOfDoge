@@ -79,13 +79,21 @@ public class DDOLConnector : MonoBehaviour {
     {
         if (dogeAlive == true)
         {
+            playerStats.currentPlayerLives = 3;
             levelManager.YouWin();
         }
         else if (dogeAlive == false)
         {
-            levelManager.GameOver();
+            if(currentPlayerLives >= 1)
+            {
+                playerStats.currentPlayerLives -= 1;
+                levelManager.NewGame();
+            }
+            else
+            {
+                playerStats.currentPlayerLives = 3;
+                levelManager.GameOver();
+            }
         }
-        
     }
-    
 }
