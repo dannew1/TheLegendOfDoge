@@ -8,12 +8,13 @@ public class Shooting : MonoBehaviour {
 
     public float maxMana = 100;
     public float manaRegen = 4;
-    public float shootingDelay = 1;
-    public float manaUsage = 20;
-
+    
     private float reloadTime = 0;
-    //private float shootingDirection = 2;
+    private float shootingDelay;
+    private float manaUsage;
     private float fireballSpeed;
+    //private float shootingDirection = 2;
+
     public float mana;
 
     

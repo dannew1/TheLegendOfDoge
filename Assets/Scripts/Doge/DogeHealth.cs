@@ -4,18 +4,21 @@ using System.Collections;
 public class DogeHealth : MonoBehaviour
 {
     private Doge DogeScript;
-    public float health;
 
     public float maxHealth = 100;
     public float healthRegen = 3;
+    private float currentHealthRegen;
 
     private float damageDelay = 3;
+
+    public float health;
 
     // Use this for initialization
     void Start()
     {
         DogeScript = GetComponent<Doge>();
-        health = maxHealth;
+        health = maxHealth + (DogeScript.hpStat * 10);
+        currentHealthRegen = healthRegen + (DogeScript.hpRegStat * 0.2f);
     }
 
     // Update is called once per frame
@@ -53,7 +56,7 @@ public class DogeHealth : MonoBehaviour
     private void HealthRegen()
     {
         if (health < maxHealth && damageDelay <= 0)
-            health += Time.deltaTime * healthRegen;
+            health += Time.deltaTime * currentHealthRegen;
     }
     private void SetHealth()
     {

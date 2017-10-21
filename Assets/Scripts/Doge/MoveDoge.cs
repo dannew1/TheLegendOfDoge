@@ -3,21 +3,21 @@ using System.Collections;
 
 public class MoveDoge : MonoBehaviour {
 
-    public bool isDogeLookingRight = true;
+    private Rigidbody2D rigid;
+    private Vector3 initialScale;
+
     public float speed = 16;
     public float topSpeed = 250;
     public float jumpHeight = 350;
     public Transform GroundCheck1;
     public LayerMask groundLayer;
 
-    private Rigidbody2D rigid;
     private bool dogeIsGrounded = false;
-    private Vector3 initialScale;
-
     private float timeInAir;
-
     private bool lockSpeedR = false;
     private bool lockSpeedL = false;
+
+    public bool isDogeLookingRight = true;
 
     // Use this for initialization
     void Start () {

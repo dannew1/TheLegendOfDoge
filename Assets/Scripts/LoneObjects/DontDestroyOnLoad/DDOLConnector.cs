@@ -3,11 +3,11 @@ using System.Collections;
 
 public class DDOLConnector : MonoBehaviour {
 
-    public float playerHpStat;
-    public float playerHpReg;
-    public float playerSpStat;
-    public float playerSpReg;
-    public float currentPlayerLives;
+    public int playerHpStat;
+    public int playerHpReg;
+    public int playerSpStat;
+    public int playerSpReg;
+    public int currentPlayerLives;
 
     private DontDestroyOnLoad dontDestroyOnLoad;
     private LevelManager levelManager;
