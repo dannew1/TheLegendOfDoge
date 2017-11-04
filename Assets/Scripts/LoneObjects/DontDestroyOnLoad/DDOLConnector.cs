@@ -3,7 +3,7 @@ using System.Collections;
 
 public class DDOLConnector : MonoBehaviour {
 
-    public int playerHpStat;
+    public int playerHpStat = 1;
     public int playerHpReg;
     public int playerSpStat;
     public int playerSpReg;
@@ -23,7 +23,6 @@ public class DDOLConnector : MonoBehaviour {
         playerStats = dontDestroyOnLoad.GetComponent<PlayerStats>();
         musicPlayer = dontDestroyOnLoad.GetComponent<MusicPlayer>();
         UpdatePlayerStat();
-       
     }
 
     void Start () {
@@ -34,8 +33,6 @@ public class DDOLConnector : MonoBehaviour {
         
         UpdatePlayerStat();
     }
-
-    
 
     private void UpdatePlayerStat()
     {

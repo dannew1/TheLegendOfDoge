@@ -6,8 +6,8 @@ public class Shooting : MonoBehaviour {
     public Fireball fireballPrefab;
     private Doge dogeScript;
 
-    public float maxMana = 100;
-    public float manaRegen = 4;
+    private float maxMana;
+    private float manaRegen;
     
     private float reloadTime = 0;
     private float shootingDelay;
@@ -23,19 +23,28 @@ public class Shooting : MonoBehaviour {
     void Start () {
         dogeScript = GetComponent<Doge>();
 
+        SetStats();
         mana = maxMana;
+
         shootingDelay = Fireball.reloadTime;
         manaUsage = Fireball.manaUsage;
-        fireballSpeed = Fireball.fireballSpeed;
+        fireballSpeed = Fireball.shootingSpeed;
     }
 
     // Update is called once per frame
     void Update () {
         ShootFireBall();
+        SetStats();
         //SetShootingDirection();
 
         ManaRegen();
         SetMana();
+    }
+
+    private void SetStats()
+    {
+        maxMana = dogeScript.baseMaxMana + (dogeScript.spStat * 10);
+        manaRegen = dogeScript.baseManaRegen + (dogeScript.spRegStat * 0.2f);
     }
 
     private void SetShootingDelay ()

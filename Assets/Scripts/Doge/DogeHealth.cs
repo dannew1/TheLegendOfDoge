@@ -3,11 +3,10 @@ using System.Collections;
 
 public class DogeHealth : MonoBehaviour
 {
-    private Doge DogeScript;
+    private Doge dogeScript;
 
-    public float maxHealth = 100;
-    public float healthRegen = 3;
-    private float currentHealthRegen;
+    private float maxHealth;
+    private float healthRegen;
 
     private float damageDelay = 3;
 
@@ -16,18 +15,27 @@ public class DogeHealth : MonoBehaviour
     // Use this for initialization
     void Start()
     {
-        DogeScript = GetComponent<Doge>();
-        health = maxHealth + (DogeScript.hpStat * 10);
-        currentHealthRegen = healthRegen + (DogeScript.hpRegStat * 0.2f);
+        dogeScript = GetComponent<Doge>();
+        SetStats();
+        health = maxHealth;
     }
 
     // Update is called once per frame
     void Update()
     {
+        //Debug.Log(health);
+        //Debug.Log(maxHealth);
         DamageDelayCountdown();
+        SetStats();
         HealthRegen();
         SetHealth();
         PlayerDeath();
+    }
+
+    private void SetStats()
+    {
+        maxHealth = dogeScript.baseMaxHp + (dogeScript.hpStat * 10);
+        healthRegen = dogeScript.baseHpRegen + (dogeScript.hpRegStat * 0.2f);
     }
 
     public void OnTriggerEnter2D(Collider2D collider)
@@ -56,7 +64,7 @@ public class DogeHealth : MonoBehaviour
     private void HealthRegen()
     {
         if (health < maxHealth && damageDelay <= 0)
-            health += Time.deltaTime * currentHealthRegen;
+            health += Time.deltaTime * healthRegen;
     }
     private void SetHealth()
     {
@@ -70,7 +78,7 @@ public class DogeHealth : MonoBehaviour
         
         if (health <= 0)
         {
-            DogeScript.DogeIsDead();
+            dogeScript.DogeIsDead();
         }
     }
 

@@ -6,7 +6,7 @@ public class MoveDoge : MonoBehaviour {
     private Rigidbody2D rigid;
     private Vector3 initialScale;
 
-    public float speed = 16;
+    public float acceleration = 16;
     public float topSpeed = 250;
     public float jumpHeight = 350;
     public Transform GroundCheck1;
@@ -38,20 +38,20 @@ public class MoveDoge : MonoBehaviour {
     {
         if (Input.GetKey(KeyCode.LeftArrow) && rigid.velocity.x > 0)
         {
-            rigid.velocity += new Vector2(-speed * 3, 0);
+            rigid.velocity += new Vector2(-acceleration * 3, 0);
         }
         else if (Input.GetKey(KeyCode.LeftArrow) && nonTopSpeed())
         {
-            rigid.velocity += new Vector2(-speed, 0);
+            rigid.velocity += new Vector2(-acceleration, 0);
         }
 
         if (Input.GetKey(KeyCode.RightArrow) && rigid.velocity.x < 0)
         {
-            rigid.velocity += new Vector2(speed * 3, 0);
+            rigid.velocity += new Vector2(acceleration * 3, 0);
         }
         else if (Input.GetKey(KeyCode.RightArrow) && nonTopSpeed())
         {
-            rigid.velocity += new Vector2(speed, 0);
+            rigid.velocity += new Vector2(acceleration, 0);
         }
 
         if (Input.GetKey(KeyCode.RightArrow) == false)

@@ -9,55 +9,76 @@ public class Doge : MonoBehaviour
     private MoveDoge moveScript;
     private QuickStatEdit baseStats;
 
+    public DDOLConnector ddolScript;
+
     public float healthValue; 
     public float manaValue;
     public bool dogeLookingRight = true;
     
-    public int hpStat = 1;
-    public int hpRegStat = 1;
-    public int spStat = 1;
-    public int spRegStat = 1;
-    public int livesLeft = 3;
+    public int hpStat;
+    public int hpRegStat;
+    public int spStat;
+    public int spRegStat;
+    public int livesLeft;
 
-    public DDOLConnector ddolScript;
+    public float baseMaxHp;
+    public float baseHpRegen;
+    public float baseMaxMana;
+    public float baseManaRegen;
+    public float acceleration;
+    public float topSpeed;
+    public float jumpHeight;
 
-    // Use this for initialization
 
-    void Awake()
+    private void Awake()
     {
-        livesLeft = ddolScript.currentPlayerLives;
-    }
-
-    void Start()
-    {
-        //changeSceneScript = levelManager.GetComponent<LevelManager>();
         shootingScript = GetComponent<Shooting>();
         healthScript = GetComponent<DogeHealth>();
         moveScript = GetComponent<MoveDoge>();
-        //baseStats = GetComponent<QuickStatEdit>();
+        baseStats = GetComponent<QuickStatEdit>();
+        SetPlayerStats();
+        SetBaseStats();
+        ReturnValues();
     }
 
-// Update is called once per frame
+    // Use this for initialization
+    void Start()
+    {
+        
+    }
+
+    // Update is called once per frame
     void Update()
     {
-        livesLeft = ddolScript.currentPlayerLives;
-        SetLookingRight();
-        SetHealthValue();
-        SetManaValue();
+        SetPlayerStats();
+        SetBaseStats();
+        ReturnValues();
     }
 
-    private void SetLookingRight()
+    private void SetPlayerStats()
+    {
+        hpStat = ddolScript.playerHpStat;
+        hpRegStat = ddolScript.playerHpReg;
+        spStat = ddolScript.playerSpStat;
+        spRegStat = ddolScript.playerSpReg;
+        livesLeft = ddolScript.currentPlayerLives;
+    }
+
+    private void SetBaseStats()
+    {
+        baseMaxHp = baseStats.baseMaxHp;
+        baseHpRegen = baseStats.baseHpRegen;
+        baseMaxMana = baseStats.baseMaxMana;
+        baseManaRegen = baseStats.baseManaRegen;
+        acceleration = baseStats.acceleration;
+        topSpeed = baseStats.topSpeed;
+        jumpHeight = baseStats.jumpHeight;
+    }
+
+    private void ReturnValues()
     {
         dogeLookingRight = moveScript.isDogeLookingRight;
-    }
-
-    private void SetHealthValue()
-    {
         healthValue = healthScript.health;
-    }
-
-    private void SetManaValue()
-    {
         manaValue = shootingScript.mana;
     }
 

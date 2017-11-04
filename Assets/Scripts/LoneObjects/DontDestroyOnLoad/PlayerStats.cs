@@ -7,16 +7,20 @@ public class PlayerStats : MonoBehaviour {
     public int playerHpReg;
     public int playerSpStat;
     public int playerSpReg;
-    public int currentPlayerLives = 3;
+    public int currentPlayerLives;
 
-    // Use this for initialization
-    void Start () {
-        
+    private void Awake()
+    {
         playerHpStat = 1;
         playerHpReg = 1;
         playerSpStat = 1;
         playerSpReg = 1;
         currentPlayerLives = 3;
+    }
+
+    // Use this for initialization
+    void Start () {
+        
     }
 	
 	// Update is called once per frame
