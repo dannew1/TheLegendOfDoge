@@ -5,8 +5,9 @@ using UnityEngine;
 public class ThunderShield : MonoBehaviour {
 
     private Rigidbody2D rigid;
+    private GameObject player;
 
-    public static float reloadTime = 1;
+    public static float reloadTime = 0;
     public static float manaUsage = 10;
     public static float shootingSpeed = 200;
 
@@ -14,17 +15,22 @@ public class ThunderShield : MonoBehaviour {
     void Start () {
 		
 	}
-
-    public void Initialize()
-    {
-        rigid = GetComponent<Rigidbody2D>();
-    }
 	
 	// Update is called once per frame
 	void Update () {
-		
-	}
+        StickToPlayer();
+    }
 
-    
+    public void SetPlayer(GameObject doge)
+    {
+        player = doge;
+    }
 
+    private void StickToPlayer()
+    {
+        if (player != null)
+        {
+            transform.position = player.transform.position;
+        }
+    }
 }

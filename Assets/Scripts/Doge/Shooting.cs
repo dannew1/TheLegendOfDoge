@@ -3,40 +3,36 @@ using System.Collections;
 
 public class Shooting : MonoBehaviour {
 
-    public Fireball fireballPrefab;
     private Doge dogeScript;
+    private WeaponList weaponScript;
+
+    private int equipedWeapon = 1;
+    private float reloadTime = 0;
+    public float mana;
 
     private float maxMana;
     private float manaRegen;
     
-    private float reloadTime = 0;
-    private float shootingDelay;
-    private float manaUsage;
-    private float fireballSpeed;
-    //private float shootingDirection = 2;
-
-    public float mana;
-
-    
+    //Keep track off MaxMana, ManaRegen, reload
+    //Return?
 
     // Use this for initialization
     void Start () {
         dogeScript = GetComponent<Doge>();
+        weaponScript = GetComponent<WeaponList>();
 
         SetStats();
         mana = maxMana;
-
-        shootingDelay = Fireball.reloadTime;
-        manaUsage = Fireball.manaUsage;
-        fireballSpeed = Fireball.shootingSpeed;
     }
 
     // Update is called once per frame
     void Update () {
-        ShootFireBall();
         SetStats();
-        //SetShootingDirection();
 
+        ChangeWeapon();
+        UseWeapon();
+
+        CountDownReloadTime();
         ManaRegen();
         SetMana();
     }
@@ -47,50 +43,44 @@ public class Shooting : MonoBehaviour {
         manaRegen = dogeScript.baseManaRegen + (dogeScript.spRegStat * 0.2f);
     }
 
-    private void SetShootingDelay ()
-        {
-            reloadTime = shootingDelay;
-        }
-
-    private void ShootFireBall()
+    private void ChangeWeapon()
     {
-        reloadTime -= Time.deltaTime;
-        if (Input.GetKey(KeyCode.C) && reloadTime <= 0 && mana > manaUsage)
+        if (Input.GetKeyDown(KeyCode.V))
         {
-            Fireball clone = (Fireball)Instantiate(fireballPrefab, transform.position, transform.rotation);
-            clone.Initialize();
-            if (dogeScript.dogeLookingRight == false)
+            if(equipedWeapon == 1)
             {
-                clone.setSpeed(-fireballSpeed);
+                equipedWeapon = 2;
             }
-            else if (dogeScript.dogeLookingRight == true)
+            else if (equipedWeapon == 2)
             {
-                clone.setSpeed(fireballSpeed);
+                equipedWeapon = 1;
             }
-            SetShootingDelay();
-            mana -= manaUsage;
         }
     }
 
-    //private void SetShootingDirection()
-    //{
-    //    if (Input.GetKey(KeyCode.DownArrow))
-    //    {
-    //        shootingDirection = 1;
-    //    }
-    //    else if (Input.GetKey(KeyCode.UpArrow))
-    //    {
-    //        shootingDirection = 3;
-    //    }
-    //    else if (Input.GetKey(KeyCode.LeftArrow) && dogeScript.nonTopSpeed())
-    //    {
-    //        shootingDirection = 2;
-    //    }
-    //    else if (Input.GetKey(KeyCode.RightArrow) && dogeScript.nonTopSpeed())
-    //    {
-    //        shootingDirection = 4;
-    //    }
-    //}
+    private void UseWeapon()
+    {
+        if (Input.GetKey(KeyCode.C))
+        {
+            Vector2 re;
+            re = weaponScript.ActivateWeapon(new Vector3(equipedWeapon, mana, reloadTime));
+            mana -= re.x;
+            reloadTime += re.y;
+        }
+    }
+
+    private void CountDownReloadTime()
+    {
+        if (reloadTime > 0)
+        {
+            reloadTime -= Time.deltaTime;
+        }
+        if (reloadTime < 0)
+        {
+            reloadTime = 0;
+        }
+        Debug.Log(reloadTime);
+    }
 
     private void ManaRegen()
     {

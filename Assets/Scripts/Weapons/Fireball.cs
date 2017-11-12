@@ -36,6 +36,6 @@ public class Fireball : MonoBehaviour {
 
     public void setSpeed(float speed)
     {
-        rigid.velocity = new Vector2(speed, 0);
+        rigid.velocity = new Vector2(speed * shootingSpeed, 0);
     }
 }
