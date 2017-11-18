@@ -9,6 +9,7 @@ public class Shooting : MonoBehaviour {
     private int equipedWeapon = 1;
     private float reloadTime = 0;
     public float mana;
+    private bool readyToFire = true;
 
     private float maxMana;
     private float manaRegen;
@@ -33,6 +34,7 @@ public class Shooting : MonoBehaviour {
         UseWeapon();
 
         CountDownReloadTime();
+        ReadyFire();
         ManaRegen();
         SetMana();
     }
@@ -60,10 +62,14 @@ public class Shooting : MonoBehaviour {
 
     private void UseWeapon()
     {
-        if (Input.GetKey(KeyCode.C))
+        if (Input.GetKey(KeyCode.C) && readyToFire == true)
         {
             Vector2 re;
             re = weaponScript.ActivateWeapon(new Vector3(equipedWeapon, mana, reloadTime));
+            if (re.x == 0 || re.y != 0)
+            {
+                readyToFire = false;
+            }
             mana -= re.x;
             reloadTime += re.y;
         }
@@ -79,7 +85,15 @@ public class Shooting : MonoBehaviour {
         {
             reloadTime = 0;
         }
-        Debug.Log(reloadTime);
+    }
+
+    private void ReadyFire()
+    {
+        Debug.Log(mana);
+        if(reloadTime <= 0 && mana > 0 && Input.GetKeyUp(KeyCode.C))
+        {
+            readyToFire = true;
+        }
     }
 
     private void ManaRegen()

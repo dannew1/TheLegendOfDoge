@@ -12,6 +12,7 @@ public class WeaponList : MonoBehaviour {
     public ThunderShield thunderShieldPrefab;
     private ThunderShield activeShield = null;
     private Vector2 thunderShieldReturn;
+    private bool keepShieldActive = false;
 
     private Vector2 zero = new Vector2(0, 0);
 
@@ -47,22 +48,29 @@ public class WeaponList : MonoBehaviour {
             }
             else
             {
+                ResetActiveWeapons();
                 return zero;
             }
         }
         else
         {
+            ResetActiveWeapons();
             return zero;
         }
     }
 
+    private void ResetActiveWeapons()
+    {
+        keepShieldActive = false;
+    }
+
     private bool CheckStats(Vector3 shootingStats)
     {
-        if (shootingStats.x == 1 && shootingStats.y >= 0 && shootingStats.z <= 0)
+        if (shootingStats.x == 1 && shootingStats.y >= fireBallReturn.x && shootingStats.z <= 0)
         {
             return true;
         }
-        else if (shootingStats.x == 2 && shootingStats.y >= 0 && shootingStats.z <= 0)
+        else if (shootingStats.x == 2 && shootingStats.y >= thunderShieldReturn.x && shootingStats.z <= 0)
         {
             return true;
         }
@@ -93,12 +101,13 @@ public class WeaponList : MonoBehaviour {
             ThunderShield clone = (ThunderShield)Instantiate(thunderShieldPrefab, transform.position, transform.rotation);
             clone.SetPlayer(gameObject);
             activeShield = clone;
+            keepShieldActive = true;
         }
-    } 
+    }
 
     private void ActiveShots()
     {
-        if (activeShield != null && Input.GetKey(KeyCode.C) == false)
+        if (activeShield != null && (Input.GetKey(KeyCode.C) == false || keepShieldActive == false))
         {
             Destroy(activeShield.gameObject);
         }

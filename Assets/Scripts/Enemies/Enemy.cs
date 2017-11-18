@@ -34,7 +34,7 @@ public class Enemy : MonoBehaviour {
     {
         GameObject other_obj = collider.gameObject;
 
-        if (other_obj.GetComponent<Fireball>())
+        if (other_obj.GetComponent<Weapon>())
         {
             Destroy(gameObject);
         }

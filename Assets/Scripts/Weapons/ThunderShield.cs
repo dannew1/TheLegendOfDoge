@@ -8,7 +8,7 @@ public class ThunderShield : MonoBehaviour {
     private GameObject player;
 
     public static float reloadTime = 0;
-    public static float manaUsage = 10;
+    public static float manaUsage = 0.8F;
     public static float shootingSpeed = 200;
 
     // Use this for initialization
