@@ -12,6 +12,8 @@ public class DogeHealth : MonoBehaviour
 
     public float health;
 
+    private bool unkillable = false;
+
     // Use this for initialization
     void Start()
     {
@@ -38,19 +40,35 @@ public class DogeHealth : MonoBehaviour
         healthRegen = dogeScript.baseHpRegen + (dogeScript.hpRegStat * 0.2f);
     }
 
+    public void EditHealth(float value)
+    {
+        health += value;
+    }
+
+    public void InvunerableDoge()
+    {
+        unkillable = true;
+    }
+    public void KillableDoge()
+    {
+        unkillable = false;
+    }
+
     public void OnTriggerEnter2D(Collider2D collider)
     {
         GameObject other_obj = collider.gameObject;
-
-        if (other_obj.GetComponent<Enemy>() && damageDelay <= 0)
+        if (!unkillable)
         {
-            damageDelay = 100;
-            health -= 49;
-        }
-        else if (other_obj.GetComponent<GuyBullet>() && damageDelay <= 0)
-        {
-            damageDelay = 100;
-            health -= 90;
+            if (other_obj.GetComponent<Enemy>() && damageDelay <= 0)
+            {
+                damageDelay = 100;
+                health -= 49;
+            }
+            else if (other_obj.GetComponent<GuyBullet>() && damageDelay <= 0)
+            {
+                damageDelay = 100;
+                health -= 90;
+            }
         }
     }
 

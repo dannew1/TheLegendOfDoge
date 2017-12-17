@@ -7,8 +7,10 @@ public class CurrentStats : MonoBehaviour {
     public Doge player;
     public Image hpSprite;
     public Image spSprite;
+    public Image reloadSprite;
     public Text hpText;
     public Text spText;
+    public Text weaponText;
     public Text livesText;
 
     //private Shooting shootingScript;
@@ -39,11 +41,20 @@ public class CurrentStats : MonoBehaviour {
 
         if (player.manaValue >= player.baseMaxMana)
         {
-            spSprite.color = new Color(0, 0, 1, 1);
+            spSprite.color = new Color(0, 0.3f, 1, 1);
         }
         else
         {
-            spSprite.color = new Color(1 - player.manaValue / player.baseMaxMana, 1 - player.manaValue / player.baseMaxMana, 1, 1);
+            spSprite.color = new Color(1 - player.manaValue / player.baseMaxMana, 1.3f - player.manaValue / player.baseMaxMana, 1, 1);
+        }
+
+        if(player.reload <= 0)
+        {
+            reloadSprite.color = new Color(0, 1, 0, 1);
+        }
+        else
+        {
+            reloadSprite.color = new Color(player.reload + 0.2f, 1, player.reload + 0.2f, 1);
         }
 
         if (player.livesLeft == 0)
@@ -62,5 +73,15 @@ public class CurrentStats : MonoBehaviour {
         hpText.text = Mathf.Round(player.healthValue / player.baseMaxHp * 100) + "%";
         spText.text = Mathf.Round(player.manaValue / player.baseMaxMana * 100) + "%";
         livesText.text = "Lives left: " + player.livesLeft;
+
+        if(player.weapon == 1)
+        {
+            weaponText.text = "Fireball";
+        }
+        else if(player.weapon == 2)
+        {
+            weaponText.text = "ThunderShield";
+        }
+
     }
 }

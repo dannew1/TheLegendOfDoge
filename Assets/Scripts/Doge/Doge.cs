@@ -14,7 +14,9 @@ public class Doge : MonoBehaviour
     public float healthValue; 
     public float manaValue;
     public bool dogeLookingRight = true;
-    
+    public float reload;
+    public float weapon;
+
     public int hpStat;
     public int hpRegStat;
     public int spStat;
@@ -80,11 +82,21 @@ public class Doge : MonoBehaviour
         dogeLookingRight = moveScript.isDogeLookingRight;
         healthValue = healthScript.health;
         manaValue = shootingScript.mana;
+        reload = shootingScript.reloadTime;
+        weapon = shootingScript.equipedWeapon;
+    }
+
+    public void Invunerablility()
+    {
+        healthScript.InvunerableDoge();
+    }
+    public void DeactivateInvunerability()
+    {
+        healthScript.KillableDoge();
     }
 
     public void DogeIsDead()
     {
-
         if (livesLeft > 0)
         {
             ddolScript.EditStat(5, -1);

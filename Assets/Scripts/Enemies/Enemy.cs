@@ -2,7 +2,8 @@
 using System.Collections;
 
 public class Enemy : MonoBehaviour {
-
+    
+    private float enemyHealth;
     private Rigidbody2D rigid;
     private Vector3 initialScale;
 
@@ -15,6 +16,20 @@ public class Enemy : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
         turnAroundEnemy();
+        KillEnemy();
+    }
+
+    public void SetEnemyHealth(float value)
+    {
+        enemyHealth = value;
+    }
+
+    private void KillEnemy()
+    {
+        if (enemyHealth <= 0)
+        {
+            Destroy(gameObject);
+        }
     }
 
     private void turnAroundEnemy()
@@ -33,10 +48,10 @@ public class Enemy : MonoBehaviour {
     public void OnTriggerEnter2D(Collider2D collider)
     {
         GameObject other_obj = collider.gameObject;
-
+    
         if (other_obj.GetComponent<Weapon>())
         {
-            Destroy(gameObject);
+            enemyHealth -= other_obj.GetComponent<Weapon>().damageToDeal;
         }
     }
 }

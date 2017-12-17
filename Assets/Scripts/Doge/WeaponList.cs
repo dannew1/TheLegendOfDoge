@@ -59,11 +59,6 @@ public class WeaponList : MonoBehaviour {
         }
     }
 
-    private void ResetActiveWeapons()
-    {
-        keepShieldActive = false;
-    }
-
     private bool CheckStats(Vector3 shootingStats)
     {
         if (shootingStats.x == 1 && shootingStats.y >= fireBallReturn.x && shootingStats.z <= 0)
@@ -78,6 +73,12 @@ public class WeaponList : MonoBehaviour {
         {
             return false;
         }
+    }
+
+    private void SetReturnValues()
+    {
+        fireBallReturn = new Vector2(Fireball.manaUsage, Fireball.reloadTime);
+        thunderShieldReturn = new Vector2(ThunderShield.manaUsage, ThunderShield.reloadTime);
     }
 
     private void ShootFireBall()
@@ -99,23 +100,25 @@ public class WeaponList : MonoBehaviour {
         if (activeShield == null)
         {
             ThunderShield clone = (ThunderShield)Instantiate(thunderShieldPrefab, transform.position, transform.rotation);
-            clone.SetPlayer(gameObject);
+            clone.Initialize(gameObject);
             activeShield = clone;
             keepShieldActive = true;
         }
     }
 
+    private void ResetActiveWeapons()
+    {
+        keepShieldActive = false;
+    }
+
     private void ActiveShots()
     {
-        if (activeShield != null && (Input.GetKey(KeyCode.C) == false || keepShieldActive == false))
+        if (activeShield != null && (!Input.GetKey(KeyCode.C) || keepShieldActive == false))
         {
             Destroy(activeShield.gameObject);
         }
+        
     }
 
-    private void SetReturnValues()
-    {
-        fireBallReturn = new Vector2(Fireball.manaUsage, Fireball.reloadTime);
-        thunderShieldReturn = new Vector2(ThunderShield.manaUsage, ThunderShield.reloadTime);
-    }
+    
 }

@@ -4,16 +4,28 @@ using UnityEngine;
 
 public class ThunderShield : MonoBehaviour {
 
+    private Weapon weaponScript;
     private Rigidbody2D rigid;
     private GameObject player;
+    private Doge dogeScript;
 
     public static float reloadTime = 0;
-    public static float manaUsage = 0.8F;
+    public static float manaUsage = 2f;
     public static float shootingSpeed = 200;
+    public static float damage = 100;
+
+    public void Initialize(GameObject doge)
+    {
+        player = doge;
+    }
 
     // Use this for initialization
     void Start () {
-		
+        weaponScript = GetComponent<Weapon>();
+        weaponScript.SetDamageToDeal(damage);
+
+        dogeScript = player.GetComponent<Doge>();
+        DamageResist();
 	}
 	
 	// Update is called once per frame
@@ -21,10 +33,12 @@ public class ThunderShield : MonoBehaviour {
         StickToPlayer();
     }
 
-    public void SetPlayer(GameObject doge)
+    private void OnDestroy()
     {
-        player = doge;
+        NoDamageResist();
     }
+
+
 
     private void StickToPlayer()
     {
@@ -32,5 +46,15 @@ public class ThunderShield : MonoBehaviour {
         {
             transform.position = player.transform.position;
         }
+    }
+
+    private void DamageResist()
+    {
+        dogeScript.Invunerablility();
+    }
+    
+    private void NoDamageResist()
+    {
+        dogeScript.DeactivateInvunerability();
     }
 }

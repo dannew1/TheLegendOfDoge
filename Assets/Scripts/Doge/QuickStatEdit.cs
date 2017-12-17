@@ -5,9 +5,9 @@ using UnityEngine;
 public class QuickStatEdit : MonoBehaviour {
 
     public float baseMaxHp = 100;
-    public float baseHpRegen = 3;
+    public float baseHpRegen = 0.5f;
     public float baseMaxMana = 100;
-    public float baseManaRegen = 4;
+    public float baseManaRegen = 2f;
     public float acceleration = 16;
     public float topSpeed = 250;
     public float jumpHeight = 350;

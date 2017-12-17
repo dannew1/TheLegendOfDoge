@@ -3,21 +3,24 @@ using System.Collections;
 
 public class Fireball : MonoBehaviour {
 
+    private Weapon weaponScript;
     private Rigidbody2D rigid;
 
-    public static float reloadTime = 2;
+    public static float reloadTime = 1.2f;
     public static float manaUsage = 20;
     public static float shootingSpeed = 300;
+    public static float damage = 40;
 
     // Use this for initialization
 
-    void Start () {
-        
-    }
-
-	public void Initialize()
+    public void Initialize()
     {
         rigid = GetComponent<Rigidbody2D>();
+    }
+
+    void Start () {
+        weaponScript = GetComponent<Weapon>();
+        weaponScript.SetDamageToDeal(damage);
     }
 
 	void Update () {

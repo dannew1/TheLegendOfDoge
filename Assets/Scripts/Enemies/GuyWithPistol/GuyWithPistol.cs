@@ -3,7 +3,12 @@ using System.Collections;
 
 public class GuyWithPistol : MonoBehaviour {
 
+    private Enemy enemyScript;
     public GuyBullet bulletPrefab;
+
+    public static float health = 30;
+
+    
     public float turnTime = 4;
     public float fireDelay = 0.5F;
     public Vector2 viewRange = new Vector2(500, 100);
@@ -18,8 +23,11 @@ public class GuyWithPistol : MonoBehaviour {
 
     // Use this for initialization
     void Start () {
+        enemyScript = GetComponent<Enemy>();
         rigid = GetComponent<Rigidbody2D>();
         initialScale = transform.localScale;
+        enemyScript.SetEnemyHealth(health);
+
         guyLookingRight = false;
         turnCounter = 0;
         fireCounter = 0;

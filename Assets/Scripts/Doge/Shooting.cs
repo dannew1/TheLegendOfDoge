@@ -6,8 +6,8 @@ public class Shooting : MonoBehaviour {
     private Doge dogeScript;
     private WeaponList weaponScript;
 
-    private int equipedWeapon = 1;
-    private float reloadTime = 0;
+    public int equipedWeapon = 1;
+    public float reloadTime = 0;
     public float mana;
     private bool readyToFire = true;
 
@@ -89,8 +89,7 @@ public class Shooting : MonoBehaviour {
 
     private void ReadyFire()
     {
-        Debug.Log(mana);
-        if(reloadTime <= 0 && mana > 0 && Input.GetKeyUp(KeyCode.C))
+        if(reloadTime <= 0 && mana > 0 && !Input.GetKey(KeyCode.C))
         {
             readyToFire = true;
         }

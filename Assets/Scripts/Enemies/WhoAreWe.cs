@@ -1,11 +1,15 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class Who_are_we : MonoBehaviour {
+public class WhoAreWe : MonoBehaviour {
 
-    public float range = 300;
-    public float speed = 0.7F;
-    public float baseWaitTime = 2.5F;
+    private Enemy enemyScript;
+
+    public static float health = 30;
+
+    public static float range = 300;
+    public static float speed = 0.7F;
+    public static float baseWaitTime = 2.5F;
 
 	private Rigidbody2D rigid;
     private float waitTime;
@@ -13,12 +17,13 @@ public class Who_are_we : MonoBehaviour {
     private float maxRange;
     private float minRange;
 
-    
-
 	// Use this for initialization
 	void Start () {
+        enemyScript = GetComponent<Enemy>();
         rigid = GetComponent<Rigidbody2D>();
         waitTime = baseWaitTime;
+
+        enemyScript.SetEnemyHealth(health);
         maxRange = transform.position.x + range;
         minRange = transform.position.x - range;
         goToPosition = Random.Range(minRange, maxRange);
