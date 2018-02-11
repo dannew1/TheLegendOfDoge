@@ -6,7 +6,11 @@ public class CurrentStats : MonoBehaviour {
 
     public Doge player;
     public Image hpSprite;
+    public Image hpSprite2;
+    public Image hpSprite3;
     public Image spSprite;
+    public Image spSprite2;
+    public Image spSprite3;
     public Image reloadSprite;
     public Text hpText;
     public Text spText;
@@ -24,7 +28,8 @@ public class CurrentStats : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        SetColors();
+        //SetColors();
+        SetFill();
         SetText();
     }
 
@@ -48,13 +53,13 @@ public class CurrentStats : MonoBehaviour {
             spSprite.color = new Color(1 - player.manaValue / player.baseMaxMana, 1.3f - player.manaValue / player.baseMaxMana, 1, 1);
         }
 
-        if(player.reload <= 0)
+        if(player.reload.x <= 0)
         {
             reloadSprite.color = new Color(0, 1, 0, 1);
         }
         else
         {
-            reloadSprite.color = new Color(player.reload + 0.2f, 1, player.reload + 0.2f, 1);
+            reloadSprite.color = new Color(player.reload.x + 0.2f, 1, player.reload.x + 0.2f, 1);
         }
 
         if (player.livesLeft == 0)
@@ -68,10 +73,31 @@ public class CurrentStats : MonoBehaviour {
         }
     }
 
+    private void SetFill()
+    {
+        hpSprite.fillAmount = player.healthValue / player.baseMaxHp;
+        hpSprite2.fillAmount = (player.healthValue - player.baseMaxHp) / player.baseMaxHp;
+        hpSprite3.fillAmount = (player.healthValue - 2*player.baseMaxHp) / player.baseMaxHp;
+
+        spSprite.fillAmount = player.manaValue / player.baseMaxMana;
+        spSprite2.fillAmount = (player.manaValue - player.baseMaxMana) / player.baseMaxMana;
+        spSprite3.fillAmount = (player.manaValue - 2 * player.baseMaxMana) / player.baseMaxMana;
+
+        if (player.reload.x <= 0)
+        {
+            reloadSprite.fillAmount = 1;
+        }
+        else
+        {
+            reloadSprite.fillAmount = 1 - (player.reload.x / player.reload.y);
+        }
+    }
+
+
     private void SetText()
     {
-        hpText.text = Mathf.Round(player.healthValue / player.baseMaxHp * 100) + "%";
-        spText.text = Mathf.Round(player.manaValue / player.baseMaxMana * 100) + "%";
+        hpText.text = Mathf.Round(player.healthValue / 10) + "%";
+        spText.text = Mathf.Round(player.manaValue / 10) + "%";
         livesText.text = "Lives left: " + player.livesLeft;
 
         if(player.weapon == 1)

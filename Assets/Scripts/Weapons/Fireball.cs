@@ -7,7 +7,7 @@ public class Fireball : MonoBehaviour {
     private Rigidbody2D rigid;
 
     public static float reloadTime = 1.2f;
-    public static float manaUsage = 20;
+    public static float manaUsage = 200;
     public static float shootingSpeed = 300;
     public static float damage = 40;
 

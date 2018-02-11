@@ -7,10 +7,9 @@ public class DogeHealth : MonoBehaviour
 
     private float maxHealth;
     private float healthRegen;
+    private float health;
 
     private float damageDelay = 3;
-
-    public float health;
 
     private bool unkillable = false;
 
@@ -36,8 +35,8 @@ public class DogeHealth : MonoBehaviour
 
     private void SetStats()
     {
-        maxHealth = dogeScript.baseMaxHp + (dogeScript.hpStat * 10);
-        healthRegen = dogeScript.baseHpRegen + (dogeScript.hpRegStat * 0.2f);
+        maxHealth = dogeScript.baseMaxHp + (dogeScript.hpStat * 100);
+        healthRegen = dogeScript.baseHpRegen + (dogeScript.hpRegStat * 2);
     }
 
     public void EditHealth(float value)
@@ -62,12 +61,12 @@ public class DogeHealth : MonoBehaviour
             if (other_obj.GetComponent<Enemy>() && damageDelay <= 0)
             {
                 damageDelay = 100;
-                health -= 49;
+                health -= 490;
             }
             else if (other_obj.GetComponent<GuyBullet>() && damageDelay <= 0)
             {
                 damageDelay = 100;
-                health -= 90;
+                health -= 900;
             }
         }
     }
@@ -98,6 +97,25 @@ public class DogeHealth : MonoBehaviour
         {
             dogeScript.DogeIsDead();
         }
+    }
+
+    public float ReturnHpValues(int stat)
+    {
+        if (stat == 1)
+        {
+            return health;
+        }
+
+        //else if (stat == 2)
+        //{
+        //    return maxHealth;
+        //}
+
+        else
+        {
+            return 0;
+        }
+
     }
 
 }

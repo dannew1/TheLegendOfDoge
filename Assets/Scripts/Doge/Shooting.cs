@@ -6,11 +6,11 @@ public class Shooting : MonoBehaviour {
     private Doge dogeScript;
     private WeaponList weaponScript;
 
-    public int equipedWeapon = 1;
-    public float reloadTime = 0;
-    public float mana;
+    private int equipedWeapon = 1;
+    private float reloadTime = 0;
+    private float baseReload;
+    private float mana;
     private bool readyToFire = true;
-
     private float maxMana;
     private float manaRegen;
     
@@ -41,8 +41,8 @@ public class Shooting : MonoBehaviour {
 
     private void SetStats()
     {
-        maxMana = dogeScript.baseMaxMana + (dogeScript.spStat * 10);
-        manaRegen = dogeScript.baseManaRegen + (dogeScript.spRegStat * 0.2f);
+        maxMana = dogeScript.baseMaxMana + (dogeScript.spStat * 100);
+        manaRegen = dogeScript.baseManaRegen + (dogeScript.spRegStat * 2);
     }
 
     private void ChangeWeapon()
@@ -72,6 +72,7 @@ public class Shooting : MonoBehaviour {
             }
             mana -= re.x;
             reloadTime += re.y;
+            baseReload = re.y;
         }
     }
 
@@ -108,5 +109,29 @@ public class Shooting : MonoBehaviour {
         {
             mana = maxMana;
         }
+    }
+
+    public float ReturnMpValues(int stat)
+    {
+        if (stat == 1)
+        {
+            return mana;
+        }
+
+        else if (stat == 2)
+        {
+            return equipedWeapon;
+        }
+
+        else
+        {
+            return 0;
+        }
+
+    }
+
+    public Vector2 ReturnRelaod()
+    {
+        return new Vector2(reloadTime, baseReload);
     }
 }

@@ -14,7 +14,7 @@ public class Doge : MonoBehaviour
     public float healthValue; 
     public float manaValue;
     public bool dogeLookingRight = true;
-    public float reload;
+    public Vector2 reload;
     public float weapon;
 
     public int hpStat;
@@ -79,11 +79,12 @@ public class Doge : MonoBehaviour
 
     private void ReturnValues()
     {
+        
         dogeLookingRight = moveScript.isDogeLookingRight;
-        healthValue = healthScript.health;
-        manaValue = shootingScript.mana;
-        reload = shootingScript.reloadTime;
-        weapon = shootingScript.equipedWeapon;
+        healthValue = healthScript.ReturnHpValues(1);
+        manaValue = shootingScript.ReturnMpValues(1);
+        weapon = shootingScript.ReturnMpValues(2);
+        reload = shootingScript.ReturnRelaod();
     }
 
     public void Invunerablility()
