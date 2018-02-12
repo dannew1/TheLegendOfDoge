@@ -27,9 +27,9 @@ public class Doge : MonoBehaviour
     public float baseHpRegen;
     public float baseMaxMana;
     public float baseManaRegen;
-    public float acceleration;
-    public float topSpeed;
-    public float jumpHeight;
+    public float baseAcceleration;
+    public float baseTopSpeed;
+    public float baseJumpHeight;
 
 
     private void Awake()
@@ -72,15 +72,15 @@ public class Doge : MonoBehaviour
         baseHpRegen = baseStats.baseHpRegen;
         baseMaxMana = baseStats.baseMaxMana;
         baseManaRegen = baseStats.baseManaRegen;
-        acceleration = baseStats.acceleration;
-        topSpeed = baseStats.topSpeed;
-        jumpHeight = baseStats.jumpHeight;
+        baseAcceleration = baseStats.acceleration;
+        baseTopSpeed = baseStats.topSpeed;
+        baseJumpHeight = baseStats.jumpHeight;
     }
 
     private void ReturnValues()
     {
         
-        dogeLookingRight = moveScript.isDogeLookingRight;
+        dogeLookingRight = moveScript.ReturnMoveValues(1);
         healthValue = healthScript.ReturnHpValues(1);
         manaValue = shootingScript.ReturnMpValues(1);
         weapon = shootingScript.ReturnMpValues(2);

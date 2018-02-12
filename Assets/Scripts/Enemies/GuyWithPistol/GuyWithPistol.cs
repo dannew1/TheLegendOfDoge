@@ -6,9 +6,8 @@ public class GuyWithPistol : MonoBehaviour {
     private Enemy enemyScript;
     public GuyBullet bulletPrefab;
 
-    public static float health = 30;
+    public float health = 30;
 
-    
     public float turnTime = 4;
     public float fireDelay = 0.5F;
     public Vector2 viewRange = new Vector2(500, 100);

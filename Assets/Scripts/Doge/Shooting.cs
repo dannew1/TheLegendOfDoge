@@ -36,7 +36,6 @@ public class Shooting : MonoBehaviour {
         CountDownReloadTime();
         ReadyFire();
         ManaRegen();
-        SetMana();
     }
 
     private void SetStats()
@@ -102,9 +101,7 @@ public class Shooting : MonoBehaviour {
         {
             mana += Time.deltaTime * manaRegen;
         }
-    }
-    private void SetMana()
-    {
+
         if (mana > maxMana)
         {
             mana = maxMana;

@@ -12,7 +12,7 @@ public class ThunderShield : MonoBehaviour {
     public static float reloadTime = 0;
     public static float manaUsage = 20;
     public static float shootingSpeed = 200;
-    public static float damage = 100;
+    public static float damage = 10;
 
     public void Initialize(GameObject doge)
     {
@@ -37,8 +37,6 @@ public class ThunderShield : MonoBehaviour {
     {
         NoDamageResist();
     }
-
-
 
     private void StickToPlayer()
     {

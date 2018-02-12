@@ -10,8 +10,9 @@ public class WeaponList : MonoBehaviour {
     private Vector2 fireBallReturn;
 
     public ThunderShield thunderShieldPrefab;
-    private ThunderShield activeShield = null;
     private Vector2 thunderShieldReturn;
+
+    private ThunderShield activeShield = null;
     private bool keepShieldActive = false;
 
     private Vector2 zero = new Vector2(0, 0);
@@ -119,6 +120,4 @@ public class WeaponList : MonoBehaviour {
         }
         
     }
-
-    
 }

@@ -10,7 +10,6 @@ public class DogeHealth : MonoBehaviour
     private float health;
 
     private float damageDelay = 3;
-
     private bool unkillable = false;
 
     // Use this for initialization
@@ -24,12 +23,9 @@ public class DogeHealth : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        //Debug.Log(health);
-        //Debug.Log(maxHealth);
         DamageDelayCountdown();
         SetStats();
         HealthRegen();
-        SetHealth();
         PlayerDeath();
     }
 
@@ -81,18 +77,18 @@ public class DogeHealth : MonoBehaviour
     private void HealthRegen()
     {
         if (health < maxHealth && damageDelay <= 0)
+        {
             health += Time.deltaTime * healthRegen;
-    }
-    private void SetHealth()
-    {
+        }
+
         if (health > maxHealth)
         {
             health = maxHealth;
         }
+
     }
     private void PlayerDeath()
     {
-        
         if (health <= 0)
         {
             dogeScript.DogeIsDead();

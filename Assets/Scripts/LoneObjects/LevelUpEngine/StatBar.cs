@@ -27,8 +27,6 @@ public class StatBar : MonoBehaviour {
         if(statType == 1)
         {
             spriteColor = new Color(1, 0.7f - playerStats.playerHpStat * 0.05f , 0.7f - playerStats.playerHpStat * 0.05f, 1);
-            //spriteColor = new Color(1, 1 / 255 * (playerStats.playerHpStat*3), 1 / 255 * (playerStats.playerHpStat * 3), 1);
-            //spriteColor = new Color(1, 1, 1, 1);
         }
         else if (statType == 2)
         {

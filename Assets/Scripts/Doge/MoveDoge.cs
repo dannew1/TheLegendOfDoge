@@ -3,12 +3,14 @@ using System.Collections;
 
 public class MoveDoge : MonoBehaviour {
 
+    private Doge dogeScript;
+
     private Rigidbody2D rigid;
     private Vector3 initialScale;
 
-    public float acceleration = 16;
-    public float topSpeed = 250;
-    public float jumpHeight = 350;
+    private float acceleration = 16;
+    private float topSpeed = 250;
+    private float jumpHeight = 350;
     public Transform GroundCheck1;
     public LayerMask groundLayer;
 
@@ -17,12 +19,18 @@ public class MoveDoge : MonoBehaviour {
     private bool lockSpeedR = false;
     private bool lockSpeedL = false;
 
-    public bool isDogeLookingRight = true;
+    private bool isDogeLookingRight = true;
 
     // Use this for initialization
     void Start () {
+        dogeScript = GetComponent<Doge>();
+
         rigid = GetComponent<Rigidbody2D>();
         initialScale = transform.localScale;
+
+        acceleration = dogeScript.baseAcceleration;
+        topSpeed = dogeScript.baseTopSpeed;
+        jumpHeight = dogeScript.baseJumpHeight;
     }
 	
 	// Update is called once per frame
@@ -140,5 +148,19 @@ public class MoveDoge : MonoBehaviour {
         {
             transform.localScale = new Vector3(initialScale.x * -1, initialScale.y, initialScale.z);
         }
+    }
+
+    public bool ReturnMoveValues(int stat)
+    {
+        if (stat == 1)
+        {
+            return isDogeLookingRight;
+        }
+
+        else
+        {
+            return false;
+        }
+
     }
 }

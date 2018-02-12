@@ -21,8 +21,8 @@ public class CameraController : MonoBehaviour
 
     void LateUpdate()
     {
-        min = edgeScript.minCamera;
-        max = edgeScript.maxCamera;
+        min = edgeScript.MinMaxEdges(1);
+        max = edgeScript.MinMaxEdges(2);
 
         if (player.transform.position.x >= max.x)
         {
@@ -51,6 +51,5 @@ public class CameraController : MonoBehaviour
         }
 
         transform.position = new Vector3 (cameraX, cameraY, player.transform.position.z - 100);
-        
     }
 }

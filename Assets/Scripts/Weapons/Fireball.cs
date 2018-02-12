@@ -9,7 +9,7 @@ public class Fireball : MonoBehaviour {
     public static float reloadTime = 1.2f;
     public static float manaUsage = 200;
     public static float shootingSpeed = 300;
-    public static float damage = 40;
+    public static float damage = 20;
 
     // Use this for initialization
 
