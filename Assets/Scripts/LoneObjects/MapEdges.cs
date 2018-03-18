@@ -7,7 +7,7 @@ public class MapEdges : MonoBehaviour {
     public GameObject topR;
     public GameObject botL;
 
-    public Vector2 offset = new Vector2(0,0);
+    public Vector2 offset = new Vector2(470, 280);
     // Use this for initialization
 
     void Start () {
@@ -23,11 +23,11 @@ public class MapEdges : MonoBehaviour {
     {
         if (setting == 1)
         {
-            return new Vector2(botL.transform.position.x + offset.y, botL.transform.position.y + offset.y);
+            return new Vector2(botL.transform.position.x + offset.x, botL.transform.position.y + offset.y);
         }
         else if (setting == 2)
         {
-            return new Vector2(topR.transform.position.x - offset.y, topR.transform.position.y - offset.y);
+            return new Vector2(topR.transform.position.x - offset.x, topR.transform.position.y - offset.y);
         }
 
         else

@@ -1,25 +1,38 @@
 ﻿using UnityEngine;
 using System.Collections;
 using UnityEngine.UI;
+using System.Collections.Generic;
+using System;
 
 public class Enemy : MonoBehaviour {
 
     private Image mask;
     private Image healthBar;
+    private Image damageBar;
 
     private float enemyHealth;
     private float enemyMaxHealth;
+    private float beforeHitHealth;
+    private float lateDamageAmount;
     private float healthBarTimer = 0;
+    private float damageBarTimer = 0;
     private Rigidbody2D rigid;
     private Vector3 initialScale;
+    private Vector3 barScale;
+
+    private List<Collider2D> activeColliders = new List<Collider2D>();
+
 
     // Use this for initialization
     void Start () {
         rigid = GetComponent<Rigidbody2D>();
         initialScale = transform.localScale;
+        
 
         mask = gameObject.transform.GetChild(0).GetComponent<Image>();
-        healthBar = mask.gameObject.transform.GetChild(0).GetComponent<Image>();
+        healthBar = mask.gameObject.transform.GetChild(1).GetComponent<Image>();
+        damageBar = mask.gameObject.transform.GetChild(0).GetComponent<Image>();
+        barScale = mask.transform.localScale;
     }
 	
 	// Update is called once per frame
@@ -27,12 +40,15 @@ public class Enemy : MonoBehaviour {
         turnAroundEnemy();
         KillEnemy();
         HealthBar();
+        DamageBar();
+        //ContinuousDamage();
     }
 
     public void SetEnemyHealth(float value)
     {
         enemyMaxHealth = value;
         enemyHealth = enemyMaxHealth;
+        beforeHitHealth = enemyMaxHealth;
     }
 
     private void KillEnemy()
@@ -56,29 +72,55 @@ public class Enemy : MonoBehaviour {
         {
             mask.color = new Color(0.8f, 0.8f, 0.8f, 0);
             healthBar.color = new Color(1, 0, 0, 0);
+            damageBar.color = new Color(1, 0.55f, 0.25f, 0);
         }
         else if(healthBarTimer > 0 && healthBarTimer < 1)
         {
             mask.color = new Color(0.8f, 0.8f, 0.8f, healthBarTimer);
             healthBar.color = new Color(1, 0, 0, healthBarTimer);
+            damageBar.color = new Color(1, 0.55f, 0.25f, healthBarTimer);
         }
         else
         {
             mask.color = new Color(0.8f, 0.8f, 0.8f, 1);
             healthBar.color = new Color(1, 0, 0, 1);
+            damageBar.color = new Color(1, 0.55f, 0.25f, 1);
         }
     }
 
+    private void DamageBar()
+    {
+        if (damageBarTimer <= 0)
+        {
+            if(beforeHitHealth > enemyHealth)
+            {
+                beforeHitHealth -= lateDamageAmount * Time.deltaTime;
+            }
+            else
+            {
+                beforeHitHealth = enemyHealth;
+            }
+        }
+        else
+        {
+            damageBarTimer -= Time.deltaTime;
+            lateDamageAmount = beforeHitHealth - enemyHealth;
+        }
+
+        damageBar.fillAmount = beforeHitHealth / enemyMaxHealth;
+    }
 
     private void turnAroundEnemy()
     {
         if (rigid.velocity.x < 0)
         {
             transform.localScale = new Vector3(initialScale.x, initialScale.y, initialScale.z);
+            mask.transform.localScale = barScale;
         }
         else if (rigid.velocity.x > 0)
         {
             transform.localScale = new Vector3(initialScale.x * -1, initialScale.y, initialScale.z);
+            mask.transform.localScale = new Vector3(barScale.x * -1, barScale.y, barScale.z);
         }
     }
 
@@ -88,8 +130,32 @@ public class Enemy : MonoBehaviour {
     
         if (other_obj.GetComponent<Weapon>())
         {
+            damageBarTimer = 1;
             enemyHealth -= other_obj.GetComponent<Weapon>().damageToDeal;
             healthBarTimer = 4;
+
+            activeColliders.Add(collider);
         }
     }
+
+    public void OnTriggerExit2D(Collider2D collider)
+    {
+        GameObject other_obj = collider.gameObject;
+
+        if (other_obj.GetComponent<Weapon>())
+        {
+            
+        }
+    }
+
+    //private void ContinuousDamage()
+    //{
+    //    if (obj != null)
+    //    {
+    //        if (GetComponent<Collider2D>().bounds.Intersects(obj.GetComponent<Collider2D>().bounds))
+    //        {
+    //            Debug.Log("inside");
+    //        }
+    //    }
+    //}
 }
