@@ -10,9 +10,9 @@ public class ThunderShield : MonoBehaviour {
     private Doge dogeScript;
 
     public static float reloadTime = 0;
-    public static float manaUsage = 20;
+    public static float manaUsage = 17;
     public static float shootingSpeed = 200;
-    public static float damage = 10;
+    public static float damage = 1;
 
     public void Initialize(GameObject doge)
     {

@@ -3,6 +3,7 @@ using System.Collections;
 using UnityEngine.UI;
 using System.Collections.Generic;
 using System;
+using System.Linq;
 
 public class Enemy : MonoBehaviour {
 
@@ -12,6 +13,7 @@ public class Enemy : MonoBehaviour {
 
     private float enemyHealth;
     private float enemyMaxHealth;
+    private float damageDelay;
     private float beforeHitHealth;
     private float lateDamageAmount;
     private float healthBarTimer = 0;
@@ -20,7 +22,8 @@ public class Enemy : MonoBehaviour {
     private Vector3 initialScale;
     private Vector3 barScale;
 
-    private List<Collider2D> activeColliders = new List<Collider2D>();
+    private List<GameObject> activeWeapons = new List<GameObject>();
+    private List<GameObject> deadWeapons = new List<GameObject>();
 
 
     // Use this for initialization
@@ -41,7 +44,8 @@ public class Enemy : MonoBehaviour {
         KillEnemy();
         HealthBar();
         DamageBar();
-        //ContinuousDamage();
+        ActiveWeaponDamage();
+        DeadWeaponList();
     }
 
     public void SetEnemyHealth(float value)
@@ -130,11 +134,51 @@ public class Enemy : MonoBehaviour {
     
         if (other_obj.GetComponent<Weapon>())
         {
-            damageBarTimer = 1;
-            enemyHealth -= other_obj.GetComponent<Weapon>().damageToDeal;
-            healthBarTimer = 4;
+            TakeDamage(other_obj);
+            activeWeapons.Add(other_obj);
+        }
+    }
 
-            activeColliders.Add(collider);
+    private void ActiveWeaponDamage()
+    {
+        if (damageDelay > 0)
+        {
+            damageDelay -= Time.deltaTime * 60;
+        }
+
+        if (damageDelay <= 0 && activeWeapons.Any())
+        {
+            foreach (GameObject weapon in activeWeapons)
+            {
+                if (weapon == null)
+                {
+                    deadWeapons.Add(weapon);
+                }
+                else
+                {
+                    TakeDamage(weapon);
+                }
+            }
+            damageDelay = 1;
+        }
+    }
+
+    private void TakeDamage(GameObject weaponObj)
+    {
+            damageBarTimer = 1;
+            enemyHealth -= weaponObj.GetComponent<Weapon>().damageToDeal;
+            healthBarTimer = 4;
+    }
+
+    private void DeadWeaponList()
+    {
+        if (deadWeapons.Any())
+        {
+            foreach (GameObject deadWeapon in deadWeapons)
+            {
+                activeWeapons.Remove(deadWeapon);
+            }
+            deadWeapons.Clear();
         }
     }
 
@@ -144,18 +188,7 @@ public class Enemy : MonoBehaviour {
 
         if (other_obj.GetComponent<Weapon>())
         {
-            
+            activeWeapons.Remove(other_obj);
         }
     }
-
-    //private void ContinuousDamage()
-    //{
-    //    if (obj != null)
-    //    {
-    //        if (GetComponent<Collider2D>().bounds.Intersects(obj.GetComponent<Collider2D>().bounds))
-    //        {
-    //            Debug.Log("inside");
-    //        }
-    //    }
-    //}
 }

@@ -14,7 +14,6 @@ public class MoveDoge : MonoBehaviour {
     public Transform GroundCheck1;
     public LayerMask groundLayer;
 
-    private bool dogeIsGrounded = false;
     private float timeInAir;
     private bool lockSpeedR = false;
     private bool lockSpeedL = false;
@@ -38,35 +37,40 @@ public class MoveDoge : MonoBehaviour {
         Move_doge();
         TurnAroundDoge();
         SetDogeLookingRight();
-        IsDogeGrounded();
         TimeInAir();
     }
 
     private void Move_doge()
     {
-        if (Input.GetKey(KeyCode.LeftArrow) && rigid.velocity.x > 0)
+        if (Input.GetKey(KeyCode.LeftArrow))
         {
-            rigid.velocity += new Vector2(-acceleration * 3, 0);
-        }
-        else if (Input.GetKey(KeyCode.LeftArrow) && nonTopSpeed())
-        {
-            rigid.velocity += new Vector2(-acceleration, 0);
-        }
-
-        if (Input.GetKey(KeyCode.RightArrow) && rigid.velocity.x < 0)
-        {
-            rigid.velocity += new Vector2(acceleration * 3, 0);
-        }
-        else if (Input.GetKey(KeyCode.RightArrow) && nonTopSpeed())
-        {
-            rigid.velocity += new Vector2(acceleration, 0);
+            if (rigid.velocity.x > 0)
+            {
+                rigid.velocity += new Vector2(-CurretAcceleration() * 3, 0);
+            }
+            else if (nonTopSpeed())
+            {
+                rigid.velocity += new Vector2(-CurretAcceleration(), 0);
+            }
         }
 
-        if (Input.GetKey(KeyCode.RightArrow) == false)
+        if (Input.GetKey(KeyCode.RightArrow))
+        {
+            if (rigid.velocity.x < 0)
+            {
+                rigid.velocity += new Vector2(CurretAcceleration() * 3, 0);
+            }
+            else if (nonTopSpeed())
+            {
+                rigid.velocity += new Vector2(CurretAcceleration(), 0);
+            }
+        }
+
+        if (!Input.GetKey(KeyCode.RightArrow))
         {
             lockSpeedR = false;
         }
-        else if (Input.GetKey(KeyCode.RightArrow) && nonTopSpeed() == false)
+        else if (Input.GetKey(KeyCode.RightArrow) && !nonTopSpeed())
         {
             lockSpeedR = true;
         }
@@ -75,11 +79,11 @@ public class MoveDoge : MonoBehaviour {
             rigid.velocity = new Vector2(topSpeed, rigid.velocity.y);
         }
 
-        if (Input.GetKey(KeyCode.LeftArrow) == false)
+        if (!Input.GetKey(KeyCode.LeftArrow))
         {
             lockSpeedL = false;
         }
-        else if (Input.GetKey(KeyCode.LeftArrow) && nonTopSpeed() == false)
+        else if (Input.GetKey(KeyCode.LeftArrow) && !nonTopSpeed())
         {
             lockSpeedL = true;
         }
@@ -88,13 +92,32 @@ public class MoveDoge : MonoBehaviour {
             rigid.velocity = new Vector2(-topSpeed, rigid.velocity.y);
         }
 
-        if (Input.GetKey(KeyCode.UpArrow) && NoYMovement())
+        if (Input.GetKey(KeyCode.UpArrow))
         {
-            rigid.velocity = new Vector2(rigid.velocity.x, jumpHeight);
+            if (NoYMovement())
+            {
+                timeInAir = 0;
+                rigid.velocity = new Vector2(rigid.velocity.x, jumpHeight);
+            }
+            else
+            {
+                Debug.Log(timeInAir);
+                rigid.velocity += new Vector2(0, jumpHeight*2 / (600 * timeInAir));
+            }
         }
-        else if (Input.GetKey(KeyCode.UpArrow))
+
+        
+    }
+
+    private float CurretAcceleration()
+    {
+        if(NoYMovement())
         {
-            rigid.velocity += new Vector2(0, jumpHeight / (300 * timeInAir));
+            return acceleration;
+        }
+        else
+        {
+            return acceleration / 2;
         }
     }
 
@@ -111,19 +134,19 @@ public class MoveDoge : MonoBehaviour {
         }
     }
 
-    private bool NoYMovement()
-    {
-        return rigid.velocity.y <= 10 && rigid.velocity.y >= -10 && dogeIsGrounded;
-    }
-
     private bool nonTopSpeed()
     {
         return rigid.velocity.x <= topSpeed && rigid.velocity.x >= -topSpeed;
     }
 
-    private void IsDogeGrounded()
+    private bool NoYMovement()
     {
-        dogeIsGrounded = Physics2D.OverlapCircle(GroundCheck1.position, 0.15f, groundLayer);
+        return rigid.velocity.y <= 10 && rigid.velocity.y >= -10 && DogeIsGrounded();
+    }
+
+    private bool DogeIsGrounded()
+    {
+        return Physics2D.OverlapCircle(GroundCheck1.position, 0.15f, groundLayer);
     }
 
     private void SetDogeLookingRight()
