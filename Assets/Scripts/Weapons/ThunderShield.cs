@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ThunderShield : MonoBehaviour {
+public class ThunderShield : Weapon {
 
     private Weapon weaponScript;
     private Rigidbody2D rigid;

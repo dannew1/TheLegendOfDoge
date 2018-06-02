@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System;
 
 public class MoveDoge : MonoBehaviour {
 
@@ -11,6 +12,7 @@ public class MoveDoge : MonoBehaviour {
     private float acceleration = 16;
     private float topSpeed = 250;
     private float jumpHeight = 350;
+    private float friction = 10;
     public Transform GroundCheck1;
     public LayerMask groundLayer;
 
@@ -38,6 +40,7 @@ public class MoveDoge : MonoBehaviour {
         TurnAroundDoge();
         SetDogeLookingRight();
         TimeInAir();
+        Friction();
     }
 
     private void Move_doge()
@@ -48,7 +51,7 @@ public class MoveDoge : MonoBehaviour {
             {
                 rigid.velocity += new Vector2(-CurretAcceleration() * 3, 0);
             }
-            else if (nonTopSpeed())
+            else if (NonTopSpeed())
             {
                 rigid.velocity += new Vector2(-CurretAcceleration(), 0);
             }
@@ -60,7 +63,7 @@ public class MoveDoge : MonoBehaviour {
             {
                 rigid.velocity += new Vector2(CurretAcceleration() * 3, 0);
             }
-            else if (nonTopSpeed())
+            else if (NonTopSpeed())
             {
                 rigid.velocity += new Vector2(CurretAcceleration(), 0);
             }
@@ -70,7 +73,7 @@ public class MoveDoge : MonoBehaviour {
         {
             lockSpeedR = false;
         }
-        else if (Input.GetKey(KeyCode.RightArrow) && !nonTopSpeed())
+        else if (Input.GetKey(KeyCode.RightArrow) && !NonTopSpeed())
         {
             lockSpeedR = true;
         }
@@ -83,7 +86,7 @@ public class MoveDoge : MonoBehaviour {
         {
             lockSpeedL = false;
         }
-        else if (Input.GetKey(KeyCode.LeftArrow) && !nonTopSpeed())
+        else if (Input.GetKey(KeyCode.LeftArrow) && !NonTopSpeed())
         {
             lockSpeedL = true;
         }
@@ -101,12 +104,24 @@ public class MoveDoge : MonoBehaviour {
             }
             else
             {
-                Debug.Log(timeInAir);
                 rigid.velocity += new Vector2(0, jumpHeight*2 / (600 * timeInAir));
             }
         }
+    }
 
-        
+    private void Friction()
+    {
+        if(DogeNotMoving() && DogeIsGrounded())
+        {
+            if (rigid.velocity.x > -10 && rigid.velocity.x < 10)
+            {
+                rigid.velocity += new Vector2(rigid.velocity.x * -0.20f, 0);
+            }
+            else
+            {
+                rigid.velocity += new Vector2(rigid.velocity.x * -0.06f, 0);
+            }
+        }
     }
 
     private float CurretAcceleration()
@@ -134,7 +149,19 @@ public class MoveDoge : MonoBehaviour {
         }
     }
 
-    private bool nonTopSpeed()
+    private bool DogeNotMoving()
+    {
+        if(!Input.GetKey(KeyCode.LeftArrow) && !Input.GetKey(KeyCode.RightArrow))
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+
+    private bool NonTopSpeed()
     {
         return rigid.velocity.x <= topSpeed && rigid.velocity.x >= -topSpeed;
     }

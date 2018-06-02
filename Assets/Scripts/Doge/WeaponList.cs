@@ -35,6 +35,7 @@ public class WeaponList : MonoBehaviour {
 
     public Vector2 ActivateWeapon(Vector3 shootingStats)
     {
+        //(equipedWeapon, mana, reloadTime)
         if (CheckStats(shootingStats))
         {
             if (shootingStats.x == 1)
@@ -107,17 +108,16 @@ public class WeaponList : MonoBehaviour {
         }
     }
 
-    private void ResetActiveWeapons()
+    public void ResetActiveWeapons()
     {
         keepShieldActive = false;
     }
 
     private void ActiveShots()
     {
-        if (activeShield != null && (!Input.GetKey(KeyCode.C) || keepShieldActive == false))
+        if (activeShield != null && keepShieldActive == false)
         {
             Destroy(activeShield.gameObject);
         }
-        
     }
 }

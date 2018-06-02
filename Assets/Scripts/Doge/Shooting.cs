@@ -73,6 +73,10 @@ public class Shooting : MonoBehaviour {
             reloadTime += re.y;
             baseReload = re.y;
         }
+        else if(Input.GetKeyUp(KeyCode.C))
+        {
+            weaponScript.ResetActiveWeapons();
+        }
     }
 
     private void CountDownReloadTime()
