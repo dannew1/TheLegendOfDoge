@@ -1,26 +1,21 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class Fireball : MonoBehaviour {
+public class Fireball : Weapon {
 
-    private Weapon weaponScript;
-    private Rigidbody2D rigid;
+    private static float shootingSpeed = 300;
 
-    public static float reloadTime = 1.2f;
-    public static float manaUsage = 200;
-    public static float shootingSpeed = 300;
-    public static float damage = 20;
-
-    // Use this for initialization
-
-    public void Initialize()
+    public void Initialize(GameObject i)
     {
-        rigid = GetComponent<Rigidbody2D>();
+        damage = 20;
+        baseManaUsage = 200;
+        reloadTime = 1.2f;
+
+        StartUp(i);
     }
 
     void Start () {
-        weaponScript = GetComponent<Weapon>();
-        weaponScript.SetDamageToDeal(damage);
+        SetSpeed();
     }
 
 	void Update () {
@@ -37,8 +32,16 @@ public class Fireball : MonoBehaviour {
         }
     }
 
-    public void setSpeed(float speed)
+    private void SetSpeed()
     {
-        rigid.velocity = new Vector2(speed * shootingSpeed, 0);
+        if (dogeScript.dogeLookingRight == false)
+        {
+            rigid.velocity = new Vector2(-shootingSpeed, 0);
+        }
+        else if (dogeScript.dogeLookingRight == true)
+
+        {
+            rigid.velocity = new Vector2(shootingSpeed, 0);
+        }
     }
 }

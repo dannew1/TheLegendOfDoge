@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class WeaponList : MonoBehaviour {
 
-    private Doge dogeScript;
+    //private Doge dogeScript;
 
     public Fireball fireballPrefab;
     private Vector2 fireBallReturn;
@@ -18,12 +18,11 @@ public class WeaponList : MonoBehaviour {
     private Vector2 zero = new Vector2(0, 0);
 
     //Return Mana, ReloadTime, EquipedWeapon
-    //CheckStats
 
     // Use this for initialization
     void Start()
     {
-        dogeScript = GetComponent<Doge>();
+        //dogeScript = GetComponent<Doge>();
         SetReturnValues();
     }
 
@@ -31,6 +30,7 @@ public class WeaponList : MonoBehaviour {
     void Update()
     {
         ActiveShots();
+        DestroyActiveShots();
     }
 
     public Vector2 ActivateWeapon(Vector3 shootingStats)
@@ -48,53 +48,42 @@ public class WeaponList : MonoBehaviour {
                 ShootThunderShield();
                 return thunderShieldReturn;
             }
-            else
-            {
-                ResetActiveWeapons();
-                return zero;
-            }
         }
-        else
-        {
-            ResetActiveWeapons();
-            return zero;
-        }
+
+        ResetActiveWeapons();
+        return zero;
     }
 
     private bool CheckStats(Vector3 shootingStats)
     {
-        if (shootingStats.x == 1 && shootingStats.y >= fireBallReturn.x && shootingStats.z <= 0)
+        if (shootingStats.z <= 0)
         {
-            return true;
+            if (shootingStats.x == 1 && shootingStats.y >= fireBallReturn.x)
+            {
+                return true;
+            }
+            else if (shootingStats.x == 2 && shootingStats.y >= thunderShieldReturn.x)
+            {
+                return true;
+            }
         }
-        else if (shootingStats.x == 2 && shootingStats.y >= thunderShieldReturn.x && shootingStats.z <= 0)
-        {
-            return true;
-        }
-        else
-        {
-            return false;
-        }
+
+        return false;
     }
 
     private void SetReturnValues()
     {
-        fireBallReturn = new Vector2(Fireball.manaUsage, Fireball.reloadTime);
-        thunderShieldReturn = new Vector2(ThunderShield.manaUsage, ThunderShield.reloadTime);
+        fireballPrefab.Initialize(gameObject);
+        fireBallReturn = new Vector2(fireballPrefab.baseManaUsage, fireballPrefab.reloadTime);
+    
+        thunderShieldPrefab.Initialize(gameObject);
+        thunderShieldReturn = new Vector2(thunderShieldPrefab.baseManaUsage, thunderShieldPrefab.reloadTime);
     }
 
     private void ShootFireBall()
     {
         Fireball clone = (Fireball)Instantiate(fireballPrefab, transform.position, transform.rotation);
-        clone.Initialize();
-        if (dogeScript.dogeLookingRight == false)
-        {
-            clone.setSpeed(-1);
-        }
-        else if (dogeScript.dogeLookingRight == true)
-        {
-            clone.setSpeed(1);
-        }
+        clone.Initialize(gameObject);
     }
 
     private void ShootThunderShield()
@@ -103,6 +92,7 @@ public class WeaponList : MonoBehaviour {
         {
             ThunderShield clone = (ThunderShield)Instantiate(thunderShieldPrefab, transform.position, transform.rotation);
             clone.Initialize(gameObject);
+
             activeShield = clone;
             keepShieldActive = true;
         }
@@ -115,8 +105,17 @@ public class WeaponList : MonoBehaviour {
 
     private void ActiveShots()
     {
+        if(activeShield != null)
+        {
+            thunderShieldReturn = new Vector2(activeShield.manaUsage, activeShield.reloadTime);
+        }
+    }
+
+    private void DestroyActiveShots()
+    {
         if (activeShield != null && keepShieldActive == false)
         {
+            thunderShieldReturn = new Vector2(activeShield.baseManaUsage, activeShield.reloadTime);
             Destroy(activeShield.gameObject);
         }
     }

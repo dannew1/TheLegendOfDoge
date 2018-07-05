@@ -4,20 +4,32 @@ using UnityEngine;
 
 public class Weapon : MonoBehaviour {
 
-    public float damageToDeal;
+    public float damage;
+    public float baseManaUsage;
+    public float reloadTime;
 
-    // Use this for initialization
+    protected GameObject player;
+    protected Doge dogeScript;
+    protected Rigidbody2D rigid;
+
+    protected void StartUp(GameObject doge)
+    {
+        rigid = GetComponent<Rigidbody2D>();
+
+        player = doge;
+        dogeScript = player.GetComponent<Doge>();
+    }
+
     void Start () {
 		
 	}
 	
-	// Update is called once per frame
 	void Update () {
 		
 	}
 
-    public void SetDamageToDeal(float value)
-    {
-        damageToDeal = value;
-    }
+    //public Vector3 GetReturn()
+    //{
+    //    return new Vector3(damage, manaUsage, reloadTime);
+    //}
 }

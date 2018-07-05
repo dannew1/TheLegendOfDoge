@@ -49,7 +49,7 @@ public class DogeHealth : MonoBehaviour
         unkillable = false;
     }
 
-    public void OnTriggerEnter2D(Collider2D collider)
+    public void OnTriggerStay2D(Collider2D collider)
     {
         GameObject other_obj = collider.gameObject;
         if (!unkillable)

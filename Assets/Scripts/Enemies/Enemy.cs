@@ -166,8 +166,8 @@ public class Enemy : MonoBehaviour {
     private void TakeDamage(GameObject weaponObj)
     {
             damageBarTimer = 1;
-            enemyHealth -= weaponObj.GetComponent<Weapon>().damageToDeal;
-            healthBarTimer = 4;
+            enemyHealth -= weaponObj.GetComponent<Weapon>().damage;
+            healthBarTimer = 6;
     }
 
     private void DeadWeaponList()

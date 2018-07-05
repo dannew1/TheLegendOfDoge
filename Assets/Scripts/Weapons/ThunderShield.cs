@@ -4,33 +4,26 @@ using UnityEngine;
 
 public class ThunderShield : Weapon {
 
-    private Weapon weaponScript;
-    private Rigidbody2D rigid;
-    private GameObject player;
-    private Doge dogeScript;
+    public float manaUsage;
+    private bool hitEnemy;
 
-    public static float reloadTime = 0;
-    public static float manaUsage = 17;
-    public static float shootingSpeed = 200;
-    public static float damage = 1;
-
-    public void Initialize(GameObject doge)
+    public void Initialize(GameObject i)
     {
-        player = doge;
+        damage = 1;
+        baseManaUsage = 2;
+        manaUsage = 2;
+        reloadTime = 0;
+
+        StartUp(i);
     }
 
-    // Use this for initialization
     void Start () {
-        weaponScript = GetComponent<Weapon>();
-        weaponScript.SetDamageToDeal(damage);
-
-        dogeScript = player.GetComponent<Doge>();
         DamageResist();
 	}
 	
-	// Update is called once per frame
 	void Update () {
         StickToPlayer();
+        SetManaUsage();
     }
 
     private void OnDestroy()
@@ -46,11 +39,35 @@ public class ThunderShield : Weapon {
         }
     }
 
+    private void SetManaUsage()
+    {
+        if(hitEnemy)
+        {
+            hitEnemy = false;
+            manaUsage = 15;
+        }
+        else if (!hitEnemy)
+        {
+            manaUsage = 2;
+        }
+    }
+
+
+    public void OnTriggerStay2D(Collider2D collider)
+    {
+        GameObject other_obj = collider.gameObject;
+
+        if (other_obj.GetComponent<Enemy>())
+        {
+            hitEnemy = true;
+            Debug.Log("hi");
+        }
+    }
+
     private void DamageResist()
     {
         dogeScript.Invunerablility();
     }
-    
     private void NoDamageResist()
     {
         dogeScript.DeactivateInvunerability();
