@@ -6,117 +6,112 @@ public class WeaponList : MonoBehaviour {
 
     //private Doge dogeScript;
 
+    private Shooting shootingScript;
+
+
     public Fireball fireballPrefab;
-    private Vector2 fireBallReturn;
+    private Vector2 fireballReturn;
 
-    public ThunderShield thunderShieldPrefab;
-    private Vector2 thunderShieldReturn;
+    private Fireball activeFireball = null;
+    private bool keepFireballActive = false;
 
-    private ThunderShield activeShield = null;
-    private bool keepShieldActive = false;
+
+    public ThunderShield thundershieldPrefab;
+    private Vector2 thundershieldReturn;
+
+    private ThunderShield activeThundershield = null;
+    private bool keepThundershieldActive = false;
+
 
     private Vector2 zero = new Vector2(0, 0);
-
-    //Return Mana, ReloadTime, EquipedWeapon
 
     // Use this for initialization
     void Start()
     {
-        //dogeScript = GetComponent<Doge>();
-        SetReturnValues();
+        shootingScript = GetComponent<Shooting>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        ActiveShots();
-        DestroyActiveShots();
+        
     }
 
-    public Vector2 ActivateWeapon(Vector3 shootingStats)
+    public Vector2 ShootFireball(float currentMana)
     {
-        //(equipedWeapon, mana, reloadTime)
-        if (CheckStats(shootingStats))
+        if (activeFireball == null)
         {
-            if (shootingStats.x == 1)
-            {
-                ShootFireBall();
-                return fireBallReturn;
-            }
-            if (shootingStats.x == 2)
-            {
-                ShootThunderShield();
-                return thunderShieldReturn;
-            }
-        }
-
-        ResetActiveWeapons();
-        return zero;
-    }
-
-    private bool CheckStats(Vector3 shootingStats)
-    {
-        if (shootingStats.z <= 0)
-        {
-            if (shootingStats.x == 1 && shootingStats.y >= fireBallReturn.x)
-            {
-                return true;
-            }
-            else if (shootingStats.x == 2 && shootingStats.y >= thunderShieldReturn.x)
-            {
-                return true;
-            }
-        }
-
-        return false;
-    }
-
-    private void SetReturnValues()
-    {
-        fireballPrefab.Initialize(gameObject);
-        fireBallReturn = new Vector2(fireballPrefab.baseManaUsage, fireballPrefab.reloadTime);
-    
-        thunderShieldPrefab.Initialize(gameObject);
-        thunderShieldReturn = new Vector2(thunderShieldPrefab.baseManaUsage, thunderShieldPrefab.reloadTime);
-    }
-
-    private void ShootFireBall()
-    {
-        Fireball clone = (Fireball)Instantiate(fireballPrefab, transform.position, transform.rotation);
-        clone.Initialize(gameObject);
-    }
-
-    private void ShootThunderShield()
-    {
-        if (activeShield == null)
-        {
-            ThunderShield clone = (ThunderShield)Instantiate(thunderShieldPrefab, transform.position, transform.rotation);
+            Fireball clone = (Fireball)Instantiate(fireballPrefab, transform.position, transform.rotation);
             clone.Initialize(gameObject);
 
-            activeShield = clone;
-            keepShieldActive = true;
+            activeFireball = clone;
+            keepFireballActive = true;
+
+            if(clone.manaUsage > currentMana)
+            {
+                Destroy(clone.gameObject);
+                shootingScript.NotEnoughForFireball();
+                return zero;
+            }
         }
-    }
-
-    public void ResetActiveWeapons()
-    {
-        keepShieldActive = false;
-    }
-
-    private void ActiveShots()
-    {
-        if(activeShield != null)
+        else if (activeFireball.manaUsage > currentMana)
         {
-            thunderShieldReturn = new Vector2(activeShield.manaUsage, activeShield.reloadTime);
+            KillFireball();
+            shootingScript.NotEnoughForFireball();
+            return zero;
         }
+
+        Vector2 temporaryReturn = new Vector2(activeFireball.manaUsage, activeFireball.reloadTime);
+        if (activeFireball.reloadTime > 0)
+        {
+            shootingScript.NotEnoughForFireball();
+            activeFireball = null;
+        }
+        return temporaryReturn;
     }
 
-    private void DestroyActiveShots()
+    public Vector2 ShootThundershield(float currentMana)
     {
-        if (activeShield != null && keepShieldActive == false)
+        if (activeThundershield == null)
         {
-            thunderShieldReturn = new Vector2(activeShield.baseManaUsage, activeShield.reloadTime);
-            Destroy(activeShield.gameObject);
+            ThunderShield clone = (ThunderShield)Instantiate(thundershieldPrefab, transform.position, transform.rotation);
+            clone.Initialize(gameObject);
+
+            activeThundershield = clone;
+            keepThundershieldActive = true;
+
+            if (clone.manaUsage > currentMana)
+            {
+                Destroy(clone.gameObject);
+                shootingScript.NotEnoughForThundershield();
+                return zero;
+            }
         }
+        else if(activeThundershield.manaUsage > currentMana)
+        {
+            
+            KillThundershield();
+            shootingScript.NotEnoughForThundershield();
+            return zero;
+        }
+
+        Vector2 temporaryReturn = new Vector2(activeThundershield.manaUsage, activeThundershield.reloadTime); ;
+        if (activeThundershield.reloadTime > 0)
+        {
+            shootingScript.NotEnoughForThundershield();
+        }
+        return temporaryReturn;
+    }
+
+    public void KillFireball()
+    {
+        activeFireball.KillThis();
+        activeFireball = null;
+    }
+
+    public void KillThundershield()
+    {
+        activeThundershield.KillThis();
+        activeThundershield = null;
     }
 }

@@ -1,9 +1,9 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class GuyWithPistol : MonoBehaviour {
+public class GuyWithPistol : Enemy {
 
-    private Enemy enemyScript;
+    //private Enemy enemyScript;
     public GuyBullet bulletPrefab;
 
     public float health = 30;
@@ -13,27 +13,31 @@ public class GuyWithPistol : MonoBehaviour {
     public Vector2 viewRange = new Vector2(500, 100);
     public GameObject player;
 
-    private Rigidbody2D rigid;
-    private Vector3 initialScale;
+    //private Rigidbody2D rigid;
+    //private Vector3 initialScale;
 
-    private bool guyLookingRight;
+    //private bool guyLookingRight;
     private float turnCounter;
     private float fireCounter;
 
     // Use this for initialization
     void Start () {
-        enemyScript = GetComponent<Enemy>();
-        rigid = GetComponent<Rigidbody2D>();
-        initialScale = transform.localScale;
-        enemyScript.SetEnemyHealth(health);
+        Initialize();
+        //enemyScript = GetComponent<Enemy>();
+        //rigid = GetComponent<Rigidbody2D>();
+        //initialScale = transform.localScale;
 
-        guyLookingRight = false;
+        SetEnemyHealth(health);
+        updateLookingRight = false;
+
+        //guyLookingRight = false;
         turnCounter = 0;
         fireCounter = 0;
     }
 	
 	// Update is called once per frame
 	void Update () {
+        CustomUpdate();
         FireAtDoge();
         WhenToTurnGuy();
     }
@@ -50,15 +54,15 @@ public class GuyWithPistol : MonoBehaviour {
 
     private void turnAroundGuy()
     {
-        if (guyLookingRight == true)
+        if (enemyLookingRight == true)
         {
-            transform.localScale = new Vector3(initialScale.x, initialScale.y, initialScale.z);
-            guyLookingRight = false;
+            //transform.localScale = new Vector3(initialScale.x, initialScale.y, initialScale.z);
+            enemyLookingRight = false;
         }
-        else if (guyLookingRight == false)
+        else if (enemyLookingRight == false)
         {
-            transform.localScale = new Vector3(-initialScale.x, initialScale.y, initialScale.z);
-            guyLookingRight = true;
+            //transform.localScale = new Vector3(-initialScale.x, initialScale.y, initialScale.z);
+            enemyLookingRight = true;
         }
     }
 
@@ -68,11 +72,11 @@ public class GuyWithPistol : MonoBehaviour {
 
         if (IsValueBetween(distanceToDoge.y, -viewRange.y, viewRange.y))
         {
-            if (IsValueBetween(distanceToDoge.x, 0, viewRange.x) && guyLookingRight == false)
+            if (IsValueBetween(distanceToDoge.x, 0, viewRange.x) && enemyLookingRight == false)
             {
                 return true;
             }
-            else if (IsValueBetween(distanceToDoge.x, -viewRange.x, 0) && guyLookingRight == true)
+            else if (IsValueBetween(distanceToDoge.x, -viewRange.x, 0) && enemyLookingRight == true)
             {
                 return true;
             }
@@ -121,11 +125,11 @@ public class GuyWithPistol : MonoBehaviour {
     {
             GuyBullet clone = (GuyBullet)Instantiate(bulletPrefab, transform.position, transform.rotation);
             clone.Initialize();
-            if (guyLookingRight == false)
+            if (enemyLookingRight == false)
             {
                 clone.setSpeed(-GuyBullet.bulletSpeed);
             }
-            else if (guyLookingRight == true)
+            else if (enemyLookingRight == true)
             {
                 clone.setSpeed(GuyBullet.bulletSpeed);
             }

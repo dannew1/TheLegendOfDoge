@@ -1,14 +1,16 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
-public class Fireball : Weapon {
+public class Fireball : UserWeapon {
 
     private static float shootingSpeed = 300;
+    private List<FireballMod> ActiveModList;
 
-    public void Initialize(GameObject i)
+    public override void Initialize(GameObject i)
     {
         damage = 20;
-        baseManaUsage = 200;
+        manaUsage = 200;
         reloadTime = 1.2f;
 
         StartUp(i);
@@ -18,9 +20,15 @@ public class Fireball : Weapon {
         SetSpeed();
     }
 
-	void Update () {
-	    
+    void Update () {
+        
 	}
+
+    public override void KillThis()
+    {
+        
+    }
+
 
     public void OnTriggerEnter2D(Collider2D collider)
     {

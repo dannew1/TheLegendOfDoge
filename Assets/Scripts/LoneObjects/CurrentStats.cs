@@ -11,10 +11,10 @@ public class CurrentStats : MonoBehaviour {
     public Image spSprite;
     public Image spSprite2;
     public Image spSprite3;
-    public Image reloadSprite;
+    public Image reloadSprite1;
+    public Image reloadSprite2;
     public Text hpText;
     public Text spText;
-    public Text weaponText;
     public Text livesText;
 
     // Use this for initialization
@@ -52,13 +52,22 @@ public class CurrentStats : MonoBehaviour {
         spSprite2.fillAmount = (player.manaValue - player.baseMaxMana) / player.baseMaxMana;
         spSprite3.fillAmount = (player.manaValue - 2 * player.baseMaxMana) / player.baseMaxMana;
 
-        if (player.reload.x <= 0)
+        if (player.fireballReload.x <= 0)
         {
-            reloadSprite.fillAmount = 1;
+            reloadSprite1.fillAmount = 1;
         }
         else
         {
-            reloadSprite.fillAmount = 1 - (player.reload.x / player.reload.y);
+            reloadSprite1.fillAmount = 1 - (player.fireballReload.x / player.fireballReload.y);
+        }
+
+        if (player.thundershieldReload.x <= 0)
+        {
+            reloadSprite2.fillAmount = 1;
+        }
+        else
+        {
+            reloadSprite2.fillAmount = 1 - (player.thundershieldReload.x / player.thundershieldReload.y);
         }
     }
 
@@ -68,13 +77,5 @@ public class CurrentStats : MonoBehaviour {
         spText.text = Mathf.Round(player.manaValue / 10) + "%";
         livesText.text = "Lives left: " + player.livesLeft;
 
-        if(player.weapon == 1)
-        {
-            weaponText.text = "Fireball";
-        }
-        else if(player.weapon == 2)
-        {
-            weaponText.text = "ThunderShield";
-        }
     }
 }

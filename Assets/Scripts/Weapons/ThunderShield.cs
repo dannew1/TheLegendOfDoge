@@ -2,34 +2,39 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ThunderShield : Weapon {
+public class ThunderShield : UserWeapon {
 
-    public float manaUsage;
     private bool hitEnemy;
 
-    public void Initialize(GameObject i)
+    public override void Initialize(GameObject i)
     {
         damage = 1;
-        baseManaUsage = 2;
         manaUsage = 2;
         reloadTime = 0;
 
         StartUp(i);
     }
 
-    void Start () {
+    void Start()
+    {
         DamageResist();
-	}
-	
-	void Update () {
+    }
+
+    void Update () {
         StickToPlayer();
         SetManaUsage();
     }
 
-    private void OnDestroy()
+    public override void KillThis()
     {
         NoDamageResist();
+        Destroy(gameObject);
     }
+
+
+
+
+
 
     private void StickToPlayer()
     {
@@ -60,7 +65,6 @@ public class ThunderShield : Weapon {
         if (other_obj.GetComponent<Enemy>())
         {
             hitEnemy = true;
-            Debug.Log("hi");
         }
     }
 

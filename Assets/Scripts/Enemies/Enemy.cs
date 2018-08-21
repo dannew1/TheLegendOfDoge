@@ -18,28 +18,35 @@ public class Enemy : MonoBehaviour {
     private float lateDamageAmount;
     private float healthBarTimer = 0;
     private float damageBarTimer = 0;
-    private Rigidbody2D rigid;
-    private Vector3 initialScale;
+
+    protected bool enemyLookingRight = false;
+    protected bool updateLookingRight = true;
+    protected Rigidbody2D rigid;
+    protected Vector3 initialScale;
     private Vector3 barScale;
 
     private List<GameObject> activeWeapons = new List<GameObject>();
     private List<GameObject> deadWeapons = new List<GameObject>();
 
-
-    // Use this for initialization
-    void Start () {
+    protected void Initialize()
+    {
         rigid = GetComponent<Rigidbody2D>();
         initialScale = transform.localScale;
-        
+
 
         mask = gameObject.transform.GetChild(0).GetComponent<Image>();
         healthBar = mask.gameObject.transform.GetChild(1).GetComponent<Image>();
         damageBar = mask.gameObject.transform.GetChild(0).GetComponent<Image>();
         barScale = mask.transform.localScale;
     }
-	
-	// Update is called once per frame
-	void Update () {
+    // Use this for initialization
+    void Start () {
+        
+    }
+
+    protected void CustomUpdate()
+    {
+        SetLookingDirection();
         turnAroundEnemy();
         KillEnemy();
         HealthBar();
@@ -48,7 +55,7 @@ public class Enemy : MonoBehaviour {
         DeadWeaponList();
     }
 
-    public void SetEnemyHealth(float value)
+    protected void SetEnemyHealth(float value)
     {
         enemyMaxHealth = value;
         enemyHealth = enemyMaxHealth;
@@ -114,14 +121,30 @@ public class Enemy : MonoBehaviour {
         damageBar.fillAmount = beforeHitHealth / enemyMaxHealth;
     }
 
+    private void SetLookingDirection()
+    {
+        if (updateLookingRight)
+        {
+            
+            if (rigid.velocity.x < 0)
+            {
+                enemyLookingRight = false;
+            }
+            else if (rigid.velocity.x > 0)
+            {
+                enemyLookingRight = true;
+            }
+        }
+    }
+
     private void turnAroundEnemy()
     {
-        if (rigid.velocity.x < 0)
+        if (enemyLookingRight == false)
         {
             transform.localScale = new Vector3(initialScale.x, initialScale.y, initialScale.z);
             mask.transform.localScale = barScale;
         }
-        else if (rigid.velocity.x > 0)
+        else if (enemyLookingRight == true)
         {
             transform.localScale = new Vector3(initialScale.x * -1, initialScale.y, initialScale.z);
             mask.transform.localScale = new Vector3(barScale.x * -1, barScale.y, barScale.z);

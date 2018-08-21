@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MusicController : MonoBehaviour {
+public abstract class FireballMod : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
@@ -13,4 +13,6 @@ public class MusicController : MonoBehaviour {
 	void Update () {
 		
 	}
+
+    //public abstract void Initialize();
 }

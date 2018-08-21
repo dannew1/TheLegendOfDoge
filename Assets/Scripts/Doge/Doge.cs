@@ -11,11 +11,13 @@ public class Doge : MonoBehaviour
 
     public DDOLConnector ddolScript;
 
-    public float healthValue; 
-    public float manaValue;
+    public float healthValue;
     public bool dogeLookingRight = true;
-    public Vector2 reload;
-    public float weapon;
+    
+    public float manaValue;
+    public float maxManaValue;
+    public Vector2 fireballReload;
+    public Vector2 thundershieldReload;
 
     public int hpStat;
     public int hpRegStat;
@@ -46,7 +48,7 @@ public class Doge : MonoBehaviour
     // Use this for initialization
     void Start()
     {
-        
+  
     }
 
     // Update is called once per frame
@@ -79,12 +81,13 @@ public class Doge : MonoBehaviour
 
     private void ReturnValues()
     {
-        
         dogeLookingRight = moveScript.ReturnMoveValues(1);
         healthValue = healthScript.ReturnHpValues(1);
+
         manaValue = shootingScript.ReturnMpValues(1);
-        weapon = shootingScript.ReturnMpValues(2);
-        reload = shootingScript.ReturnRelaod();
+        maxManaValue = shootingScript.ReturnMpValues(2);
+        fireballReload = shootingScript.ReturnRelaod(1);
+        thundershieldReload = shootingScript.ReturnRelaod(2);
     }
 
     public void Invunerablility()

@@ -1,9 +1,9 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class WhoAreWe : MonoBehaviour {
+public class WhoAreWe : Enemy {
 
-    private Enemy enemyScript;
+    //private Enemy enemyScript;
 
     public static float health = 30;
 
@@ -11,7 +11,7 @@ public class WhoAreWe : MonoBehaviour {
     public static float speed = 0.7F;
     public static float baseWaitTime = 2.5F;
 
-	private Rigidbody2D rigid;
+	//private Rigidbody2D rigid;
     private float waitTime;
     private float goToPosition;
     private float maxRange;
@@ -19,11 +19,12 @@ public class WhoAreWe : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-        enemyScript = GetComponent<Enemy>();
-        rigid = GetComponent<Rigidbody2D>();
+        //enemyScript = GetComponent<Enemy>();
+        //rigid = GetComponent<Rigidbody2D>();
+        Initialize();
         waitTime = baseWaitTime;
 
-        enemyScript.SetEnemyHealth(health);
+        SetEnemyHealth(health);
         maxRange = transform.position.x + range;
         minRange = transform.position.x - range;
         goToPosition = Random.Range(minRange, maxRange);
@@ -31,10 +32,11 @@ public class WhoAreWe : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        enemy_movement();
+        CustomUpdate();
+        Enemy_movement();
     }
 
-    public void enemy_movement()
+    public void Enemy_movement()
     {
         waitTime -= Time.deltaTime;
         if (waitTime <= 0)

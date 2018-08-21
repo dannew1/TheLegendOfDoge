@@ -6,14 +6,22 @@ public class Shooting : MonoBehaviour {
     private Doge dogeScript;
     private WeaponList weaponScript;
 
-    private int equipedWeapon = 1;
-    private float reloadTime = 0;
-    private float baseReload;
+    private float fireballReloadTime = 0;
+    private float fireballBaseReload;
+
+    private float thundershieldReloadTime = 0;
+    private float thundershieldBaseReload;
+
+    private bool usingFireball = false;
+    private bool usingThundershield = false;
+
     private float mana;
-    private bool readyToFire = true;
     private float maxMana;
     private float manaRegen;
-    
+
+    private bool readyToFireball = true;
+    private bool readyToThundershield = true;
+
     //Keep track off MaxMana, ManaRegen, reload
     //Return?
 
@@ -30,78 +38,120 @@ public class Shooting : MonoBehaviour {
     void Update () {
         SetStats();
 
-        ChangeWeapon();
-        UseWeapon();
+        UseFireball();
+        UseThundershield();
 
-        CountDownReloadTime();
-        ReadyFire();
+        fireballReloadTime = CountDownReloadTime(fireballReloadTime);
+        thundershieldReloadTime = CountDownReloadTime(thundershieldReloadTime);
+
+        ReadyFireball();
+        ReadyThunderShield();
+
         ManaRegen();
     }
 
     private void SetStats()
     {
+        //Check this??
         maxMana = dogeScript.baseMaxMana + (dogeScript.spStat * 100);
         manaRegen = dogeScript.baseManaRegen + (dogeScript.spRegStat * 2);
     }
 
-    private void ChangeWeapon()
+    private void UseFireball()
     {
-        if (Input.GetKeyDown(KeyCode.V))
+        if (Input.GetKey(KeyCode.C) && readyToFireball == true)
         {
-            if(equipedWeapon == 1)
-            {
-                equipedWeapon = 2;
-            }
-            else if (equipedWeapon == 2)
-            {
-                equipedWeapon = 1;
-            }
-        }
-    }
+            usingFireball = true;
 
-    private void UseWeapon()
-    {
-        if (Input.GetKey(KeyCode.C) && readyToFire == true)
-        {
             Vector2 re;
-            re = weaponScript.ActivateWeapon(new Vector3(equipedWeapon, mana, reloadTime));
-            if (re.x == 0 || re.y != 0)
-            {
-                readyToFire = false;
-            }
+            re = weaponScript.ShootFireball(mana);
+
             mana -= re.x;
-            reloadTime += re.y;
-            baseReload = re.y;
+            fireballReloadTime += re.y;
+            fireballBaseReload = re.y;
         }
-        else if(Input.GetKeyUp(KeyCode.C))
+        else if (usingFireball)
         {
-            weaponScript.ResetActiveWeapons();
+            usingFireball = false;
+            weaponScript.KillFireball();
         }
     }
 
-    private void CountDownReloadTime()
+    public void NotEnoughForFireball()
     {
+        usingFireball = false;
+        readyToFireball = false;
+    }
+
+    private void ReadyFireball()
+    {
+        if(fireballReloadTime <= 0 && mana > 0 && !Input.GetKey(KeyCode.C))
+        {
+            readyToFireball = true;
+        }
+    }
+
+    private void UseThundershield()
+    {
+        if (Input.GetKey(KeyCode.V) && readyToThundershield == true)
+        {
+            usingThundershield = true;
+
+            Vector2 re;
+            re = weaponScript.ShootThundershield(mana);
+
+            mana -= re.x;
+            thundershieldReloadTime += re.y;
+            thundershieldBaseReload = re.y;
+        }
+        else if (usingThundershield)
+        {
+            usingThundershield = false;
+            weaponScript.KillThundershield();
+        }
+    }
+
+    public void NotEnoughForThundershield()
+    {
+        usingThundershield = false;
+        readyToThundershield = false;
+    }
+
+    private void ReadyThunderShield()
+    {
+        if (thundershieldReloadTime <= 0 && mana > 0 && !Input.GetKey(KeyCode.V))
+        {
+            readyToThundershield = true;
+        }
+    }
+
+    private float CountDownReloadTime(float reloadTime)
+    {
+        float newReload = reloadTime;
+
         if (reloadTime > 0)
         {
-            reloadTime -= Time.deltaTime;
+            newReload -= Time.deltaTime;
         }
+
         if (reloadTime < 0)
         {
-            reloadTime = 0;
+            newReload = 0;
         }
-    }
 
-    private void ReadyFire()
-    {
-        if(reloadTime <= 0 && mana > 0 && !Input.GetKey(KeyCode.C))
-        {
-            readyToFire = true;
-        }
+        return newReload;
     }
 
     private void ManaRegen()
     {
-        if (mana < maxMana && reloadTime <= 0)
+        if (mana < 0)
+        {
+            mana = 0;
+        }
+
+        if (mana < maxMana
+            && (fireballReloadTime <= 0 && !usingFireball)
+            && (thundershieldReloadTime <= 0 && !usingThundershield))
         {
             mana += Time.deltaTime * manaRegen;
         }
@@ -121,7 +171,7 @@ public class Shooting : MonoBehaviour {
 
         else if (stat == 2)
         {
-            return equipedWeapon;
+            return maxMana;
         }
 
         else
@@ -131,8 +181,19 @@ public class Shooting : MonoBehaviour {
 
     }
 
-    public Vector2 ReturnRelaod()
+    public Vector2 ReturnRelaod(int weapon)
     {
-        return new Vector2(reloadTime, baseReload);
+        if (weapon == 1)
+        {
+            return new Vector2(fireballReloadTime, fireballBaseReload);
+        }
+        else if (weapon == 2)
+        {
+            return new Vector2(thundershieldReloadTime, thundershieldBaseReload);
+        }
+        else
+        {
+            return new Vector2(0, 0);
+        }
     }
 }
