@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class GuyBullet : MonoBehaviour {
+public class GuyBullet : EnemyWeapon {
 
     public static float bulletSpeed = 150;
 

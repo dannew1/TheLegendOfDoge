@@ -8,22 +8,24 @@ using System.Linq;
 public class Enemy : MonoBehaviour {
 
     private Image mask;
-    private Image healthBar;
-    private Image damageBar;
+    private Vector3 barScale;
 
+    private Image healthBar;
     private float enemyHealth;
     private float enemyMaxHealth;
+    private float healthBarTimer = 0;
+    public float enemyBodyDamage;
+
+    private Image damageBar;
     private float damageDelay;
     private float beforeHitHealth;
     private float lateDamageAmount;
-    private float healthBarTimer = 0;
     private float damageBarTimer = 0;
 
     protected bool enemyLookingRight = false;
     protected bool updateLookingRight = true;
     protected Rigidbody2D rigid;
     protected Vector3 initialScale;
-    private Vector3 barScale;
 
     private List<GameObject> activeWeapons = new List<GameObject>();
     private List<GameObject> deadWeapons = new List<GameObject>();
@@ -32,7 +34,6 @@ public class Enemy : MonoBehaviour {
     {
         rigid = GetComponent<Rigidbody2D>();
         initialScale = transform.localScale;
-
 
         mask = gameObject.transform.GetChild(0).GetComponent<Image>();
         healthBar = mask.gameObject.transform.GetChild(1).GetComponent<Image>();
@@ -46,11 +47,13 @@ public class Enemy : MonoBehaviour {
 
     protected void CustomUpdate()
     {
-        SetLookingDirection();
-        turnAroundEnemy();
         KillEnemy();
         HealthBar();
         DamageBar();
+
+        SetLookingDirection();
+        turnAroundEnemy();
+
         ActiveWeaponDamage();
         DeadWeaponList();
     }
@@ -125,7 +128,6 @@ public class Enemy : MonoBehaviour {
     {
         if (updateLookingRight)
         {
-            
             if (rigid.velocity.x < 0)
             {
                 enemyLookingRight = false;
@@ -167,6 +169,7 @@ public class Enemy : MonoBehaviour {
         if (damageDelay > 0)
         {
             damageDelay -= Time.deltaTime * 60;
+            // -60/s
         }
 
         if (damageDelay <= 0 && activeWeapons.Any())

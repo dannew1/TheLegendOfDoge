@@ -3,7 +3,6 @@ using System.Collections;
 
 public class GuyWithPistol : Enemy {
 
-    //private Enemy enemyScript;
     public GuyBullet bulletPrefab;
 
     public float health = 30;
@@ -13,24 +12,17 @@ public class GuyWithPistol : Enemy {
     public Vector2 viewRange = new Vector2(500, 100);
     public GameObject player;
 
-    //private Rigidbody2D rigid;
-    //private Vector3 initialScale;
-
-    //private bool guyLookingRight;
     private float turnCounter;
     private float fireCounter;
 
     // Use this for initialization
     void Start () {
         Initialize();
-        //enemyScript = GetComponent<Enemy>();
-        //rigid = GetComponent<Rigidbody2D>();
-        //initialScale = transform.localScale;
 
         SetEnemyHealth(health);
         updateLookingRight = false;
+        enemyBodyDamage = 1000;
 
-        //guyLookingRight = false;
         turnCounter = 0;
         fireCounter = 0;
     }
@@ -56,12 +48,10 @@ public class GuyWithPistol : Enemy {
     {
         if (enemyLookingRight == true)
         {
-            //transform.localScale = new Vector3(initialScale.x, initialScale.y, initialScale.z);
             enemyLookingRight = false;
         }
         else if (enemyLookingRight == false)
         {
-            //transform.localScale = new Vector3(-initialScale.x, initialScale.y, initialScale.z);
             enemyLookingRight = true;
         }
     }
@@ -80,15 +70,9 @@ public class GuyWithPistol : Enemy {
             {
                 return true;
             }
-            else
-            {
-                return false;
-            }
         }
-        else
-        {
-            return false;
-        }
+
+        return false;
     }
 
     private bool IsValueBetween(float value, float low, float high)
