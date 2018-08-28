@@ -14,6 +14,7 @@ public class Enemy : MonoBehaviour {
     private float enemyHealth;
     private float enemyMaxHealth;
     private float healthBarTimer = 0;
+
     public float enemyBodyDamage;
 
     private Image damageBar;
@@ -24,6 +25,7 @@ public class Enemy : MonoBehaviour {
 
     protected bool enemyLookingRight = false;
     protected bool updateLookingRight = true;
+    protected bool kamekazeUnit = false;
     protected Rigidbody2D rigid;
     protected Vector3 initialScale;
 
@@ -161,6 +163,18 @@ public class Enemy : MonoBehaviour {
         {
             TakeDamage(other_obj);
             activeWeapons.Add(other_obj);
+        }
+        else if (other_obj.GetComponent<Doge>())
+        {
+            HitDoge();
+        }
+    }
+
+    private void HitDoge()
+    {
+        if(kamekazeUnit)
+        {
+            Destroy(gameObject);
         }
     }
 

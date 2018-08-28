@@ -5,7 +5,7 @@ public class GuyWithPistol : Enemy {
 
     public GuyBullet bulletPrefab;
 
-    public float health = 30;
+    public float maxHealth = 30;
 
     public float turnTime = 4;
     public float fireDelay = 0.5F;
@@ -19,9 +19,9 @@ public class GuyWithPistol : Enemy {
     void Start () {
         Initialize();
 
-        SetEnemyHealth(health);
+        SetEnemyHealth(maxHealth);
         updateLookingRight = false;
-        enemyBodyDamage = 1000;
+        enemyBodyDamage = 40;
 
         turnCounter = 0;
         fireCounter = 0;

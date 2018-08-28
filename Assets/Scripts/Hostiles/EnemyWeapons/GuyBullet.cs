@@ -9,7 +9,7 @@ public class GuyBullet : EnemyWeapon {
 
     // Use this for initialization
     void Start () {
-	
+        damage = 1000;
 	}
 	
     public void Initialize()
@@ -26,7 +26,7 @@ public class GuyBullet : EnemyWeapon {
     {
         GameObject other_obj = collider.gameObject;
 
-        if (other_obj.GetComponent<Platform>())
+        if (other_obj.GetComponent<Platform>() || other_obj.GetComponent<Doge>())
         {
             Destroy(gameObject);
         }

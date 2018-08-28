@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class EnemyWeapon : MonoBehaviour {
 
+    public float damage;
+
 	// Use this for initialization
 	void Start () {
 		

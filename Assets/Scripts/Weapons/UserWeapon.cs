@@ -18,6 +18,8 @@ public abstract class UserWeapon : Weapon {
         dogeScript = player.GetComponent<Doge>();
     }
 
+    
+
     public abstract void Initialize(GameObject i);
     
     public abstract void KillThis();

@@ -1,5 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
 
 public class DogeHealth : MonoBehaviour
 {
@@ -12,6 +14,11 @@ public class DogeHealth : MonoBehaviour
     private float damageDelay = 3;
     private bool unkillable = false;
 
+    private List<GameObject> activeEnemyWeapon = new List<GameObject>();
+    private List<GameObject> deadEnemyWeapon = new List<GameObject>();
+    private List<GameObject> activeEnemy = new List<GameObject>();
+    private List<GameObject> deadEnemy = new List<GameObject>();
+
     // Use this for initialization
     void Start()
     {
@@ -23,8 +30,11 @@ public class DogeHealth : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        DamageDelayCountdown();
         SetStats();
+
+        ActiveEnemyDamage();
+        DeadEnemyLists();
+
         HealthRegen();
         PlayerDeath();
     }
@@ -49,31 +59,125 @@ public class DogeHealth : MonoBehaviour
         unkillable = false;
     }
 
-    public void OnTriggerStay2D(Collider2D collider)
+    //public void OnTriggerStay2D(Collider2D collider)
+    //{
+    //    GameObject other_obj = collider.gameObject;
+    //    if (!unkillable)
+    //    {
+    //        if (other_obj.GetComponent<Enemy>() && damageDelay <= 0)
+    //        {
+    //            health -= 490;
+    //            damageDelay = 100;
+    //        }
+    //        else if (other_obj.GetComponent<GuyBullet>() && damageDelay <= 0)
+    //        {
+    //            health -= 900;
+    //            damageDelay = 100;
+    //        }
+    //    }
+    //}
+
+    public void OnTriggerEnter2D(Collider2D collider)
     {
         GameObject other_obj = collider.gameObject;
+
+        if (other_obj.GetComponent<Enemy>())
+        {
+            TakeDamage(other_obj);
+            activeEnemy.Add(other_obj);
+        }
+        else if (other_obj.GetComponent<EnemyWeapon>())
+        {
+            TakeDamage(other_obj);
+            activeEnemyWeapon.Add(other_obj);
+        }
+    }
+
+    private void ActiveEnemyDamage()
+    {
+        if (damageDelay > 0)
+        {
+            damageDelay -= Time.deltaTime * 60;
+            // -60/s
+        }
+
+        if (damageDelay <= 0 && (activeEnemy.Any() || activeEnemyWeapon.Any()))
+        {
+            foreach (GameObject enemy in activeEnemy)
+            {
+                if (enemy == null)
+                {
+                    deadEnemy.Add(enemy);
+                }
+                else
+                {
+                    TakeDamage(enemy);
+                }
+            }
+            foreach (GameObject enemyWeapon in activeEnemyWeapon)
+            {
+                if (enemyWeapon == null)
+                {
+                    deadEnemyWeapon.Add(enemyWeapon);
+                }
+                else
+                {
+                    TakeDamage(enemyWeapon);
+                }
+            }
+            damageDelay = 1;
+        }
+    }
+
+    private void TakeDamage(GameObject enemyObj)
+    {
         if (!unkillable)
         {
-            if (other_obj.GetComponent<Enemy>() && damageDelay <= 0)
+            if (enemyObj.GetComponent<Enemy>())
             {
-                damageDelay = 100;
-                health -= 490;
+                health -= enemyObj.GetComponent<Enemy>().enemyBodyDamage;
             }
-            else if (other_obj.GetComponent<GuyBullet>() && damageDelay <= 0)
+            else if (enemyObj.GetComponent<EnemyWeapon>())
             {
-                damageDelay = 100;
-                health -= 900;
+                health -= enemyObj.GetComponent<EnemyWeapon>().damage;
             }
         }
     }
 
-    private void DamageDelayCountdown()
+    private void DeadEnemyLists()
     {
-        if (damageDelay >= -10)
+        if (deadEnemy.Any())
         {
-            damageDelay -= Time.deltaTime * 100;
+            foreach (GameObject enemy in deadEnemy)
+            {
+                activeEnemy.Remove(enemy);
+            }
+            deadEnemy.Clear();
+        }
+        if (deadEnemyWeapon.Any())
+        {
+            foreach (GameObject weapon in deadEnemyWeapon)
+            {
+                activeEnemyWeapon.Remove(weapon);
+            }
+            deadEnemyWeapon.Clear();
         }
     }
+
+    public void OnTriggerExit2D(Collider2D collider)
+    {
+        GameObject other_obj = collider.gameObject;
+
+        if (other_obj.GetComponent<Enemy>())
+        {
+            activeEnemy.Remove(other_obj);
+        }
+        else if (other_obj.GetComponent<EnemyWeapon>())
+        {
+            activeEnemyWeapon.Remove(other_obj);
+        }
+    }
+
     private void HealthRegen()
     {
         if (health < maxHealth && damageDelay <= 0)

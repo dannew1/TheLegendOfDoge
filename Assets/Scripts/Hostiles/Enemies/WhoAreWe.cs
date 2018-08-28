@@ -3,7 +3,7 @@ using System.Collections;
 
 public class WhoAreWe : Enemy {
 
-    public static float health = 30;
+    public static float maxHealth = 30;
 
     public static float range = 300;
     public static float speed = 0.7F;
@@ -16,8 +16,8 @@ public class WhoAreWe : Enemy {
 
 	void Start () {
         Initialize();
-        SetEnemyHealth(health);
-        enemyBodyDamage = 1000;
+        SetEnemyHealth(maxHealth);
+        enemyBodyDamage = 40;
 
         waitTime = baseWaitTime;
         maxRange = transform.position.x + range;
