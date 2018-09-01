@@ -2,11 +2,11 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TestFireballMod : FireballMod
+public class FireballSimpleDirectionMod : FireballMod
 {
     public void Initialize()
     {
-        modtype = 0;
+        modType = 0;
         modPriority = 0;
     }
 
@@ -14,16 +14,6 @@ public class TestFireballMod : FireballMod
     {
         SetSpeed();
     }
-
-    //public void OnTriggerEnter2D(Collider2D collider)
-    //{
-    //    GameObject other_obj = collider.gameObject;
-    //
-    //    if (other_obj.GetComponent<Enemy>())
-    //    {
-    //        Destroy(gameObject);
-    //    }
-    //}
 
     private void SetSpeed()
     {

@@ -11,7 +11,7 @@ public class MoveDoge : MonoBehaviour {
 
     private float acceleration = 16;
     private float topSpeed = 250;
-    private float jumpHeight = 350;
+    private float jumpHeight = 450;
     private float friction = 10;
     public Transform GroundCheck1;
     public LayerMask groundLayer;
@@ -101,6 +101,7 @@ public class MoveDoge : MonoBehaviour {
             {
                 timeInAir = 0;
                 rigid.velocity = new Vector2(rigid.velocity.x, jumpHeight);
+                //rigid.velocity = new Vector2(rigid.velocity.x, 1000);
             }
             else
             {

@@ -10,7 +10,7 @@ public class QuickStatEdit : MonoBehaviour {
     public float baseManaRegen = 40;
     public float acceleration = 20;
     public float topSpeed = 250;
-    public float jumpHeight = 350;
+    public float jumpHeight = 450;
 
 
 	// Use this for initialization

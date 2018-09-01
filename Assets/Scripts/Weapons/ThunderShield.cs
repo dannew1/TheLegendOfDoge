@@ -4,76 +4,94 @@ using UnityEngine;
 
 public class ThunderShield : UserWeapon {
 
-    private bool hitEnemy;
+    public List<ThunderShieldMod> ActiveModList;
+    public List<ThunderShieldMod> ModList;
 
-    public override void Initialize(GameObject i)
+    public override void Initialize(GameObject player)
     {
         damage = 1;
         manaUsage = 2;
         reloadTime = 0;
 
-        StartUp(i);
+        foreach(ThunderShieldMod mod in ActiveModList)
+        {
+            mod.GetPlayer(player);
+        }
     }
+ 
+
+
 
     void Start()
     {
-        DamageResist();
+        Type0mods();
     }
 
     void Update () {
-        StickToPlayer();
-        SetManaUsage();
+        Type2mods();
     }
 
-    public override void KillThis()
-    {
-        NoDamageResist();
-        Destroy(gameObject);
-    }
-
-
-
-
-
-
-    private void StickToPlayer()
-    {
-        if (player != null)
-        {
-            transform.position = player.transform.position;
-        }
-    }
-
-    private void SetManaUsage()
-    {
-        if(hitEnemy)
-        {
-            hitEnemy = false;
-            manaUsage = 15;
-        }
-        else if (!hitEnemy)
-        {
-            manaUsage = 2;
-        }
-    }
-
-
-    public void OnTriggerStay2D(Collider2D collider)
+    public void OnTriggerEnter2D(Collider2D collider)
     {
         GameObject other_obj = collider.gameObject;
 
         if (other_obj.GetComponent<Enemy>())
         {
-            hitEnemy = true;
+            Type4mods();
         }
     }
 
-    private void DamageResist()
+    public override void KillThis()
     {
-        dogeScript.Invunerablility();
+        Type3mods();
+
     }
-    private void NoDamageResist()
+
+    void OnDestroy()
     {
-        dogeScript.DeactivateInvunerability();
+        Type1mods();
+    }
+
+
+
+
+    private void Type0mods()
+    {
+        foreach (ThunderShieldMod mod in ActiveModList)
+        {
+            mod.ModStart();
+        }
+    }
+
+    private void Type1mods()
+    {
+        foreach (ThunderShieldMod mod in ActiveModList)
+        {
+            mod.ModOnDestroy();
+        }
+    }
+
+    private void Type2mods()
+    {
+        foreach (ThunderShieldMod mod in ActiveModList)
+        {
+            mod.ModUpdate();
+        }
+    }
+
+    private void Type3mods()
+    {
+        foreach (ThunderShieldMod mod in ActiveModList)
+        {
+            mod.ModKillThis();
+        }
+    }
+
+    private void Type4mods()
+    {
+        foreach (ThunderShieldMod mod in ActiveModList)
+        {
+            mod.ModTriggerEnter();
+        }
     }
 }

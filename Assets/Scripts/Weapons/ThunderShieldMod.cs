@@ -4,15 +4,53 @@ using UnityEngine;
 
 public abstract class ThunderShieldMod : MonoBehaviour {
 
-	// Use this for initialization
-	void Start () {
-		
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
+    public int modType;
+    public int modPriority;
+    private ThunderShield thunderShieldscript;
 
-    public abstract void Initialze();
+    protected float currentManaUsage;
+    protected float currentReloadTime;
+
+    protected GameObject player;
+    protected Doge dogeScript;
+    protected Rigidbody2D rigid;
+
+    protected bool hitEnemy;
+
+    private void OnEnable()
+    {
+        ConnectMod();
+    }
+
+    private void ConnectMod()
+    {
+        thunderShieldscript = GetComponent<ThunderShield>();
+        thunderShieldscript.ActiveModList.Add(this);
+        
+    }
+
+    private void Update()
+    {
+        thunderShieldscript.UpdateStats(currentManaUsage, currentReloadTime);
+    }
+
+    public void GetPlayer(GameObject doge)
+    {
+        rigid = GetComponent<Rigidbody2D>();
+        player = doge;
+        dogeScript = player.GetComponent<Doge>();
+
+        currentManaUsage = thunderShieldscript.manaUsage;
+        currentReloadTime = thunderShieldscript.reloadTime;
+    }
+
+    public abstract void ModStart();
+
+    public abstract void ModUpdate();
+
+    public abstract void ModTriggerEnter();
+
+    public abstract void ModKillThis();
+
+    public abstract void ModOnDestroy();
 }

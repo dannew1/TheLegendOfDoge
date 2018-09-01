@@ -7,18 +7,22 @@ public abstract class UserWeapon : Weapon {
     public float manaUsage;
     public float reloadTime;
 
-    protected GameObject player;
-    protected Doge dogeScript;
-    protected Rigidbody2D rigid;
+    //protected GameObject player;
+    //protected Doge dogeScript;
+    //protected Rigidbody2D rigid;
+    //
+    //protected void StartUp(GameObject doge)
+    //{
+    //    rigid = GetComponent<Rigidbody2D>();
+    //    player = doge;
+    //    dogeScript = player.GetComponent<Doge>();
+    //}
 
-    protected void StartUp(GameObject doge)
+    public void UpdateStats(float mana, float reload)
     {
-        rigid = GetComponent<Rigidbody2D>();
-        player = doge;
-        dogeScript = player.GetComponent<Doge>();
+        manaUsage = mana;
+        reloadTime = reload;
     }
-
-    
 
     public abstract void Initialize(GameObject i);
     

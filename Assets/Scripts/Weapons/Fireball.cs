@@ -4,17 +4,14 @@ using System.Collections.Generic;
 
 public class Fireball : UserWeapon {
 
-    private static float shootingSpeed = 300;
     public List<FireballMod> ActiveModList;
     public List<FireballMod> ModList;
 
-    public override void Initialize(GameObject i)
+    public override void Initialize(GameObject player)
     {
         damage = 20;
         manaUsage = 200;
         reloadTime = 1.2f;
-
-        StartUp(i);
 
         foreach (FireballMod mod in ActiveModList)
         {
@@ -22,8 +19,9 @@ public class Fireball : UserWeapon {
         }
     }
 
+
+
     void Start () {
-        //SetSpeed();
         Type0mods();
     }
 
@@ -31,10 +29,28 @@ public class Fireball : UserWeapon {
         
 	}
 
+    public void OnTriggerEnter2D(Collider2D collider)
+    {
+        GameObject other_obj = collider.gameObject;
+
+        if (other_obj.GetComponent<Enemy>())
+        {
+            Type1mods();
+        }
+    }
+
     public override void KillThis()
     {
         
     }
+
+    void OnDestroy()
+    {
+
+    }
+
+
+
 
     private void Type0mods()
     {
@@ -44,27 +60,13 @@ public class Fireball : UserWeapon {
         }
     }
 
+    private void Type1mods()
+    {
+        foreach(FireballMod mod in ActiveModList)
+        {
+            mod.ModTriggerEnter();
+        }
+    }
 
-    //public void OnTriggerEnter2D(Collider2D collider)
-    //{
-    //    GameObject other_obj = collider.gameObject;
-    //
-    //    if (other_obj.GetComponent<Enemy>())
-    //    {
-    //        Destroy(gameObject);
-    //    }
-    //}
 
-    //private void SetSpeed()
-    //{
-    //    if (dogeScript.dogeLookingRight == false)
-    //    {
-    //        rigid.velocity = new Vector2(-shootingSpeed, 0);
-    //    }
-    //    else if (dogeScript.dogeLookingRight == true)
-    //
-    //    {
-    //        rigid.velocity = new Vector2(shootingSpeed, 0);
-    //    }
-    //}
 }
