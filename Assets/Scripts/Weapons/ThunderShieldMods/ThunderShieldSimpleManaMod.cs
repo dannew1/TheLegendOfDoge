@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class ThunderShieldSimpleManaMod : ThunderShieldMod {
 
-    public void Initialize()
+    public override void Initialize()
     {
         modType = 0;
         modPriority = 0;
@@ -17,12 +17,17 @@ public class ThunderShieldSimpleManaMod : ThunderShieldMod {
 
     public override void ModUpdate()
     {
-        SetManaUsage();
+
     }
 
     public override void ModTriggerEnter()
     {
-        hitEnemy = true;
+        changeManaUsage = 13;
+    }
+
+    public override void ModTriggerExit()
+    {
+        changeManaUsage = -13;
     }
 
     public override void ModKillThis()
@@ -33,18 +38,5 @@ public class ThunderShieldSimpleManaMod : ThunderShieldMod {
     public override void ModOnDestroy()
     {
 
-    }
-
-    private void SetManaUsage()
-    {
-        if (hitEnemy)
-        {
-            hitEnemy = false;
-            currentManaUsage = 15;
-        }
-        else if (!hitEnemy)
-        {
-            currentManaUsage = 2;
-        }
     }
 }

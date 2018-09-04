@@ -11,6 +11,8 @@ public class DogeHealth : MonoBehaviour
     private float healthRegen;
     private float health;
 
+    private float baseDamageDelay = 1;
+
     private float damageDelay = 3;
     private bool unkillable = false;
 
@@ -125,7 +127,7 @@ public class DogeHealth : MonoBehaviour
                     TakeDamage(enemyWeapon);
                 }
             }
-            damageDelay = 1;
+            damageDelay = baseDamageDelay;
         }
     }
 

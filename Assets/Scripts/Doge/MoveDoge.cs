@@ -9,10 +9,15 @@ public class MoveDoge : MonoBehaviour {
     private Rigidbody2D rigid;
     private Vector3 initialScale;
 
-    private float acceleration = 16;
-    private float topSpeed = 250;
-    private float jumpHeight = 450;
-    private float friction = 10;
+    private float acceleration;
+    private float accelerationMultiplier = 3;
+    private float topSpeed;
+    private float jumpHeight;
+    private float timeInAirMultiplier = 300;
+    private float friction = 0.2f;
+    private float frictionMultiplier = 0.3f;
+    private float stopMargin = 10;
+    private float groundRad = 0.15f;
     public Transform GroundCheck1;
     public LayerMask groundLayer;
 
@@ -49,7 +54,7 @@ public class MoveDoge : MonoBehaviour {
         {
             if (rigid.velocity.x > 0)
             {
-                rigid.velocity += new Vector2(-CurretAcceleration() * 3, 0);
+                rigid.velocity += new Vector2(-CurretAcceleration() * accelerationMultiplier, 0);
             }
             else if (NonTopSpeed())
             {
@@ -61,7 +66,7 @@ public class MoveDoge : MonoBehaviour {
         {
             if (rigid.velocity.x < 0)
             {
-                rigid.velocity += new Vector2(CurretAcceleration() * 3, 0);
+                rigid.velocity += new Vector2(CurretAcceleration() * accelerationMultiplier, 0);
             }
             else if (NonTopSpeed())
             {
@@ -101,11 +106,10 @@ public class MoveDoge : MonoBehaviour {
             {
                 timeInAir = 0;
                 rigid.velocity = new Vector2(rigid.velocity.x, jumpHeight);
-                //rigid.velocity = new Vector2(rigid.velocity.x, 1000);
             }
             else
             {
-                rigid.velocity += new Vector2(0, jumpHeight*2 / (600 * timeInAir));
+                rigid.velocity += new Vector2(0, jumpHeight /  timeInAir);
             }
         }
     }
@@ -114,13 +118,13 @@ public class MoveDoge : MonoBehaviour {
     {
         if(DogeNotMoving() && DogeIsGrounded())
         {
-            if (rigid.velocity.x > -10 && rigid.velocity.x < 10)
+            if (rigid.velocity.x > -stopMargin && rigid.velocity.x < stopMargin)
             {
-                rigid.velocity += new Vector2(rigid.velocity.x * -0.20f, 0);
+                rigid.velocity += new Vector2(rigid.velocity.x * -friction, 0);
             }
             else
             {
-                rigid.velocity += new Vector2(rigid.velocity.x * -0.06f, 0);
+                rigid.velocity += new Vector2(rigid.velocity.x * -(friction * frictionMultiplier), 0);
             }
         }
     }
@@ -146,7 +150,7 @@ public class MoveDoge : MonoBehaviour {
 
         else if (NoYMovement() == false)
         {
-            timeInAir += Time.deltaTime;
+            timeInAir += timeInAirMultiplier * Time.deltaTime;
         }
     }
 
@@ -169,12 +173,12 @@ public class MoveDoge : MonoBehaviour {
 
     private bool NoYMovement()
     {
-        return rigid.velocity.y <= 10 && rigid.velocity.y >= -10 && DogeIsGrounded();
+        return rigid.velocity.y <= stopMargin && rigid.velocity.y >= -stopMargin && DogeIsGrounded();
     }
 
     private bool DogeIsGrounded()
     {
-        return Physics2D.OverlapCircle(GroundCheck1.position, 0.15f, groundLayer);
+        return Physics2D.OverlapCircle(GroundCheck1.position, groundRad, groundLayer);
     }
 
     private void SetDogeLookingRight()

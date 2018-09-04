@@ -14,6 +14,8 @@ public class WhoAreWe : Enemy {
     private float maxRange;
     private float minRange;
 
+    private float stopMargin = 10;
+
 	void Start () {
         Initialize();
         SetEnemyHealth(maxHealth);
@@ -35,7 +37,7 @@ public class WhoAreWe : Enemy {
         waitTime -= Time.deltaTime;
         if (waitTime <= 0)
         {
-            if (transform.position.x + 10 >= goToPosition && transform.position.x - 10 <= goToPosition)
+            if (transform.position.x + stopMargin >= goToPosition && transform.position.x - stopMargin <= goToPosition)
             {
                 rigid.velocity = new Vector2(0, 0);
                 goToPosition = Random.Range(minRange, maxRange);

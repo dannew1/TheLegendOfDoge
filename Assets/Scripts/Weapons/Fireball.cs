@@ -20,14 +20,13 @@ public class Fireball : UserWeapon {
     }
 
 
-
     void Start () {
         Type0mods();
     }
 
     void Update () {
-        
-	}
+        Type1mods();
+    }
 
     public void OnTriggerEnter2D(Collider2D collider)
     {
@@ -35,22 +34,29 @@ public class Fireball : UserWeapon {
 
         if (other_obj.GetComponent<Enemy>())
         {
-            Type1mods();
+            Type2mods();
+        }
+    }
+
+    public void OnTriggerExit2D(Collider2D collider)
+    {
+        GameObject other_obj = collider.gameObject;
+
+        if (other_obj.GetComponent<Enemy>())
+        {
+            Type3mods();
         }
     }
 
     public override void KillThis()
     {
-        
+        Type4mods();
     }
 
     void OnDestroy()
     {
-
+        Type5mods();
     }
-
-
-
 
     private void Type0mods()
     {
@@ -64,7 +70,39 @@ public class Fireball : UserWeapon {
     {
         foreach(FireballMod mod in ActiveModList)
         {
+            mod.ModUpdate();
+        }
+    }
+
+    private void Type2mods()
+    {
+        foreach (FireballMod mod in ActiveModList)
+        {
             mod.ModTriggerEnter();
+        }
+    }
+
+    private void Type3mods()
+    {
+        foreach (FireballMod mod in ActiveModList)
+        {
+            mod.ModTriggerExit();
+        }
+    }
+
+    private void Type4mods()
+    {
+        foreach (FireballMod mod in ActiveModList)
+        {
+            mod.ModKillThis();
+        }
+    }
+
+    private void Type5mods()
+    {
+        foreach (FireballMod mod in ActiveModList)
+        {
+            mod.ModOnDestroy();
         }
     }
 

@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class ThunderShieldSimpleStickMod : ThunderShieldMod {
 
-    public void Initialize()
+    public override void Initialize()
     {
         modType = 0;
         modPriority = 0;
@@ -21,6 +21,11 @@ public class ThunderShieldSimpleStickMod : ThunderShieldMod {
     }
 
     public override void ModTriggerEnter()
+    {
+
+    }
+
+    public override void ModTriggerExit()
     {
 
     }

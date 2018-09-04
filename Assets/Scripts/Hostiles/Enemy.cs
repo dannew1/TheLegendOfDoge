@@ -7,6 +7,8 @@ using System.Linq;
 
 public class Enemy : MonoBehaviour {
 
+    public float enemyBodyDamage;
+
     private Image mask;
     private Vector3 barScale;
 
@@ -15,13 +17,15 @@ public class Enemy : MonoBehaviour {
     private float enemyMaxHealth;
     private float healthBarTimer = 0;
 
-    public float enemyBodyDamage;
-
     private Image damageBar;
     private float damageDelay;
     private float beforeHitHealth;
     private float lateDamageAmount;
     private float damageBarTimer = 0;
+
+    private float baseDamageBarTimer = 1;
+    private float baseDamageDelay = 1;
+    private float baseHealthBarTimer = 6;
 
     protected bool enemyLookingRight = false;
     protected bool updateLookingRight = true;
@@ -199,15 +203,15 @@ public class Enemy : MonoBehaviour {
                     TakeDamage(weapon);
                 }
             }
-            damageDelay = 1;
+            damageDelay = baseDamageDelay;
         }
     }
 
     private void TakeDamage(GameObject weaponObj)
     {
-            damageBarTimer = 1;
+            damageBarTimer = baseDamageBarTimer;
             enemyHealth -= weaponObj.GetComponent<Weapon>().damage;
-            healthBarTimer = 6;
+            healthBarTimer = baseHealthBarTimer;
     }
 
     private void DeadWeaponList()

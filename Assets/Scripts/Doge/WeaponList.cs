@@ -11,16 +11,11 @@ public class WeaponList : MonoBehaviour {
 
     public Fireball fireballPrefab;
     private Vector2 fireballReturn;
-
     private Fireball activeFireball = null;
-    private bool keepFireballActive = false;
-
 
     public ThunderShield thundershieldPrefab;
     private Vector2 thundershieldReturn;
-
     private ThunderShield activeThundershield = null;
-    private bool keepThundershieldActive = false;
 
 
     private Vector2 zero = new Vector2(0, 0);
@@ -45,7 +40,6 @@ public class WeaponList : MonoBehaviour {
             clone.Initialize(gameObject);
 
             activeFireball = clone;
-            keepFireballActive = true;
 
             if(clone.manaUsage > currentMana)
             {
@@ -78,7 +72,6 @@ public class WeaponList : MonoBehaviour {
             clone.Initialize(gameObject);
 
             activeThundershield = clone;
-            keepThundershieldActive = true;
 
             if (clone.manaUsage > currentMana)
             {

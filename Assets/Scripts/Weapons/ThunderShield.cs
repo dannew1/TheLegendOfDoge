@@ -19,16 +19,13 @@ public class ThunderShield : UserWeapon {
         }
     }
  
-
-
-
     void Start()
     {
         Type0mods();
     }
 
     void Update () {
-        Type2mods();
+        Type1mods();
     }
 
     public void OnTriggerEnter2D(Collider2D collider)
@@ -37,23 +34,30 @@ public class ThunderShield : UserWeapon {
 
         if (other_obj.GetComponent<Enemy>())
         {
-            Type4mods();
+            Type2mods();
+        }
+    }
+
+    public void OnTriggerExit2D(Collider2D collider)
+    {
+        GameObject other_obj = collider.gameObject;
+
+        if (other_obj.GetComponent<Enemy>())
+        {
+            Type3mods();
         }
     }
 
     public override void KillThis()
     {
-        Type3mods();
+        Type4mods();
 
     }
 
     void OnDestroy()
     {
-        Type1mods();
+        Type5mods();
     }
-
-
-
 
     private void Type0mods()
     {
@@ -63,15 +67,8 @@ public class ThunderShield : UserWeapon {
         }
     }
 
-    private void Type1mods()
-    {
-        foreach (ThunderShieldMod mod in ActiveModList)
-        {
-            mod.ModOnDestroy();
-        }
-    }
 
-    private void Type2mods()
+    private void Type1mods()
     {
         foreach (ThunderShieldMod mod in ActiveModList)
         {
@@ -79,11 +76,19 @@ public class ThunderShield : UserWeapon {
         }
     }
 
+    private void Type2mods()
+    {
+        foreach (ThunderShieldMod mod in ActiveModList)
+        {
+            mod.ModTriggerEnter();
+        }
+    }
+
     private void Type3mods()
     {
         foreach (ThunderShieldMod mod in ActiveModList)
         {
-            mod.ModKillThis();
+            mod.ModTriggerExit();
         }
     }
 
@@ -91,7 +96,15 @@ public class ThunderShield : UserWeapon {
     {
         foreach (ThunderShieldMod mod in ActiveModList)
         {
-            mod.ModTriggerEnter();
+            mod.ModKillThis();
+        }
+    }
+
+    private void Type5mods()
+    {
+        foreach (ThunderShieldMod mod in ActiveModList)
+        {
+            mod.ModOnDestroy();
         }
     }
 }

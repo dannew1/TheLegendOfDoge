@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ThunderShieldKillMod : ThunderShieldMod {
+public class TemplateFireball : FireballMod {
 
     public override void Initialize()
     {
@@ -32,7 +32,7 @@ public class ThunderShieldKillMod : ThunderShieldMod {
 
     public override void ModKillThis()
     {
-        Destroy(gameObject);
+
     }
 
     public override void ModOnDestroy()
@@ -40,3 +40,4 @@ public class ThunderShieldKillMod : ThunderShieldMod {
 
     }
 }
+

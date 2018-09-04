@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class FireballSimpleDeathMod : FireballMod {
 
-    public void Initialize()
+    public override void Initialize()
     {
         modType = 1;
         modPriority = 0;
@@ -23,5 +23,20 @@ public class FireballSimpleDeathMod : FireballMod {
     public override void ModTriggerEnter()
     {
         Destroy(gameObject);
+    }
+
+    public override void ModTriggerExit()
+    {
+
+    }
+
+    public override void ModKillThis()
+    {
+
+    }
+
+    public override void ModOnDestroy()
+    {
+
     }
 }

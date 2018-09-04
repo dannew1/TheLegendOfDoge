@@ -13,7 +13,6 @@ public class Doge : MonoBehaviour
 
     public float healthValue;
     public bool dogeLookingRight = true;
-    
     public float manaValue;
     public float maxManaValue;
     public Vector2 fireballReload;
@@ -82,6 +81,7 @@ public class Doge : MonoBehaviour
     private void ReturnValues()
     {
         dogeLookingRight = moveScript.ReturnMoveValues(1);
+
         healthValue = healthScript.ReturnHpValues(1);
 
         manaValue = shootingScript.ReturnMpValues(1);

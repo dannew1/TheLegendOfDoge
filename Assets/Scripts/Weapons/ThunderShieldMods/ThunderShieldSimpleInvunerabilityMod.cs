@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class ThunderShieldSimpleInvunerabilityMod : ThunderShieldMod {
 
-    public void Initialize()
+    public override void Initialize()
     {
         modType = 0;
         modPriority = 0;
@@ -12,7 +12,7 @@ public class ThunderShieldSimpleInvunerabilityMod : ThunderShieldMod {
 
     public override void ModStart()
     {
-        DamageResist();
+        dogeScript.Invunerablility();
     }
 
     public override void ModUpdate()
@@ -25,22 +25,17 @@ public class ThunderShieldSimpleInvunerabilityMod : ThunderShieldMod {
 
     }
 
+    public override void ModTriggerExit()
+    {
+
+    }
+
     public override void ModKillThis()
     {
 
     }
 
     public override void ModOnDestroy()
-    {
-        NoDamageResist();
-    }
-
-    private void DamageResist()
-    {
-        dogeScript.Invunerablility();
-    }
-
-    private void NoDamageResist()
     {
         dogeScript.DeactivateInvunerability();
     }

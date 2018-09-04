@@ -8,17 +8,16 @@ public abstract class ThunderShieldMod : MonoBehaviour {
     public int modPriority;
     private ThunderShield thunderShieldscript;
 
-    protected float currentManaUsage;
-    protected float currentReloadTime;
+    protected float changeManaUsage = 0;
+    protected float changeReloadTime = 0;
 
     protected GameObject player;
     protected Doge dogeScript;
     protected Rigidbody2D rigid;
 
-    protected bool hitEnemy;
-
     private void OnEnable()
     {
+        Initialize();
         ConnectMod();
     }
 
@@ -26,12 +25,13 @@ public abstract class ThunderShieldMod : MonoBehaviour {
     {
         thunderShieldscript = GetComponent<ThunderShield>();
         thunderShieldscript.ActiveModList.Add(this);
-        
     }
 
     private void Update()
     {
-        thunderShieldscript.UpdateStats(currentManaUsage, currentReloadTime);
+        thunderShieldscript.UpdateStats(changeManaUsage, changeReloadTime);
+        changeManaUsage = 0;
+        changeReloadTime = 0;
     }
 
     public void GetPlayer(GameObject doge)
@@ -39,16 +39,17 @@ public abstract class ThunderShieldMod : MonoBehaviour {
         rigid = GetComponent<Rigidbody2D>();
         player = doge;
         dogeScript = player.GetComponent<Doge>();
-
-        currentManaUsage = thunderShieldscript.manaUsage;
-        currentReloadTime = thunderShieldscript.reloadTime;
     }
+
+    public abstract void Initialize();
 
     public abstract void ModStart();
 
     public abstract void ModUpdate();
 
     public abstract void ModTriggerEnter();
+
+    public abstract void ModTriggerExit();
 
     public abstract void ModKillThis();
 
