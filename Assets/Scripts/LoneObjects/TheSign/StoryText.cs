@@ -6,7 +6,7 @@ public class StoryText : MonoBehaviour {
 
     public Text storyText;
     public bool inStory = false;
-    public Vector3 lastReadText;
+    private Vector3 lastReadText;
 
     private bool finalTextShown = false;
 
@@ -84,14 +84,14 @@ public class StoryText : MonoBehaviour {
         if (toRead == new Vector3(0, 2, 1))
         {
             storyText.text = "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA";
-            lastReadText = new Vector3(0, 2, 1);
+            lastReadText = toRead;
             inStory = true;
         }
 
         if (toRead == new Vector3(0, 2, 2))
         {
             storyText.text = "BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB";
-            lastReadText = new Vector3(0, 2, 2);
+            lastReadText = toRead;
             finalTextShown = true;
         }
     }

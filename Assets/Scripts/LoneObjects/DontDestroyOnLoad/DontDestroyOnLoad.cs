@@ -12,7 +12,6 @@ public class DontDestroyOnLoad : MonoBehaviour {
 
     void Awake()
     {
-
         if (instance != null && instance != this)
         {
             Destroy(this.gameObject);
@@ -22,6 +21,7 @@ public class DontDestroyOnLoad : MonoBehaviour {
         {
             instance = this;
         }
+
         DontDestroyOnLoad(this.gameObject);
     }
 }

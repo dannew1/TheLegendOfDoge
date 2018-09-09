@@ -4,12 +4,6 @@ using UnityEngine.SceneManagement;
 
 public class LevelManager : MonoBehaviour
 {
-
-    void Start()
-    {
-        
-    }
-
     public void NewGame()
     {
         SceneManager.LoadScene("Scene");

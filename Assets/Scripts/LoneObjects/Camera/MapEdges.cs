@@ -4,15 +4,16 @@ using System.Collections.Generic;
 
 public class MapEdges : MonoBehaviour {
 
-    public GameObject topR;
-    public GameObject botL;
+    private GameObject topR;
+    private GameObject botL;
 
     public Vector2 offset = new Vector2(470, 280);
     // Use this for initialization
 
     void Start () {
-		
-	}
+        topR = gameObject.transform.GetChild(0).gameObject;
+        botL = gameObject.transform.GetChild(1).gameObject;
+    }
 	
 	// Update is called once per frame
 	void Update () {
