@@ -7,7 +7,7 @@ public class MapEdges : MonoBehaviour {
     private GameObject topR;
     private GameObject botL;
 
-    public Vector2 offset = new Vector2(470, 280);
+    public Vector2 offset = new Vector2(0, 0);
     // Use this for initialization
 
     void Start () {
