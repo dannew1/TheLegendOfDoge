@@ -4,6 +4,11 @@ using UnityEngine.UI;
 
 public class StoryText : MonoBehaviour {
 
+    public TextAsset textFile;
+    private string[] happyStrings;
+    private string[] normalStrings;
+    private string[] angryStrings;
+
     public Text storyText;
     public bool inStory = false;
     private Vector3 lastReadText;
@@ -12,7 +17,11 @@ public class StoryText : MonoBehaviour {
 
     // Use this for initialization
     void Start () {
-        
+        string[] lines;
+        lines = textFile.text.Split('\\' );
+        happyStrings = lines[0].Split('\n');
+        normalStrings = lines[1].Split('\n');
+        angryStrings = lines[2].Split('\n');
     }
 	
 	// Update is called once per frame
@@ -83,14 +92,14 @@ public class StoryText : MonoBehaviour {
     {
         if (toRead == new Vector3(0, 2, 1))
         {
-            storyText.text = "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA";
+            storyText.text = normalStrings[0];
             lastReadText = toRead;
             inStory = true;
         }
 
         if (toRead == new Vector3(0, 2, 2))
         {
-            storyText.text = "BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB";
+            storyText.text = normalStrings[1];
             lastReadText = toRead;
             finalTextShown = true;
         }
