@@ -50,6 +50,6 @@ public class CameraController : MonoBehaviour
             cameraY = player.transform.position.y;
         }
 
-        transform.position = new Vector3 (cameraX, cameraY, player.transform.position.z - 100);
+        //transform.position = new Vector3 (cameraX, cameraY, player.transform.position.z - 100);
     }
 }
