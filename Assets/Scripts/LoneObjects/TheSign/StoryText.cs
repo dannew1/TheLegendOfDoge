@@ -18,10 +18,10 @@ public class StoryText : MonoBehaviour {
     // Use this for initialization
     void Start () {
         string[] lines;
-        lines = textFile.text.Split('\\' );
-        happyStrings = lines[0].Split('\n');
-        normalStrings = lines[1].Split('\n');
-        angryStrings = lines[2].Split('\n');
+        //lines = textFile.text.Split('\\' );
+        //happyStrings = lines[0].Split('\n');
+        //normalStrings = lines[1].Split('\n');
+        //angryStrings = lines[2].Split('\n');
     }
 	
 	// Update is called once per frame
