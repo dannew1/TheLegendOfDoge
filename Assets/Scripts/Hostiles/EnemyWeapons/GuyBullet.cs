@@ -3,7 +3,7 @@ using System.Collections;
 
 public class GuyBullet : EnemyWeapon {
 
-    public static float bulletSpeed = 150;
+    public static float bulletSpeed = 50;
 
     private Rigidbody2D rigid;
 

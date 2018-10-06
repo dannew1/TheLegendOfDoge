@@ -13,7 +13,7 @@ public class MoveDoge : MonoBehaviour {
     private float accelerationMultiplier = 3;
     private float topSpeed;
     private float jumpHeight;
-    private float timeInAirMultiplier = 400;
+    private float timeInAirMultiplier = 350;
     private float friction = 0.2f;
     private float frictionMultiplier = 0.3f;
     private float stopMargin = 10;
@@ -25,7 +25,7 @@ public class MoveDoge : MonoBehaviour {
     private bool lockSpeedR = false;
     private bool lockSpeedL = false;
 
-    private bool isDogeLookingRight = true;
+    private bool isDogeLookingRight = false;
 
     // Use this for initialization
     void Start () {
@@ -46,58 +46,62 @@ public class MoveDoge : MonoBehaviour {
         SetDogeLookingRight();
         TimeInAir();
         Friction();
+        
     }
 
     private void Move_doge()
     {
-        if (Input.GetKey(KeyCode.LeftArrow))
+        if (!(Input.GetKey(KeyCode.LeftArrow) && Input.GetKey(KeyCode.RightArrow)))
         {
-            if (rigid.velocity.x > 0)
+            if (Input.GetKey(KeyCode.LeftArrow))
             {
-                rigid.velocity += new Vector2(-CurretAcceleration() * accelerationMultiplier, 0);
+                if (rigid.velocity.x > 0)
+                {
+                    rigid.velocity += new Vector2(-CurretAcceleration() * accelerationMultiplier, 0);
+                }
+                else if (NonTopSpeed())
+                {
+                    rigid.velocity += new Vector2(-CurretAcceleration(), 0);
+                }
             }
-            else if (NonTopSpeed())
-            {
-                rigid.velocity += new Vector2(-CurretAcceleration(), 0);
-            }
-        }
 
-        if (Input.GetKey(KeyCode.RightArrow))
-        {
-            if (rigid.velocity.x < 0)
+            if (Input.GetKey(KeyCode.RightArrow))
             {
-                rigid.velocity += new Vector2(CurretAcceleration() * accelerationMultiplier, 0);
+                if (rigid.velocity.x < 0)
+                {
+                    rigid.velocity += new Vector2(CurretAcceleration() * accelerationMultiplier, 0);
+                }
+                else if (NonTopSpeed())
+                {
+                    rigid.velocity += new Vector2(CurretAcceleration(), 0);
+                }
             }
-            else if (NonTopSpeed())
+
+            if (!Input.GetKey(KeyCode.RightArrow))
             {
-                rigid.velocity += new Vector2(CurretAcceleration(), 0);
+                lockSpeedR = false;
             }
-        }
+            else if (Input.GetKey(KeyCode.RightArrow) && !NonTopSpeed())
+            {
+                lockSpeedR = true;
+            }
+            if (lockSpeedR == true)
+            {
+                rigid.velocity = new Vector2(topSpeed, rigid.velocity.y);
+            }
 
-        if (!Input.GetKey(KeyCode.RightArrow))
-        {
-            lockSpeedR = false;
-        }
-        else if (Input.GetKey(KeyCode.RightArrow) && !NonTopSpeed())
-        {
-            lockSpeedR = true;
-        }
-        if (lockSpeedR == true)
-        {
-            rigid.velocity = new Vector2(topSpeed, rigid.velocity.y);
-        }
-
-        if (!Input.GetKey(KeyCode.LeftArrow))
-        {
-            lockSpeedL = false;
-        }
-        else if (Input.GetKey(KeyCode.LeftArrow) && !NonTopSpeed())
-        {
-            lockSpeedL = true;
-        }
-        if (lockSpeedL == true)
-        {
-            rigid.velocity = new Vector2(-topSpeed, rigid.velocity.y);
+            if (!Input.GetKey(KeyCode.LeftArrow))
+            {
+                lockSpeedL = false;
+            }
+            else if (Input.GetKey(KeyCode.LeftArrow) && !NonTopSpeed())
+            {
+                lockSpeedL = true;
+            }
+            if (lockSpeedL == true)
+            {
+                rigid.velocity = new Vector2(-topSpeed, rigid.velocity.y);
+            }
         }
 
         if (Input.GetKey(KeyCode.UpArrow))

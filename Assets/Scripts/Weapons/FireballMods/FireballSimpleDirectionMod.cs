@@ -45,12 +45,12 @@ public class FireballSimpleDirectionMod : FireballMod
     {
         if (dogeScript.dogeLookingRight == false)
         {
-            rigid.velocity = new Vector2(-300, 0);
+            rigid.velocity = new Vector2(-100, 0);
         }
         else if (dogeScript.dogeLookingRight == true)
 
         {
-            rigid.velocity = new Vector2(300, 0);
+            rigid.velocity = new Vector2(100, 0);
         }
     }
 }

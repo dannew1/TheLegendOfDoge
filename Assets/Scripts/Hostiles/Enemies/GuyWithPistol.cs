@@ -5,11 +5,11 @@ public class GuyWithPistol : Enemy {
 
     public GuyBullet bulletPrefab;
 
-    public float maxHealth = 30;
+    public static float maxHealth = 30;
+    public static float turnTime = 4;
+    public static float fireDelay = 2;
+    public static Vector2 viewRange = new Vector2(55, 10);
 
-    public float turnTime = 4;
-    public float fireDelay = 0.5F;
-    public Vector2 viewRange = new Vector2(500, 100);
     public GameObject player;
 
     private float turnCounter;
@@ -59,7 +59,7 @@ public class GuyWithPistol : Enemy {
     private bool DogeInViewRange()
     {
         Vector2 distanceToDoge = new Vector2(transform.position.x - player.transform.position.x, transform.position.y - player.transform.position.y);
-
+        
         if (IsValueBetween(distanceToDoge.y, -viewRange.y, viewRange.y))
         {
             if (IsValueBetween(distanceToDoge.x, 0, viewRange.x) && enemyLookingRight == false)
