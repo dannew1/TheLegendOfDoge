@@ -14,7 +14,7 @@ public class MoveDoge : MonoBehaviour {
     private float topSpeed;
     private float jumpHeight;
     private float timeInAirMultiplier = 350;
-    private float friction = 0.2f;
+    private float friction = 1f;
     private float frictionMultiplier = 0.3f;
     private float stopMargin = 10;
     private float groundRad = 0.15f;
@@ -111,10 +111,10 @@ public class MoveDoge : MonoBehaviour {
                 timeInAir = 0;
                 rigid.velocity = new Vector2(rigid.velocity.x, jumpHeight);
             }
-            else if (timeInAir != 0)
-            {
-                rigid.velocity += new Vector2(0, jumpHeight /  timeInAir);
-            }
+            //else if (timeInAir > 0)
+            //{
+            //    rigid.velocity += new Vector2(0, jumpHeight /  timeInAir);
+            //}
         }
     }
 

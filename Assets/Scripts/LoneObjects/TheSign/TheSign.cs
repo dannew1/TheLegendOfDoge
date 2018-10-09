@@ -19,13 +19,13 @@ public class TheSign : MonoBehaviour {
 
     private void activateSign()
     {
-        if (storyScript.inStory == true && Input.GetKeyDown(KeyCode.X))
+        if (storyScript.GetInStory() == true && Input.GetKeyDown(KeyCode.X))
         {
             storyScript.ContinueText();
         }
         else if (overlappingDoge == true && Input.GetKeyDown(KeyCode.X))
         {
-            storyScript.StartText(0, 1);
+            storyScript.StartText();
         }
         else if(Input.GetKeyDown(KeyCode.Z))
         {
@@ -48,6 +48,4 @@ public class TheSign : MonoBehaviour {
             overlappingDoge = false;
         }
     }
-
-
 }

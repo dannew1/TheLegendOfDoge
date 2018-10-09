@@ -4,24 +4,37 @@ using UnityEngine.UI;
 
 public class StoryText : MonoBehaviour {
 
-    public TextAsset textFile;
-    private string[] happyStrings;
+    public TextAsset normalText;
+    public TextAsset var1Text;
+    public TextAsset var2Text;
     private string[] normalStrings;
-    private string[] angryStrings;
+    private string[] var1Strings;
+    private string[] var2Strings;
 
     public Text storyText;
-    public bool inStory = false;
-    private Vector3 lastReadText;
+    private bool inStory = false;
+    private int lastReadText;
+    private int numberOfStrings = 0;
 
-    private bool finalTextShown = false;
+    public bool GetInStory()
+    {
+        return inStory;
+    }
 
     // Use this for initialization
     void Start () {
-        string[] lines;
-        //lines = textFile.text.Split('\\' );
-        //happyStrings = lines[0].Split('\n');
-        //normalStrings = lines[1].Split('\n');
-        //angryStrings = lines[2].Split('\n');
+        normalStrings = SplitString(normalText);
+        var1Strings = SplitString(var1Text);
+        var2Strings = SplitString(var2Text);
+    }
+
+    private string[] SplitString(TextAsset txt)
+    {
+        if(txt != null)
+        {
+            return txt.text.Split('\n');
+        }
+        return null;
     }
 	
 	// Update is called once per frame
@@ -29,32 +42,34 @@ public class StoryText : MonoBehaviour {
 	
 	}
 
-    public void StartText(int currentStage, int signRage)
+    public void StartText()
     {
-        int scenario = CurrentScenario(signRage, currentStage);
-        ShowText(new Vector3(currentStage, scenario, 1));
+        //Here check which var
+        //int scenario = CurrentScenario(signRage, currentStage);
+        //ShowText(new Vector3(currentStage, scenario, 1));
+
+        inStory = true;
+        numberOfStrings = 0;
+        foreach (string s in normalStrings)
+        {
+            numberOfStrings++;
+        }
+        ShowText(0, normalStrings);
     }
 
     public void ContinueText()
     {
-        if(finalTextShown == true)
-        {
-            ClearText();
-        }
-        else
-        {
-            ShowText(new Vector3(lastReadText.x, lastReadText.y, lastReadText.z + 1));
-        }
+        ShowText(lastReadText + 1, normalStrings);
     }
 
     public void ClearText()
     {
         storyText.text = "";
         inStory = false;
-        finalTextShown = false;
     }
 
     /// //////////////////////////////////////////////////////////////////
+    //Unused
 
     private int CurrentScenario(int signRage, int currentStage)
     {
@@ -88,20 +103,16 @@ public class StoryText : MonoBehaviour {
 
     /// ///////////////////////////////////////////////////////////////////
 
-    private void ShowText(Vector3 toRead)
+    private void ShowText(int toRead, string[] strings)
     {
-        if (toRead == new Vector3(0, 2, 1))
+        if (toRead < numberOfStrings)
         {
-            storyText.text = normalStrings[0];
+            storyText.text = strings[toRead];
             lastReadText = toRead;
-            inStory = true;
         }
-
-        if (toRead == new Vector3(0, 2, 2))
+        else
         {
-            storyText.text = normalStrings[1];
-            lastReadText = toRead;
-            finalTextShown = true;
+            ClearText();
         }
     }
 

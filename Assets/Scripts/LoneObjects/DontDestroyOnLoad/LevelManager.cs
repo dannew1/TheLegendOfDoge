@@ -6,14 +6,14 @@ public class LevelManager : MonoBehaviour
 {
     public void NewGame()
     {
-        SceneManager.LoadScene("Scene");
+        SceneManager.LoadScene("SceneTiled");
     }
     public void GameOver()
     {
-        SceneManager.LoadScene("EndScreen");
+        SceneManager.LoadScene("SceneTiled");
     }
     public void YouWin()
     {
-        SceneManager.LoadScene("WinScene");
+        SceneManager.LoadScene("SceneTiled");
     }
 }
