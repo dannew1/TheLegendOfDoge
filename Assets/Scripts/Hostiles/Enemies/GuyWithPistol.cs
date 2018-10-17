@@ -8,7 +8,7 @@ public class GuyWithPistol : Enemy {
     public static float maxHealth = 30;
     public static float turnTime = 4;
     public static float fireDelay = 2;
-    public static Vector2 viewRange = new Vector2(55, 10);
+    public static Vector2 viewRange = new Vector2(80, 10);
 
     public GameObject player;
 
