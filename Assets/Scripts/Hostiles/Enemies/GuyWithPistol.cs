@@ -6,11 +6,10 @@ public class GuyWithPistol : Enemy {
     public GuyBullet bulletPrefab;
 
     public static float maxHealth = 30;
-    public static float turnTime = 4;
-    public static float fireDelay = 2;
-    public static Vector2 viewRange = new Vector2(80, 10);
-
-    public GameObject player;
+    public static float turnTime = 1.5f;
+    public static float turnOffset = 0.75f;
+    public static float fireDelay = 1;
+    public static Vector2 viewRange = new Vector2(93, 10);
 
     private float turnCounter;
     private float fireCounter;
@@ -36,7 +35,7 @@ public class GuyWithPistol : Enemy {
 
     private void WhenToTurnGuy()
     {
-        turnCounter += Time.deltaTime;
+        turnCounter += Random.Range(1-turnOffset, 1+ turnOffset) * Time.deltaTime;
         if (turnCounter >= turnTime)
         {
             turnAroundGuy();
@@ -58,20 +57,22 @@ public class GuyWithPistol : Enemy {
 
     private bool DogeInViewRange()
     {
-        Vector2 distanceToDoge = new Vector2(transform.position.x - player.transform.position.x, transform.position.y - player.transform.position.y);
-        
-        if (IsValueBetween(distanceToDoge.y, -viewRange.y, viewRange.y))
+        if (enemyCurrentBox == player.currentBox)
         {
-            if (IsValueBetween(distanceToDoge.x, 0, viewRange.x) && enemyLookingRight == false)
+            Vector2 distanceToDoge = new Vector2(transform.position.x - player.transform.position.x, transform.position.y - player.transform.position.y);
+
+            if (IsValueBetween(distanceToDoge.y, -viewRange.y, viewRange.y))
             {
-                return true;
-            }
-            else if (IsValueBetween(distanceToDoge.x, -viewRange.x, 0) && enemyLookingRight == true)
-            {
-                return true;
+                if (IsValueBetween(distanceToDoge.x, 0, viewRange.x) && enemyLookingRight == false)
+                {
+                    return true;
+                }
+                else if (IsValueBetween(distanceToDoge.x, -viewRange.x, 0) && enemyLookingRight == true)
+                {
+                    return true;
+                }
             }
         }
-
         return false;
     }
 

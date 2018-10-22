@@ -5,16 +5,17 @@ public class WhoAreWe : Enemy {
 
     public static float maxHealth = 30;
 
-    public static float range = 30;
+    public static float range = 10;
     public static float speed = 0.4F;
-    public static float baseWaitTime = 2.5F;
+    public static float baseWaitTime = 1.5F;
+
 
     private float waitTime;
     private float goToPosition;
     private float maxRange;
     private float minRange;
 
-    private float stopMargin = 10;
+    private float stopMargin = 2;
 
 	void Start () {
         Initialize();

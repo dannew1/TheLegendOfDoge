@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using UnityEngine.SceneManagement;
+using System;
 
 public class Doge : MonoBehaviour
 {
@@ -32,6 +33,8 @@ public class Doge : MonoBehaviour
     public float baseTopSpeed;
     public float baseJumpHeight;
 
+    public Vector2 currentBox;
+    public Vector2 boxSize = new Vector2(93, 53);
 
     private void Awake()
     {
@@ -56,6 +59,19 @@ public class Doge : MonoBehaviour
         SetPlayerStats();
         SetBaseStats();
         ReturnValues();
+        GetCurrentBox();
+    }
+
+    private void GetCurrentBox()
+    {
+        currentBox = new Vector2(
+            (float)Math.Floor(
+            (transform.position.x - boxSize.x / 2) / boxSize.x
+            ) + 1,
+
+            (float)Math.Floor(
+            (transform.position.y - boxSize.y / 2) / boxSize.y
+            ) + 1);
     }
 
     private void SetPlayerStats()

@@ -33,6 +33,11 @@ public class Enemy : MonoBehaviour {
     protected Rigidbody2D rigid;
     protected Vector3 initialScale;
 
+    protected Vector2 enemyCurrentBox;
+    protected Vector2 boxSize = new Vector2(93, 53);
+
+    protected Doge player;
+
     private List<GameObject> activeWeapons = new List<GameObject>();
     private List<GameObject> deadWeapons = new List<GameObject>();
 
@@ -45,11 +50,10 @@ public class Enemy : MonoBehaviour {
         healthBar = mask.gameObject.transform.GetChild(1).GetComponent<Image>();
         damageBar = mask.gameObject.transform.GetChild(0).GetComponent<Image>();
         barScale = mask.transform.localScale;
+
+        player = GameObject.FindObjectOfType<Doge>();
     }
     // Use this for initialization
-    void Start () {
-        
-    }
 
     protected void CustomUpdate()
     {
@@ -57,11 +61,24 @@ public class Enemy : MonoBehaviour {
         HealthBar();
         DamageBar();
 
+        GetCurrentBox();
         SetLookingDirection();
         turnAroundEnemy();
 
         ActiveWeaponDamage();
         DeadWeaponList();
+    }
+
+    private void GetCurrentBox()
+    {
+        enemyCurrentBox = new Vector2(
+            (float)Math.Floor(
+            (transform.position.x - boxSize.x / 2) / boxSize.x
+            ) + 1,
+
+            (float)Math.Floor(
+            (transform.position.y - boxSize.y / 2) / boxSize.y
+            ) + 1);
     }
 
     protected void SetEnemyHealth(float value)

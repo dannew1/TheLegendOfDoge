@@ -89,4 +89,9 @@ public class DDOLConnector : MonoBehaviour {
             }
         }
     }
+
+    public void StartScene()
+    {
+        levelManager.MainMenu();
+    }
 }
