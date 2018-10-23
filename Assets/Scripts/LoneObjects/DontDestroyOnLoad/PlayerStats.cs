@@ -8,6 +8,8 @@ public class PlayerStats : MonoBehaviour {
     public int playerSpStat;
     public int playerSpReg;
     public int currentPlayerLives;
+    public Fireball fireballPrefab;
+    public ThunderShield thunderShieldPrefab;
 
     private void Awake()
     {
@@ -15,7 +17,7 @@ public class PlayerStats : MonoBehaviour {
         playerHpReg = 1;
         playerSpStat = 1;
         playerSpReg = 1;
-        currentPlayerLives = 3;
+        currentPlayerLives = 2;
     }
 
     // Use this for initialization

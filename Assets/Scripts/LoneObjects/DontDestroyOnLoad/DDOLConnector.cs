@@ -8,6 +8,8 @@ public class DDOLConnector : MonoBehaviour {
     public int playerSpStat;
     public int playerSpReg;
     public int currentPlayerLives;
+    public Fireball ballPrefab;
+    public ThunderShield shieldPrefab;
 
     private DontDestroyOnLoad dontDestroyOnLoad;
     private LevelManager levelManager;
@@ -37,6 +39,8 @@ public class DDOLConnector : MonoBehaviour {
         playerSpStat = playerStats.playerSpStat;
         playerSpReg = playerStats.playerSpReg;
         currentPlayerLives = playerStats.currentPlayerLives;
+        ballPrefab = playerStats.fireballPrefab;
+        shieldPrefab = playerStats.thunderShieldPrefab;
     }
 
     public void EditStat(int stat, int value)
@@ -63,8 +67,15 @@ public class DDOLConnector : MonoBehaviour {
         }
     }
 
+    public void SaveWeaponPrefab(Fireball ball, ThunderShield shield)
+    {
+        playerStats.fireballPrefab = ball;
+        playerStats.thunderShieldPrefab = shield;
+    }
+
     public void NewGame()
     {
+        SaveWeaponPrefab(null, null);
         levelManager.NewGame();
     }
 
@@ -80,6 +91,7 @@ public class DDOLConnector : MonoBehaviour {
             if(currentPlayerLives >= 1)
             {
                 playerStats.currentPlayerLives -= 1;
+                SaveWeaponPrefab(null, null);
                 levelManager.NewGame();
             }
             else

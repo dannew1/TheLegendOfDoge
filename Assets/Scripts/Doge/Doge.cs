@@ -19,6 +19,9 @@ public class Doge : MonoBehaviour
     public Vector2 fireballReload;
     public Vector2 thundershieldReload;
 
+    public Fireball activeFireball;
+    public ThunderShield activeThundershield;
+
     public int hpStat;
     public int hpRegStat;
     public int spStat;
@@ -81,6 +84,8 @@ public class Doge : MonoBehaviour
         spStat = ddolScript.playerSpStat;
         spRegStat = ddolScript.playerSpReg;
         livesLeft = ddolScript.currentPlayerLives;
+        activeFireball = ddolScript.ballPrefab;
+        activeThundershield = ddolScript.shieldPrefab;
     }
 
     private void SetBaseStats()
@@ -104,6 +109,20 @@ public class Doge : MonoBehaviour
         maxManaValue = shootingScript.ReturnMpValues(2);
         fireballReload = shootingScript.ReturnRelaod(1);
         thundershieldReload = shootingScript.ReturnRelaod(2);
+    }
+
+    public void GiveWeaponPrefab(Fireball ballPrefab, ThunderShield shieldPrefab, bool isFireball)
+    {
+        if(isFireball)
+        {
+            ddolScript.SaveWeaponPrefab(ballPrefab, activeThundershield);
+            activeFireball = ballPrefab;
+        }
+        else if (isFireball == false)
+        {
+            ddolScript.SaveWeaponPrefab(activeFireball, shieldPrefab);
+            activeThundershield = shieldPrefab;
+        }
     }
 
     public void Invunerablility()

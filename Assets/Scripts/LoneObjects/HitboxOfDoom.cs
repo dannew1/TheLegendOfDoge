@@ -3,8 +3,6 @@ using System.Collections;
 
 public class HitboxOfDoom : MonoBehaviour {
 
-    public DDOLConnector levelManager;
-
     // Use this for initialization
     void Start () {
     }
@@ -18,11 +16,11 @@ public class HitboxOfDoom : MonoBehaviour {
     {
         GameObject other_obj = collider.gameObject;
 
-        if (other_obj.GetComponent<Doge>())
+        if (other_obj.GetComponent<GuyBullet>())
         {
-            levelManager.GameOver(false);
+            Destroy(other_obj);
         }
-        else
+        else if(other_obj.GetComponent<Fireball>())
         {
             Destroy(other_obj);
         }

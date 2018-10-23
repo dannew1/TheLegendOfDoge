@@ -4,16 +4,14 @@ using UnityEngine;
 
 public class WeaponList : MonoBehaviour {
 
-    //private Doge dogeScript;
-
+    private Doge dogeScript;
     private Shooting shootingScript;
 
-
-    public Fireball fireballPrefab;
+    private Fireball fireballPrefab;
     private Vector2 fireballReturn;
     private Fireball activeFireball = null;
 
-    public ThunderShield thundershieldPrefab;
+    private ThunderShield thundershieldPrefab;
     private Vector2 thundershieldReturn;
     private ThunderShield activeThundershield = null;
 
@@ -23,88 +21,104 @@ public class WeaponList : MonoBehaviour {
     // Use this for initialization
     void Start()
     {
+        dogeScript = GetComponent<Doge>();
         shootingScript = GetComponent<Shooting>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+        fireballPrefab = dogeScript.activeFireball;
+        thundershieldPrefab = dogeScript.activeThundershield;
     }
 
     public Vector2 ShootFireball(float currentMana)
     {
-        if (activeFireball == null)
+        if (fireballPrefab != null)
         {
-            Fireball clone = (Fireball)Instantiate(fireballPrefab, transform.position, transform.rotation);
-            clone.Initialize(gameObject);
-
-            activeFireball = clone;
-
-            if(clone.manaUsage > currentMana)
+            if (activeFireball == null)
             {
-                Destroy(clone.gameObject);
+                Fireball clone = (Fireball)Instantiate(fireballPrefab, transform.position, transform.rotation);
+                clone.Initialize(gameObject);
+
+                activeFireball = clone;
+
+                if (clone.manaUsage > currentMana)
+                {
+                    Destroy(clone.gameObject);
+                    shootingScript.NotEnoughForFireball();
+                    return zero;
+                }
+            }
+            else if (activeFireball.manaUsage > currentMana)
+            {
+                KillFireball();
                 shootingScript.NotEnoughForFireball();
                 return zero;
             }
-        }
-        else if (activeFireball.manaUsage > currentMana)
-        {
-            KillFireball();
-            shootingScript.NotEnoughForFireball();
-            return zero;
-        }
 
-        Vector2 temporaryReturn = new Vector2(activeFireball.manaUsage, activeFireball.reloadTime);
-        if (activeFireball.reloadTime > 0)
-        {
-            shootingScript.NotEnoughForFireball();
-            activeFireball = null;
+            Vector2 temporaryReturn = new Vector2(activeFireball.manaUsage, activeFireball.reloadTime);
+            if (activeFireball.reloadTime > 0)
+            {
+                shootingScript.NotEnoughForFireball();
+                activeFireball = null;
+            }
+            return temporaryReturn;
         }
-        return temporaryReturn;
+        return zero;
     }
 
     public Vector2 ShootThundershield(float currentMana)
     {
-        if (activeThundershield == null)
+        if (thundershieldPrefab != null)
         {
-            ThunderShield clone = (ThunderShield)Instantiate(thundershieldPrefab, transform.position, transform.rotation);
-            clone.Initialize(gameObject);
-
-            activeThundershield = clone;
-
-            if (clone.manaUsage > currentMana)
+            if (activeThundershield == null)
             {
-                Destroy(clone.gameObject);
+                ThunderShield clone = (ThunderShield)Instantiate(thundershieldPrefab, transform.position, transform.rotation);
+                clone.Initialize(gameObject);
+
+                activeThundershield = clone;
+
+                if (clone.manaUsage > currentMana)
+                {
+                    Destroy(clone.gameObject);
+                    shootingScript.NotEnoughForThundershield();
+                    return zero;
+                }
+            }
+            else if (activeThundershield.manaUsage > currentMana)
+            {
+
+                KillThundershield();
                 shootingScript.NotEnoughForThundershield();
                 return zero;
             }
-        }
-        else if(activeThundershield.manaUsage > currentMana)
-        {
-            
-            KillThundershield();
-            shootingScript.NotEnoughForThundershield();
-            return zero;
-        }
 
-        Vector2 temporaryReturn = new Vector2(activeThundershield.manaUsage, activeThundershield.reloadTime); ;
-        if (activeThundershield.reloadTime > 0)
-        {
-            shootingScript.NotEnoughForThundershield();
+            Vector2 temporaryReturn = new Vector2(activeThundershield.manaUsage, activeThundershield.reloadTime); ;
+            if (activeThundershield.reloadTime > 0)
+            {
+                shootingScript.NotEnoughForThundershield();
+            }
+            return temporaryReturn;
         }
-        return temporaryReturn;
+        return zero;
     }
 
     public void KillFireball()
     {
-        activeFireball.KillThis();
-        activeFireball = null;
+        if (fireballPrefab != null)
+        {
+            activeFireball.KillThis();
+            activeFireball = null;
+        }
     }
 
     public void KillThundershield()
     {
-        activeThundershield.KillThis();
-        activeThundershield = null;
+        if (thundershieldPrefab != null)
+        {
+            activeThundershield.KillThis();
+            activeThundershield = null;
+        }
     }
 }

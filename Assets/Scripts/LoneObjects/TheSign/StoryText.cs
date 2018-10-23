@@ -11,7 +11,7 @@ public class StoryText : MonoBehaviour {
     private string[] var1Strings;
     private string[] var2Strings;
 
-    public Text storyText;
+    private Text storyText;
     private bool inStory = false;
     private int lastReadText;
     private int numberOfStrings = 0;
@@ -23,6 +23,8 @@ public class StoryText : MonoBehaviour {
 
     // Use this for initialization
     void Start () {
+        storyText = FindObjectOfType<MovingText>().GetComponent<Text>();
+
         normalStrings = SplitString(normalText);
         var1Strings = SplitString(var1Text);
         var2Strings = SplitString(var2Text);
@@ -44,10 +46,6 @@ public class StoryText : MonoBehaviour {
 
     public void StartText()
     {
-        //Here check which var
-        //int scenario = CurrentScenario(signRage, currentStage);
-        //ShowText(new Vector3(currentStage, scenario, 1));
-
         inStory = true;
         numberOfStrings = 0;
         foreach (string s in normalStrings)
@@ -66,6 +64,19 @@ public class StoryText : MonoBehaviour {
     {
         storyText.text = "";
         inStory = false;
+    }
+
+    private void ShowText(int toRead, string[] strings)
+    {
+        if (toRead < numberOfStrings)
+        {
+            storyText.text = strings[toRead];
+            lastReadText = toRead;
+        }
+        else
+        {
+            ClearText();
+        }
     }
 
     /// //////////////////////////////////////////////////////////////////
@@ -100,22 +111,6 @@ public class StoryText : MonoBehaviour {
             return new Vector2(0, 0);
         }
     }
-
-    /// ///////////////////////////////////////////////////////////////////
-
-    private void ShowText(int toRead, string[] strings)
-    {
-        if (toRead < numberOfStrings)
-        {
-            storyText.text = strings[toRead];
-            lastReadText = toRead;
-        }
-        else
-        {
-            ClearText();
-        }
-    }
-
 
 
 

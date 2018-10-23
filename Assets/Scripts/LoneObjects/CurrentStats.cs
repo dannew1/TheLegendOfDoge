@@ -4,7 +4,7 @@ using UnityEngine.UI;
 
 public class CurrentStats : MonoBehaviour {
 
-    public Doge player;
+    private Doge player;
     public Image hpSprite;
     public Image hpSprite2;
     public Image hpSprite3;
@@ -19,7 +19,7 @@ public class CurrentStats : MonoBehaviour {
 
     // Use this for initialization
     void Start () {
-
+        player = FindObjectOfType<Doge>();
     }
 	
 	// Update is called once per frame
@@ -52,7 +52,12 @@ public class CurrentStats : MonoBehaviour {
         spSprite2.fillAmount = (player.manaValue - player.baseMaxMana) / player.baseMaxMana;
         spSprite3.fillAmount = (player.manaValue - 2 * player.baseMaxMana) / player.baseMaxMana;
 
-        if (player.fireballReload.x <= 0)
+
+        if(player.activeFireball == null)
+        {
+            reloadSprite1.fillAmount = 0;
+        }
+        else if (player.fireballReload.x <= 0)
         {
             reloadSprite1.fillAmount = 1;
         }
@@ -61,7 +66,11 @@ public class CurrentStats : MonoBehaviour {
             reloadSprite1.fillAmount = 1 - (player.fireballReload.x / player.fireballReload.y);
         }
 
-        if (player.thundershieldReload.x <= 0)
+        if (player.activeThundershield == null)
+        {
+            reloadSprite2.fillAmount = 0;
+        }
+        else if (player.thundershieldReload.x <= 0)
         {
             reloadSprite2.fillAmount = 1;
         }
