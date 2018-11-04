@@ -6,7 +6,7 @@ public class WhoAreWe : Enemy {
     public static float maxHealth = 30;
 
     public static float range = 10;
-    public static float speed = 0.4F;
+    public static float speed = 16;
     public static float baseWaitTime = 1.5F;
 
 
@@ -46,12 +46,12 @@ public class WhoAreWe : Enemy {
             }
             else if (goToPosition >= transform.position.x)
             {
-                rigid.velocity += new Vector2(speed, 0);
+                rigid.velocity += new Vector2(speed * Time.deltaTime, 0);
             }
 
             else if (goToPosition <= transform.position.x)
             {
-                rigid.velocity += new Vector2(-speed, 0);
+                rigid.velocity += new Vector2(-speed * Time.deltaTime, 0);
             }
         }
     }

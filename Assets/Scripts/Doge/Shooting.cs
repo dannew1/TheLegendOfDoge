@@ -22,6 +22,10 @@ public class Shooting : MonoBehaviour {
     private bool readyToFireball = true;
     private bool readyToThundershield = true;
 
+    private float fireballTimer = 0;
+    private float thunderShieldTimer = 0;
+    private float frameDelay = 0.03f;
+
     //Keep track off MaxMana, ManaRegen, reload
     //Return?
 
@@ -59,21 +63,30 @@ public class Shooting : MonoBehaviour {
 
     private void UseFireball()
     {
-        if (Input.GetKey(KeyCode.C) && readyToFireball == true)
+        if(fireballTimer > 0)
         {
-            usingFireball = true;
-
-            Vector2 re;
-            re = weaponScript.ShootFireball(mana);
-
-            mana -= re.x;
-            fireballReloadTime += re.y;
-            fireballBaseReload = re.y;
+            fireballTimer -= Time.deltaTime;
         }
-        else if (usingFireball)
+
+        if (fireballTimer <= 0)
         {
-            usingFireball = false;
-            weaponScript.KillFireball();
+            if (Input.GetKey(KeyCode.C) && readyToFireball == true)
+            {
+                usingFireball = true;
+
+                Vector2 re;
+                re = weaponScript.ShootFireball(mana);
+
+                mana -= re.x;
+                fireballReloadTime += re.y;
+                fireballBaseReload = re.y;
+            }
+            else if (usingFireball)
+            {
+                usingFireball = false;
+                weaponScript.KillFireball();
+            }
+            fireballTimer = frameDelay;
         }
     }
 
@@ -93,21 +106,30 @@ public class Shooting : MonoBehaviour {
 
     private void UseThundershield()
     {
-        if (Input.GetKey(KeyCode.V) && readyToThundershield == true)
+        if (thunderShieldTimer > 0)
         {
-            usingThundershield = true;
-
-            Vector2 re;
-            re = weaponScript.ShootThundershield(mana);
-
-            mana -= re.x;
-            thundershieldReloadTime += re.y;
-            thundershieldBaseReload = re.y;
+            thunderShieldTimer -= Time.deltaTime;
         }
-        else if (usingThundershield)
+
+        if (thunderShieldTimer <= 0)
         {
-            usingThundershield = false;
-            weaponScript.KillThundershield();
+            if (Input.GetKey(KeyCode.V) && readyToThundershield == true)
+            {
+                usingThundershield = true;
+
+                Vector2 re;
+                re = weaponScript.ShootThundershield(mana);
+
+                mana -= re.x;
+                thundershieldReloadTime += re.y;
+                thundershieldBaseReload = re.y;
+            }
+            else if (usingThundershield)
+            {
+                usingThundershield = false;
+                weaponScript.KillThundershield();
+            }
+            thunderShieldTimer = frameDelay;
         }
     }
 
