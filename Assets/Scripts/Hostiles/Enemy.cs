@@ -41,6 +41,9 @@ public class Enemy : MonoBehaviour {
     private List<GameObject> activeWeapons = new List<GameObject>();
     private List<GameObject> deadWeapons = new List<GameObject>();
 
+    private float frameTimer = 0;
+    private float frameDelay = 0.03f;
+
     protected void Initialize()
     {
         rigid = GetComponent<Rigidbody2D>();
@@ -57,6 +60,8 @@ public class Enemy : MonoBehaviour {
 
     protected void CustomUpdate()
     {
+        FrameTimer();
+        
         KillEnemy();
         HealthBar();
         DamageBar();
@@ -67,6 +72,14 @@ public class Enemy : MonoBehaviour {
 
         ActiveWeaponDamage();
         DeadWeaponList();
+    }
+
+    private void FrameTimer()
+    {
+        if (frameTimer > 0)
+        {
+            frameTimer -= Time.deltaTime;
+        }
     }
 
     private void GetCurrentBox()
@@ -226,9 +239,13 @@ public class Enemy : MonoBehaviour {
 
     private void TakeDamage(GameObject weaponObj)
     {
-            damageBarTimer = baseDamageBarTimer;
+        damageBarTimer = baseDamageBarTimer;
+        if (frameTimer <= 0)
+        {
             enemyHealth -= weaponObj.GetComponent<Weapon>().damage;
-            healthBarTimer = baseHealthBarTimer;
+            frameTimer = frameDelay;
+        }
+        healthBarTimer = baseHealthBarTimer;
     }
 
     private void DeadWeaponList()

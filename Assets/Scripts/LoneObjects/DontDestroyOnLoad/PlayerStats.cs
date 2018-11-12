@@ -13,10 +13,10 @@ public class PlayerStats : MonoBehaviour {
 
     private void Awake()
     {
-        playerHpStat = 1;
-        playerHpReg = 1;
-        playerSpStat = 1;
-        playerSpReg = 1;
+        //playerHpStat = 1;
+        //playerHpReg = 1;
+        //playerSpStat = 1;
+        //playerSpReg = 1;
         currentPlayerLives = 2;
     }
 

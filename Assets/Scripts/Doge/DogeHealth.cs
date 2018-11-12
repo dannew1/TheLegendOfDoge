@@ -16,10 +16,16 @@ public class DogeHealth : MonoBehaviour
     private float damageDelay = 3;
     private bool unkillable = false;
 
+    private float regenDelay = 0;
+    private float baseRegenDelay = 4;
+
     private List<GameObject> activeEnemyWeapon = new List<GameObject>();
     private List<GameObject> deadEnemyWeapon = new List<GameObject>();
     private List<GameObject> activeEnemy = new List<GameObject>();
     private List<GameObject> deadEnemy = new List<GameObject>();
+
+    private float frameTimer = 0;
+    private float frameDelay = 0.03f;
 
     // Use this for initialization
     void Start()
@@ -32,6 +38,8 @@ public class DogeHealth : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        Timers();
+
         SetStats();
 
         ActiveEnemyDamage();
@@ -39,6 +47,19 @@ public class DogeHealth : MonoBehaviour
 
         HealthRegen();
         PlayerDeath();
+    }
+
+    private void Timers()
+    {
+        if (frameTimer > 0)
+        {
+            frameTimer -= Time.deltaTime;
+        }
+
+        if(regenDelay > 0)
+        {
+            regenDelay -= Time.deltaTime;
+        }
     }
 
     private void SetStats()
@@ -135,13 +156,18 @@ public class DogeHealth : MonoBehaviour
     {
         if (!unkillable)
         {
-            if (enemyObj.GetComponent<Enemy>())
+            if (frameTimer <= 0)
             {
-                health -= enemyObj.GetComponent<Enemy>().enemyBodyDamage;
-            }
-            else if (enemyObj.GetComponent<EnemyWeapon>())
-            {
-                health -= enemyObj.GetComponent<EnemyWeapon>().damage;
+                if (enemyObj.GetComponent<Enemy>())
+                {
+                    health -= enemyObj.GetComponent<Enemy>().enemyBodyDamage;
+                }
+                else if (enemyObj.GetComponent<EnemyWeapon>())
+                {
+                    health -= enemyObj.GetComponent<EnemyWeapon>().damage;
+                }
+                frameTimer = frameDelay;
+                regenDelay = baseRegenDelay;
             }
         }
     }
@@ -182,7 +208,7 @@ public class DogeHealth : MonoBehaviour
 
     private void HealthRegen()
     {
-        if (health < maxHealth && damageDelay <= 0)
+        if (health < maxHealth && regenDelay <= 0)
         {
             health += Time.deltaTime * healthRegen;
         }

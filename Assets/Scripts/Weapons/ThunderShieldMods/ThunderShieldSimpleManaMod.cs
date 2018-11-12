@@ -22,12 +22,12 @@ public class ThunderShieldSimpleManaMod : ThunderShieldMod {
 
     public override void ModTriggerEnter()
     {
-        changeManaUsage = 13;
+        changeManaUsage = 9;
     }
 
     public override void ModTriggerExit()
     {
-        changeManaUsage = -13;
+        changeManaUsage = -9;
     }
 
     public override void ModKillThis()

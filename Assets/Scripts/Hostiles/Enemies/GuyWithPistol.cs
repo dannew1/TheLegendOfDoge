@@ -9,7 +9,7 @@ public class GuyWithPistol : Enemy {
     public static float turnTime = 1.5f;
     public static float turnOffset = 0.75f;
     public static float fireDelay = 0.5f;
-    public static Vector2 viewRange = new Vector2(93, 10);
+    public static Vector2 viewRange = new Vector2(93, 8);
 
     private float turnCounter;
     private float fireCounter;

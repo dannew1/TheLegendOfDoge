@@ -66,6 +66,11 @@ public class StoryText : MonoBehaviour {
         inStory = false;
     }
 
+    public void InterruptText()
+    {
+        ClearText();
+    }
+
     private void ShowText(int toRead, string[] strings)
     {
         if (toRead < numberOfStrings)

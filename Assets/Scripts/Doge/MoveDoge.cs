@@ -13,8 +13,8 @@ public class MoveDoge : MonoBehaviour {
     private float accelerationMultiplier = 3;
     private float topSpeed;
     private float jumpHeight;
-    private float timeInAirMultiplier = 350;
-    private float friction = 20;
+    private float timeInAirMultiplier = 250;
+    private float friction = 30;
     private float frictionMultiplier = 0.5f;
     private float stopMargin = 5;
     private float groundRad = 0.3f;
@@ -135,7 +135,8 @@ public class MoveDoge : MonoBehaviour {
 
     private float CurretAcceleration()
     {
-        if(NoYMovement())
+        return acceleration;
+        if (NoYMovement())
         {
             return acceleration;
         }

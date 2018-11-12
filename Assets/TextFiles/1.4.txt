@@ -1,6 +1,7 @@
-Now it's time for your next weapon.
-This one is called a Thunder-shield and you use it with "V".
-When you use it, you become immune to damage.
-It also deals damage to enemies but be careful
-While you deal damage it drains more Sp.
-It's also a great counter to those bullet-guys.
+Now it's time for your next spell
+This one is a shield and you use it with "V"
+When you use it, you become immune to damage
+That makes it a great counter to those bullet-guys
+It also deals quite a bit of damage to enemies
+But be careful,
+While you deal damage it drains much more Mana

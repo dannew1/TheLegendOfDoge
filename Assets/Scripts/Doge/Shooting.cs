@@ -22,6 +22,9 @@ public class Shooting : MonoBehaviour {
     private bool readyToFireball = true;
     private bool readyToThundershield = true;
 
+    private float regenDelay = 0;
+    private float baseRegenDelay = 4;
+
     private float fireballTimer = 0;
     private float thunderShieldTimer = 0;
     private float frameDelay = 0.03f;

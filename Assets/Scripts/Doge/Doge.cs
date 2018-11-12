@@ -62,12 +62,12 @@ public class Doge : MonoBehaviour
         SetPlayerStats();
         SetBaseStats();
         ReturnValues();
-        GetCurrentBox();
+        currentBox = GetCurrentBox();
     }
 
-    private void GetCurrentBox()
+    private Vector2 GetCurrentBox()
     {
-        currentBox = new Vector2(
+        return new Vector2(
             (float)Math.Floor(
             (transform.position.x - boxSize.x / 2) / boxSize.x
             ) + 1,

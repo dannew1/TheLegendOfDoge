@@ -9,7 +9,7 @@ public class GuyBullet : EnemyWeapon {
 
     // Use this for initialization
     void Start () {
-        damage = 1000;
+        damage = 400;
 	}
 	
     public void Initialize()

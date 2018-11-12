@@ -10,7 +10,7 @@ public class ThunderShield : UserWeapon {
     public override void Initialize(GameObject player)
     {
         damage = 1;
-        manaUsage = 2;
+        manaUsage = 4;
         reloadTime = 0;
 
         foreach(ThunderShieldMod mod in ActiveModList)
