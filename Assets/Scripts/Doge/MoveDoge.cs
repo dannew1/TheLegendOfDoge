@@ -14,7 +14,7 @@ public class MoveDoge : MonoBehaviour {
     private float topSpeed;
     private float jumpHeight;
     private float timeInAirMultiplier = 250;
-    private float friction = 30;
+    private float friction = 35;
     private float frictionMultiplier = 0.5f;
     private float stopMargin = 5;
     private float groundRad = 0.3f;
