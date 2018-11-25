@@ -16,6 +16,8 @@ public class DDOLConnector : MonoBehaviour {
     private PlayerStats playerStats;
     private MusicPlayer musicPlayer;
 
+    public Vector3 startPositon;
+
     // Use this for initialization
 
     void Awake()
@@ -24,6 +26,8 @@ public class DDOLConnector : MonoBehaviour {
         levelManager = dontDestroyOnLoad.GetComponent<LevelManager>();
         playerStats = dontDestroyOnLoad.GetComponent<PlayerStats>();
         musicPlayer = dontDestroyOnLoad.GetComponent<MusicPlayer>();
+        startPositon = playerStats.savedPosition;
+        SaveWeaponPrefab(playerStats.savedFireball, playerStats.savedThunderShield);
         UpdatePlayerStat();
     }
 
@@ -73,9 +77,22 @@ public class DDOLConnector : MonoBehaviour {
         playerStats.thunderShieldPrefab = shield;
     }
 
+    public void ResetSavedPosition()
+    {
+        playerStats.savedPosition = Vector3.zero;
+    }
+
+    public void SaveGame(Vector3 dogePosition)
+    {
+        playerStats.savedFireball = playerStats.fireballPrefab;
+        playerStats.savedThunderShield= playerStats.thunderShieldPrefab;
+        playerStats.savedPosition = dogePosition;
+    }
+
     public void NewGame()
     {
         SaveWeaponPrefab(null, null);
+
         levelManager.NewGame();
     }
 
@@ -92,7 +109,7 @@ public class DDOLConnector : MonoBehaviour {
             {
                 playerStats.currentPlayerLives -= 1;
                 SaveWeaponPrefab(null, null);
-                levelManager.NewGame();
+                levelManager.Retry();
             }
             else
             {

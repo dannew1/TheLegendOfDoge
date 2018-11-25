@@ -23,7 +23,7 @@ public class Shooting : MonoBehaviour {
     private bool readyToThundershield = true;
 
     private float regenDelay = 0;
-    private float baseRegenDelay = 4;
+    private float baseRegenDelay = 3;
 
     private float fireballTimer = 0;
     private float thunderShieldTimer = 0;
@@ -167,16 +167,24 @@ public class Shooting : MonoBehaviour {
         return newReload;
     }
 
+    public void SetRegenDelay()
+    {
+        regenDelay = baseRegenDelay;
+    }
+
     private void ManaRegen()
     {
+        if(regenDelay > 0)
+        {
+            regenDelay -= Time.deltaTime;
+        }
+
         if (mana < 0)
         {
             mana = 0;
         }
 
-        if (mana < maxMana
-            && (fireballReloadTime <= 0 && !usingFireball)
-            && (thundershieldReloadTime <= 0 && !usingThundershield))
+        if (mana < maxMana && regenDelay <= 0)
         {
             mana += Time.deltaTime * manaRegen;
         }

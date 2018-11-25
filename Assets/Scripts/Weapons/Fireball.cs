@@ -10,7 +10,7 @@ public class Fireball : UserWeapon {
     public override void Initialize(GameObject player)
     {
         damage = 10;
-        manaUsage = 400;
+        manaUsage = 100;
         reloadTime = 0.6f;
 
         foreach (FireballMod mod in ActiveModList)

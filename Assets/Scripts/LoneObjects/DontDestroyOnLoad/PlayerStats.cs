@@ -10,6 +10,9 @@ public class PlayerStats : MonoBehaviour {
     public int currentPlayerLives;
     public Fireball fireballPrefab;
     public ThunderShield thunderShieldPrefab;
+    public Fireball savedFireball;
+    public ThunderShield savedThunderShield;
+    public Vector3 savedPosition;
 
     private void Awake()
     {
@@ -27,6 +30,6 @@ public class PlayerStats : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-	
+
 	}
 }

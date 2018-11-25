@@ -5,6 +5,8 @@ using System;
 
 public class TheSign : MonoBehaviour {
 
+    private Doge playerScript;
+
     private bool overlappingDoge = false;
     private StoryText storyScript;
     private CameraController cameraScript;
@@ -54,6 +56,8 @@ public class TheSign : MonoBehaviour {
         else if (overlappingDoge == true && Input.GetKeyDown(KeyCode.X))
         {
             storyScript.StartText();
+            playerScript.SaveState();
+            
         }
         else if(Input.GetKeyDown(KeyCode.Z))
         {
@@ -65,6 +69,7 @@ public class TheSign : MonoBehaviour {
     {
         if (collider.gameObject.GetComponent<Doge>())
         {
+            playerScript = collider.gameObject.GetComponent<Doge>();
             overlappingDoge = true;
         }
     }

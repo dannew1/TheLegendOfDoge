@@ -63,6 +63,7 @@ public class WeaponList : MonoBehaviour {
                 shootingScript.NotEnoughForFireball();
                 activeFireball = null;
             }
+            shootingScript.SetRegenDelay();
             return temporaryReturn;
         }
         return zero;
@@ -99,6 +100,7 @@ public class WeaponList : MonoBehaviour {
             {
                 shootingScript.NotEnoughForThundershield();
             }
+            shootingScript.SetRegenDelay();
             return temporaryReturn;
         }
         return zero;

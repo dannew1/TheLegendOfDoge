@@ -7,6 +7,8 @@ public class Pickup : MonoBehaviour {
     private bool isFireballPickup;
     private bool overlappingDoge = false;
 
+    private bool isActive = true;
+
     public Fireball pickupFireball;
     public ThunderShield pickupThunderShield;
 
@@ -17,35 +19,59 @@ public class Pickup : MonoBehaviour {
 	void Start () {
 
         spriteChild = transform.GetChild(0).GetComponent<SpriteRenderer>();
+
+        player = FindObjectOfType<Doge>();
+
         if (pickupFireball != null)
         {
             isFireballPickup = true;
-            spriteChild.sprite = pickupFireball.GetComponent<SpriteRenderer>().sprite;
         }
-        else if(pickupThunderShield != null)
+        else if (pickupThunderShield != null)
         {
             isFireballPickup = false;
-            spriteChild.sprite = pickupThunderShield.GetComponent<SpriteRenderer>().sprite;
         }
-        else
-        {
-            spriteChild.sprite = null;
-        }
-	}
+
+    }
 	
 	// Update is called once per frame
 	void Update () {
         activatePickup();
     }
 
+    
+
     private void activatePickup()
     {
-        if (overlappingDoge == true && Input.GetKeyDown(KeyCode.X) && (pickupFireball || pickupThunderShield))
+        if((pickupFireball == player.activeFireball && isFireballPickup) || (pickupThunderShield == player.activeThundershield && !isFireballPickup))
+        {
+            isActive = false;
+            spriteChild.sprite = null;
+        }
+        else
+        {
+            isActive = true;
+            PreparePickup();
+        }
+
+        if (overlappingDoge == true && Input.GetKeyDown(KeyCode.X) && isActive)
         {
             player.GiveWeaponPrefab(pickupFireball, pickupThunderShield, isFireballPickup);
+        }
+    }
+
+    private void PreparePickup()
+    {
+        if (isFireballPickup == true)
+        {
+            spriteChild.sprite = pickupFireball.GetComponent<SpriteRenderer>().sprite;
+        }
+        else if (isFireballPickup == false)
+        {
+            spriteChild.sprite = pickupThunderShield.GetComponent<SpriteRenderer>().sprite;
+        }
+        else
+        {
             spriteChild.sprite = null;
-            pickupFireball = null;
-            pickupThunderShield = null;
         }
     }
 
@@ -54,7 +80,6 @@ public class Pickup : MonoBehaviour {
         if (collider.gameObject.GetComponent<Doge>())
         {
             overlappingDoge = true;
-            player = collider.gameObject.GetComponent<Doge>();
         }
     }
 

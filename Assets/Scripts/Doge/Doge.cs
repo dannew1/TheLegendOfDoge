@@ -53,7 +53,10 @@ public class Doge : MonoBehaviour
     // Use this for initialization
     void Start()
     {
-  
+        if(ddolScript.startPositon != Vector3.zero)
+        {
+            transform.position = ddolScript.startPositon;
+        }
     }
 
     // Update is called once per frame
@@ -123,6 +126,10 @@ public class Doge : MonoBehaviour
             ddolScript.SaveWeaponPrefab(activeFireball, shieldPrefab);
             activeThundershield = shieldPrefab;
         }
+    }
+    public void SaveState()
+    {
+        ddolScript.SaveGame(transform.position);
     }
 
     public void Invunerablility()
